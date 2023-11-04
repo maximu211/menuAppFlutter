@@ -1,10 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:menuapp/account_page/account_page.dart';
 import 'package:menuapp/add_page/add_page.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/home_page/home_page.dart';
 import 'package:menuapp/search_page/search_page.dart';
+
+import '../global_variables/font_size_variables.dart';
+import '../global_variables/icon_size_variables.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
@@ -17,59 +19,97 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPage extends State<NavigationPage> {
   ColorPackage colors = ColorPackage();
+  FontSizeVariables fontSize = FontSizeVariables();
+  IconSizeVariables iconSizeVariables = IconSizeVariables();
 
   int _currentIndex = 0;
 
-  Widget renderScreen(int index){
-    switch (index){
-      case 0: return const HomePage();
-      case 1: return const SearchPage();
-      case 2: return const AddPage();
-      case 3: return AccountPage();
-      default: return const Text('Невідомий екран');
+  Widget renderScreen(int index) {
+    switch (index) {
+      case 0:
+        return const HomePage();
+      case 1:
+        return const SearchPage();
+      case 2:
+        return const AddPage();
+      case 3:
+        return const AccountPage();
+      default:
+        return const Text('Невідомий екран');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: colors.primary_color,
-        //shadowColor: const Color.fromARGB(0, 1, 1, 1),
-        actions: [
-          Center(
-            child: Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: Row(
-                  children: [
-                    Text("Cool App Name",
-                        style: TextStyle(fontSize: 20, color: colors.background_color)),
-                    Image.asset('assets/images/logo.png', color: colors.background_color,)
-                  ],
-                )),
-          )
-        ],
-      ),
-      backgroundColor: colors.background_color,
-      bottomNavigationBar: NavigationBar(
-        height: 50,
         backgroundColor: colors.background_color,
-        indicatorColor: colors.primary_color,
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home), label: ''),
-          NavigationDestination(icon: Icon(Icons.search_rounded), label: ''),
-          NavigationDestination(icon: Icon(Icons.add), label: ''),
-          NavigationDestination(icon: Icon(Icons.person), label: ''),
-        ],
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (int index){
-          setState(() {
-            _currentIndex = index;
-          });
-        }
-      ),
-      body: renderScreen(_currentIndex)
+        bottomNavigationBar: NavigationBar(
+            //height: MediaQuery.of(context).size.height * 0.07,
+            backgroundColor: colors.background_color,
+            indicatorColor: colors.primary_color,
+            destinations: [
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.home,
+                    size: iconSizeVariables.regularSize,
+                  ),
+                  label: ''),
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.search_rounded,
+                    size: iconSizeVariables.regularSize,
+                  ),
+                  label: ''),
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.add,
+                    size: iconSizeVariables.regularSize,
+                  ),
+                  label: ''),
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.person,
+                    size: iconSizeVariables.regularSize,
+                  ),
+                  label: ''),
+            ],
+            selectedIndex: _currentIndex,
+            onDestinationSelected: (int index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            }),
+        body: Stack(children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/background_image.png"),
+                fit: BoxFit.fill
+              )
+            ),
+          ),
+          CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                floating: true,
+                pinned: false,
+                snap: true,
+                automaticallyImplyLeading: false,
+                backgroundColor: colors.primary_color,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text(
+                    'Сool App Name',
+                    style: TextStyle(color: colors.background_color, fontSize: fontSize.h1Size),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: renderScreen(_currentIndex),
+              ),
+            ],
+          ),
+        ]
+      )
     );
   }
 }
