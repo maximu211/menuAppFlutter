@@ -1,38 +1,21 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
-import 'package:menuapp/home_page/card/booked_icon.dart';
-
+import 'package:menuapp/home_page/components/booked_icon.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
-import 'user_row.dart';
+import 'package:menuapp/home_page/receipt_page/receipt_page.dart';
+import 'package:menuapp/models/card_model.dart';
+import '../components/user_row.dart';
 import 'card_icons_info.dart';
 
 class MainPageCard extends StatefulWidget {
-  MainPageCard(
-      {super.key,
-      required this.userPhoto,
-      required this.userName,
-      required this.dishPhoto,
-      required this.dishName,
-      required this.cookHardness,
-      required this.cookTime,
-      required this.cookType,
-      required this.isDishSaved,
-      required this.savedCount});
+  MainPageCard({Key? key, required this.cardReceipt}) : super(key: key);
 
-  final String userPhoto;
-  final String userName;
+  final CardReceipt cardReceipt;
 
-  final String dishPhoto;
-  final String dishName;
-
-  final String cookHardness;
-  final String cookTime;
-  final String cookType;
-
-  bool isDishSaved;
-  int savedCount;
   @override
   State<MainPageCard> createState() => _MainPageCardState();
 }
@@ -43,74 +26,128 @@ class _MainPageCardState extends State<MainPageCard> {
   final IconSizeVariables iconSize = IconSizeVariables();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [BoxShadow(color: Colors.black, blurRadius: 2)],
-            color: colors.primary_color,
-          ),
-          child: Column(
-            children: [
-              UserRow(
-                photoPath: widget.userPhoto,
-                userName: widget.userName,
-                textColor: colors.background_color,
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: const [BoxShadow(color: Colors.black, blurRadius: 2)],
+          color: colors.primary_color,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            UserRow(
+              photoPath: widget.cardReceipt.userPhoto,
+              userName: widget.cardReceipt.userName,
+              textColor: colors.background_color,
+            ),
+            Image.asset(
+              widget.cardReceipt.dishPhoto,
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.25,
+              fit: BoxFit.fill,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              widget.cardReceipt.dishName,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: fontSize.h1Size,
+                  fontWeight: FontWeight.bold,
+                  color: colors.background_color),
+            ),
+            const SizedBox(height: 10),
+            CardIconsInfo(
+                textHardness: widget.cardReceipt.cookHardness,
+                textTime: widget.cardReceipt.cookTime,
+                textType: widget.cardReceipt.cookType,
+                iconColor: colors.background_color),
+            Container(
+              margin: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(_createRoute(
+                          cardReceipt: widget.cardReceipt,
+                        ));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: colors.background_color,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                      ),
+                      child: Text(
+                        "Go to receipt!",
+                        style: TextStyle(
+                            fontSize: fontSize.regularSize,
+                            fontWeight: FontWeight.bold,
+                            color: colors.primary_color),
+                      ),
+                    ),
+                  ),
+                  ButtonToggle(
+                      bookedButtonColor: colors.pure_white,
+                      isDishSaved: widget.cardReceipt.isDishSaved,
+                      onTap: (newState) {
+                        setState(() {
+                          widget.cardReceipt.isDishSaved = newState;
+                          if (newState) {
+                            widget.cardReceipt.savedCount++;
+                          } else {
+                            widget.cardReceipt.savedCount--;
+                          }
+                        });
+                      }),
+                ],
               ),
-              Image.asset(
-                widget.dishPhoto,
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.2,
-                fit: BoxFit.cover,
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Icon(Icons.bookmark, color: colors.background_color, size: iconSize.regularSize),
+                  Text(
+                    widget.cardReceipt.savedCount.toString(),
+                    style: TextStyle(color: colors.background_color),
+                  )
+                ],
               ),
-              const SizedBox(height: 10),
-              Text(
-                widget.dishName,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: fontSize.h1Size, color: colors.background_color),
-              ),
-              const SizedBox(height: 10),
-              CardIconsInfo(
-                  textHardness: widget.cookHardness,
-                  textTime: widget.cookTime,
-                  textType: widget.cookType,
-                  iconColor: colors.background_color),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                margin: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(child: CardButton(colors: colors)),
-                    ButtonToggle(
-                        bookedButtonColor: colors.background_color,
-                        isDishSaved: widget.isDishSaved),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    Icon(Icons.bookmark,
-                        color: colors.background_color, size: iconSize.regularSize),
-                    Text(
-                      widget.savedCount.toString(),
-                      style: TextStyle(color: colors.background_color),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
   }
+}
+
+Route _createRoute({
+  required dynamic cardReceipt,
+}) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => ReceiptPage(
+      cardReceipt: cardReceipt,
+    ),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

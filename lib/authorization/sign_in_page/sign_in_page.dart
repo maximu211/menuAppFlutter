@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                         ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              Navigator.pushNamed(context, '/startpage');
+                              Navigator.popAndPushNamed(context, '/startpage');
                             }
                           },
                           style: ElevatedButton.styleFrom(

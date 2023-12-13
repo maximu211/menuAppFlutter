@@ -26,25 +26,33 @@ class CardIconsInfo extends StatelessWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Icon(Icons.access_time_filled, color: iconColor, size: iconSizeVariables.regularSize,),
-            Text(textTime, style: TextStyle(color: iconColor, fontSize: fontSize.regularSize))
-          ],
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Icon(Icons.access_time_filled, color: iconColor, size: iconSizeVariables.regularSize,),
+              Text(textTime, style: TextStyle(color: iconColor, fontSize: fontSize.regularSize))
+            ],
+          ),
         ),
-        Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Icon(Icons.star, color: iconColor, size: iconSizeVariables.regularSize,),
-            Text(textHardness, style: TextStyle(color: iconColor, fontSize: fontSize.regularSize))
-          ],
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Icon(Icons.star, color: iconColor, size: iconSizeVariables.regularSize,),
+              Text(textHardness, style: TextStyle(color: iconColor, fontSize: fontSize.regularSize))
+            ],
+          ),
         ),
-        Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Icon(Icons.restaurant, color: iconColor, size: iconSizeVariables.regularSize,),
-            Text(textType, style: TextStyle(color: iconColor, fontSize: fontSize.regularSize))
-          ],
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Icon(Icons.restaurant, color: iconColor, size: iconSizeVariables.regularSize,),
+              Text(textType, style: TextStyle(color: iconColor, fontSize: fontSize.regularSize))
+            ],
+          ),
         ),
       ],
     );

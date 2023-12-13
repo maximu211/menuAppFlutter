@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
-import 'package:menuapp/home_page/card/booked_icon.dart';
+import 'package:menuapp/home_page/card/card.dart';
+import 'package:menuapp/home_page/components/booked_icon.dart';
 import 'package:menuapp/home_page/receipt_page/list_of_ingredients/list_of_ingredients.dart';
-
+import 'package:menuapp/models/card_model.dart';
 import 'comments/comments_page.dart';
 
 class ReceiptPage extends StatefulWidget {
-  const ReceiptPage({super.key});
+  const ReceiptPage({Key? key, required this.cardReceipt});
+
+  final CardReceipt cardReceipt;
 
   @override
   State<StatefulWidget> createState() {
@@ -26,7 +29,7 @@ class _ReceiptPage extends State<ReceiptPage> {
   Widget renderScreen(int index) {
     switch (index) {
       case 0:
-        return const IngredientList();
+        return IngredientList(cardReceipt: widget.cardReceipt);
       case 1:
         return const CommentsPage();
       default:
@@ -80,14 +83,13 @@ class _ReceiptPage extends State<ReceiptPage> {
               automaticallyImplyLeading: true,
               expandedHeight: MediaQuery.of(context).size.height * 0.5,
               backgroundColor: colors.primary_color,
-              actions: [
-                ButtonToggle(
-                  bookedButtonColor: Colors.white,
-                  isDishSaved: true,
-                )
-              ],
+              leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset("assets/images/images.jpg", fit: BoxFit.cover),
+                background: Image.asset(widget.cardReceipt.dishPhoto, fit: BoxFit.cover),
               ),
             ),
             SliverToBoxAdapter(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
-import 'package:menuapp/home_page/card/user_row.dart';
+import 'package:menuapp/home_page/components/user_row.dart';
 import 'package:intl/intl.dart';
 
 class Comment extends StatefulWidget{
