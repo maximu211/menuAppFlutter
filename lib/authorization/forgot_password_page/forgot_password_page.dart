@@ -3,22 +3,18 @@ import 'package:menuapp/authorization/forgot_password_page/confirmation_code_pag
 import 'package:menuapp/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/global_variables/icon_size_variables.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
 
-  ForgotPasswordPage({super.key});
+  const ForgotPasswordPage({super.key});
 
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  ColorPackage colors = ColorPackage();
-  FontSizeVariables fontSize = FontSizeVariables();
-  IconSizeVariables iconSizeVariables = IconSizeVariables();
 
-  TextEditingController _eMailController = TextEditingController();
+  final TextEditingController _eMailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -51,12 +47,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   const SizedBox(height: 25),
                   Text(
                     "Forgot Password?",
-                    style: TextStyle(fontSize: fontSize.h1Size, color: Colors.white),
+                    style: TextStyle(fontSize: FontSizeVariables.h1Size, color: Colors.white),
                   ),
                   Text(
                     "Enter your Email and we will send you a verification code",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: fontSize.h2Size, color: Colors.white),
+                    style: TextStyle(fontSize: FontSizeVariables.h1Size, color: Colors.white),
                   ),
                   const SizedBox(height: 25),
                   TextFieldLogin(
@@ -84,12 +80,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: colors.primary_color,
+                          backgroundColor: ColorVariables.primaryColor,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                         ),
                         child: Text(
                           "Send Code",
-                          style: TextStyle(color: colors.background_color),
+                          style: TextStyle(color: ColorVariables.backgroundColor),
                         ),
                       ),
                     ],

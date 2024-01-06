@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../global_variables/color_variables.dart';
-import '../../global_variables/font_size_variables.dart';
+import 'package:menuapp/global_variables/font_size_variables.dart';
 
 class UserRow extends StatelessWidget {
   final String userName;
   final String photoPath;
   final Color textColor;
 
-  UserRow({
+  const UserRow({super.key, 
     required this.userName,
     required this.photoPath,
     required this.textColor
@@ -15,9 +14,6 @@ class UserRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorPackage colors = ColorPackage();
-    FontSizeVariables fontSize = FontSizeVariables();
-
     return Row(
       children: [
         Container(
@@ -40,7 +36,7 @@ class UserRow extends StatelessWidget {
         Text(
           userName,
           style: TextStyle(
-            fontSize: fontSize.regularSize,
+            fontSize: FontSizeVariables.regularSize,
             color: textColor,
           ),
         ),

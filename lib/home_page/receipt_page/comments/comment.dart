@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/global_variables/color_variables.dart';
-import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/home_page/components/user_row.dart';
 import 'package:intl/intl.dart';
 import 'package:menuapp/models/models.dart';
@@ -11,13 +8,9 @@ class Comment extends StatelessWidget {
       {super.key,
       required this.comment});
 
-  CommentModel comment;
+  final CommentModel comment;
 
-  final ColorPackage colors = ColorPackage();
-  final FontSizeVariables fontSize = FontSizeVariables();
-  final IconSizeVariables iconSize = IconSizeVariables();
-
-  final f = new DateFormat('yyyy.MM.dd HH:mm');
+  final f = DateFormat('yyyy.MM.dd HH:mm');
 
   @override
   Widget build(BuildContext context) {

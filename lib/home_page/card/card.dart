@@ -1,8 +1,4 @@
-import 'dart:async';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/home_page/components/toggle_button.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
@@ -13,7 +9,7 @@ import '../components/user_row.dart';
 import 'card_icons_info.dart';
 
 class MainPageCard extends StatefulWidget {
-  MainPageCard({Key? key, required this.cardReceipt}) : super(key: key);
+  const MainPageCard({Key? key, required this.cardReceipt}) : super(key: key);
 
   final CardReceiptModel cardReceipt;
 
@@ -22,10 +18,6 @@ class MainPageCard extends StatefulWidget {
 }
 
 class _MainPageCardState extends State<MainPageCard> {
-  final ColorPackage colors = ColorPackage();
-  final FontSizeVariables fontSize = FontSizeVariables();
-  final IconSizeVariables iconSize = IconSizeVariables();
-
   @override
   void initState() {
     super.initState();
@@ -40,7 +32,7 @@ class _MainPageCardState extends State<MainPageCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           boxShadow: const [BoxShadow(color: Colors.black, blurRadius: 2)],
-          color: colors.primary_color,
+          color: ColorVariables.primaryColor,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -48,7 +40,7 @@ class _MainPageCardState extends State<MainPageCard> {
             UserRow(
               photoPath: widget.cardReceipt.user.userPhoto,
               userName: widget.cardReceipt.user.userName,
-              textColor: colors.background_color,
+              textColor: ColorVariables.backgroundColor,
             ),
             Image.asset(
               widget.cardReceipt.dishPhoto,
@@ -61,16 +53,16 @@ class _MainPageCardState extends State<MainPageCard> {
               widget.cardReceipt.dishName,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: fontSize.h1Size,
+                  fontSize: FontSizeVariables.h1Size,
                   fontWeight: FontWeight.bold,
-                  color: colors.background_color),
+                  color: ColorVariables.backgroundColor),
             ),
             const SizedBox(height: 10),
             CardIconsInfo(
                 textHardness: widget.cardReceipt.cookHardness,
                 textTime: widget.cardReceipt.cookTime,
                 textType: widget.cardReceipt.cookType,
-                iconColor: colors.background_color),
+                iconColor: ColorVariables.backgroundColor),
             Container(
               margin: const EdgeInsets.all(10),
               child: Row(
@@ -84,16 +76,16 @@ class _MainPageCardState extends State<MainPageCard> {
                         ));
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: colors.background_color,
+                        backgroundColor: ColorVariables.backgroundColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40)),
                       ),
                       child: Text(
                         "Go to receipt!",
                         style: TextStyle(
-                            fontSize: fontSize.regularSize,
+                            fontSize: FontSizeVariables.h1Size,
                             fontWeight: FontWeight.bold,
-                            color: colors.primary_color),
+                            color: ColorVariables.primaryColor),
                       ),
                     ),
                   ),
@@ -127,11 +119,12 @@ class _MainPageCardState extends State<MainPageCard> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Icon(Icons.favorite,
-                        color: colors.background_color, size: iconSize.bigSize),
+                        color: ColorVariables.backgroundColor,
+                        size: IconSizeVariables.bigSize),
                   ),
                   Text(
                     widget.cardReceipt.savedCount.toString(),
-                    style: TextStyle(color: colors.background_color),
+                    style: TextStyle(color: ColorVariables.backgroundColor),
                   )
                 ],
               ),

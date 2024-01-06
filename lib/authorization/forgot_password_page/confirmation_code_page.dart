@@ -2,21 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/authorization/forgot_password_page/new_password_page.dart';
 import 'package:menuapp/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
-import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/global_variables/icon_size_variables.dart';
 
 class ConfirmationCodePage extends StatefulWidget {
 
-  ConfirmationCodePage({super.key});
+  const ConfirmationCodePage({super.key});
 
   @override
   State<ConfirmationCodePage> createState() => _ConfirmationCodePageState();
 }
 
 class _ConfirmationCodePageState extends State<ConfirmationCodePage> {
-  ColorPackage colors = ColorPackage();
-  FontSizeVariables fontSize = FontSizeVariables();
-  IconSizeVariables iconSizeVariables = IconSizeVariables();
+
 
   final TextEditingController _codeController = TextEditingController();
 
@@ -80,12 +76,12 @@ class _ConfirmationCodePageState extends State<ConfirmationCodePage> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: colors.primary_color,
+                          backgroundColor: ColorVariables.primaryColor,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                         ),
                         child: Text(
                           "Verify code",
-                          style: TextStyle(color: colors.background_color),
+                          style: TextStyle(color: ColorVariables.backgroundColor),
                         ),
                       ),
                     ],

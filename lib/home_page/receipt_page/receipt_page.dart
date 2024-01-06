@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
-import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/home_page/components/toggle_button.dart';
 import 'package:menuapp/home_page/receipt_page/list_of_ingredients/list_of_ingredients.dart';
@@ -8,7 +7,7 @@ import 'package:menuapp/models/models.dart';
 import 'comments/comments_page.dart';
 
 class ReceiptPage extends StatefulWidget {
-  const ReceiptPage({Key? key, required this.cardReceipt});
+  const ReceiptPage({super.key, required this.cardReceipt});
 
   final CardReceiptModel cardReceipt;
 
@@ -19,10 +18,6 @@ class ReceiptPage extends StatefulWidget {
 }
 
 class _ReceiptPage extends State<ReceiptPage> {
-  final ColorPackage colors = ColorPackage();
-  final FontSizeVariables fontSize = FontSizeVariables();
-  final IconSizeVariables iconSize = IconSizeVariables();
-
   int _currentIndex = 0;
 
   Widget renderScreen(int index) {
@@ -39,21 +34,21 @@ class _ReceiptPage extends State<ReceiptPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors.background_color,
+      backgroundColor: ColorVariables.backgroundColor,
       bottomNavigationBar: NavigationBar(
-          backgroundColor: colors.background_color,
-          indicatorColor: colors.primary_color,
+          backgroundColor: ColorVariables.backgroundColor,
+          indicatorColor: ColorVariables. primaryColor,
           destinations: [
             NavigationDestination(
                 icon: Icon(
                   Icons.format_list_bulleted,
-                  size: iconSize.regularSize,
+                  size: IconSizeVariables.regularSize,
                 ),
                 label: ''),
             NavigationDestination(
                 icon: Icon(
                   Icons.comment,
-                  size: iconSize.regularSize,
+                  size: IconSizeVariables.regularSize,
                 ),
                 label: ''),
           ],
@@ -73,7 +68,7 @@ class _ReceiptPage extends State<ReceiptPage> {
                 snap: false,
                 automaticallyImplyLeading: true,
                 expandedHeight: MediaQuery.of(context).size.height * 0.5,
-                backgroundColor: colors.primary_color,
+                backgroundColor: ColorVariables.primaryColor,
                 actions: [
                   Positioned(
                       right: 16,
@@ -95,7 +90,7 @@ class _ReceiptPage extends State<ReceiptPage> {
                 leading: IconButton(
                     icon: Icon(
                       Icons.arrow_back,
-                      color: colors.pure_white,
+                      color: ColorVariables.backgroundColor,
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();

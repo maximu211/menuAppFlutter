@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/authorization/sign_in_page/sign_in_page.dart';
 import 'package:menuapp/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
-import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/global_variables/icon_size_variables.dart';
 
 class NewPasswordPage extends StatelessWidget {
-  ColorPackage colors = ColorPackage();
-  FontSizeVariables fontSize = FontSizeVariables();
-  IconSizeVariables iconSizeVariables = IconSizeVariables();
 
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _repeatPasswordController = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
+  NewPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,29 +72,29 @@ class NewPasswordPage extends StatelessWidget {
                           Navigator.push(
                               context, MaterialPageRoute(builder: (context) => const LoginPage()));
                         } else {
-                          String textError;
+                          //String textError;
                           if (passwordText != repeatPasswordText) {
-                            textError = "The passwords you entered are not the same";
+                            String textError = "The passwords you entered are not the same";
                           }
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              backgroundColor: colors.primary_color,
+                              backgroundColor: ColorVariables.primaryColor,
                               duration: const Duration(seconds: 1),
                               content: Text(
                                 "Please enter all fields 😒",
-                                style: TextStyle(color: colors.background_color),
+                                style: TextStyle(color: ColorVariables.backgroundColor),
                               ),
                             ),
                           );
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: colors.primary_color,
+                        backgroundColor: ColorVariables.primaryColor,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                       ),
                       child: Text(
                         "Save new password",
-                        style: TextStyle(color: colors.background_color),
+                        style: TextStyle(color: ColorVariables.backgroundColor),
                       ),
                     ),
                   ],

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class UserModel {
   UserModel({required this.userName, required this.userPhoto});
 

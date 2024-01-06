@@ -11,6 +11,6 @@ class AccountPage extends StatefulWidget{
 class _AccountPage extends State<AccountPage>{
   @override
   Widget build(BuildContext context) {
-    return Text("account page");
+    return const Text("account page");
   }
 }

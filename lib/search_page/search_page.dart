@@ -1,26 +1,20 @@
-import 'package:card_swiper/card_swiper.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/home_page/card/card.dart';
 import 'package:menuapp/models/models.dart';
 //import 'package:flutter/services.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key});
+  const SearchPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage>
-    with SingleTickerProviderStateMixin {
-  final ColorPackage colors = ColorPackage();
-  final FontSizeVariables fontSize = FontSizeVariables();
-  final IconSizeVariables iconSize = IconSizeVariables();
+class _SearchPageState extends State<SearchPage>{
 
   final TextEditingController searchController = TextEditingController();
   var items = [];
@@ -74,19 +68,19 @@ class _SearchPageState extends State<SearchPage>
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          foregroundColor: colors.background_color,
+          foregroundColor: ColorVariables.backgroundColor,
           floating: true,
           pinned: true,
           snap: false,
           automaticallyImplyLeading: false,
-          backgroundColor: colors.primary_color,
+          backgroundColor: ColorVariables.primaryColor,
           flexibleSpace: EasySearchBar(
-            backgroundColor: colors.primary_color,
-            foregroundColor: colors.background_color,
+            backgroundColor: ColorVariables.primaryColor,
+            foregroundColor: ColorVariables.backgroundColor,
             elevation: 100,
             searchHintText: 'Soup, pizza e.t.c.',
             searchClearIconTheme: const IconThemeData(),
-            searchCursorColor: colors.primary_color,
+            searchCursorColor: ColorVariables.primaryColor,
             systemOverlayStyle: SystemUiOverlayStyle.light,
             onSearch: (query) {
               listFiltering(query);
@@ -97,8 +91,8 @@ class _SearchPageState extends State<SearchPage>
             title: Text(
               "What do you want to cook today?🤔",
               style: TextStyle(
-                color: colors.background_color,
-                fontSize: fontSize.h1Size,
+                color: ColorVariables.backgroundColor,
+                fontSize: FontSizeVariables.h1Size,
               ),
             ),
           ),

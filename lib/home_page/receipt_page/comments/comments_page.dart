@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/home_page/receipt_page/comments/comment.dart';
 import 'package:menuapp/models/models.dart';
 
@@ -15,10 +14,6 @@ class CommentsPage extends StatefulWidget {
 }
 
 class _CommentsPage extends State<CommentsPage> {
-  final ColorPackage colors = ColorPackage();
-  final FontSizeVariables fontSize = FontSizeVariables();
-  final IconSizeVariables iconSize = IconSizeVariables();
-
   List<CommentModel> comentList = [
     CommentModel(
         commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
@@ -49,7 +44,8 @@ class _CommentsPage extends State<CommentsPage> {
         ),
         Text("Comments",
             style: TextStyle(
-                fontSize: fontSize.h1Size, fontWeight: FontWeight.bold)),
+                fontSize: FontSizeVariables.h1Size,
+                fontWeight: FontWeight.bold)),
         const SizedBox(height: 20),
         TextField(
           textAlign: TextAlign.justify,
@@ -58,7 +54,7 @@ class _CommentsPage extends State<CommentsPage> {
           decoration: InputDecoration(
             labelText: "Write your comment",
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: colors.primary_color),
+              borderSide: BorderSide(color: ColorVariables.primaryColor),
             ),
             labelStyle: const TextStyle(
               color: Colors.black,
@@ -87,11 +83,12 @@ class _CommentsPage extends State<CommentsPage> {
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        backgroundColor: colors.primary_color,
+                        backgroundColor: ColorVariables.primaryColor,
                         duration: const Duration(seconds: 1),
                         content: Text(
                           "Please enter comment text 😒",
-                          style: TextStyle(color: colors.background_color),
+                          style:
+                              TextStyle(color: ColorVariables.backgroundColor),
                         ),
                       ),
                     );
@@ -100,13 +97,13 @@ class _CommentsPage extends State<CommentsPage> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: colors.primary_color,
+                backgroundColor: ColorVariables.primaryColor,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40)),
               ),
               child: Text(
                 "Add comment",
-                style: TextStyle(color: colors.background_color),
+                style: TextStyle(color: ColorVariables.backgroundColor),
               ),
             ),
           ],

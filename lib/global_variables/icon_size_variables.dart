@@ -1,4 +1,4 @@
 class IconSizeVariables{
-  double regularSize = 30;
-  double bigSize = 40;
+  static double regularSize = 30;
+  static double bigSize = 40;
 }

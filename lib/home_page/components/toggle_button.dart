@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/entypo_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:fluttericon/mfg_labs_icons.dart';
-import 'package:fluttericon/octicons_icons.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
-import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
-import 'package:fluttericon/typicons_icons.dart';
 
 class ToggleButton extends StatefulWidget {
-  ToggleButton(
+  const ToggleButton(
       {Key? key,
       required this.onTap,
       required this.isButtonToggled,
@@ -28,16 +22,11 @@ class ToggleButton extends StatefulWidget {
   final Function(bool) onTap;
 
   @override
-  _ToggleButtonState createState() => _ToggleButtonState();
+  ToggleButtonState createState() => ToggleButtonState();
 }
 
-class _ToggleButtonState extends State<ToggleButton> {
+class ToggleButtonState extends State<ToggleButton> {
   late bool isDishSaved;
-
-  final ColorPackage colors = ColorPackage();
-  final FontSizeVariables fontSize = FontSizeVariables();
-  final IconSizeVariables iconSize = IconSizeVariables();
-
   @override
   void initState() {
     super.initState();
@@ -53,11 +42,11 @@ class _ToggleButtonState extends State<ToggleButton> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        backgroundColor: colors.primary_color,
+        backgroundColor: ColorVariables.primaryColor,
         duration: const Duration(seconds: 1),
         content: Text(
           newState ? widget.buttonToggledText : widget.buttonUntoggledText,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: ColorVariables.backgroundColor),
         ),
       ),
     );
@@ -75,14 +64,14 @@ class _ToggleButtonState extends State<ToggleButton> {
               : CrossFadeState.showSecond,
           firstChild: Icon(
             widget.filledIcon,
-            color: colors.pure_white,
-            size: iconSize.bigSize,
+            color: ColorVariables.backgroundColor,
+            size: IconSizeVariables.bigSize,
             shadows: const [BoxShadow(color: Colors.black, blurRadius: 3)],
           ),
           secondChild: Icon(
             widget.emptyIcon,
-            color: colors.pure_white,
-            size: iconSize.bigSize,
+            color: ColorVariables.backgroundColor,
+            size: IconSizeVariables.bigSize,
             shadows: const [BoxShadow(color: Colors.black, blurRadius: 3)],
           ),
         ),
@@ -92,7 +81,7 @@ class _ToggleButtonState extends State<ToggleButton> {
 }
 
 class LikeButton extends ToggleButton {
-  LikeButton({
+  const LikeButton({
     Key? key,
     required Function(bool) onTap,
     required bool isButtonToggled,
@@ -110,7 +99,7 @@ class LikeButton extends ToggleButton {
 }
 
 class SaveButton extends ToggleButton {
-  SaveButton({
+  const SaveButton({
     Key? key,
     required Function(bool) onTap,
     required bool isButtonToggled,

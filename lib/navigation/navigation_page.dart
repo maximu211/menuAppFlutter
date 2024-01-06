@@ -4,9 +4,7 @@ import 'package:menuapp/add_page/add_page.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/home_page/home_page.dart';
 import 'package:menuapp/search_page/search_page.dart';
-
-import '../global_variables/font_size_variables.dart';
-import '../global_variables/icon_size_variables.dart';
+import 'package:menuapp/global_variables/icon_size_variables.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
@@ -18,10 +16,6 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPage extends State<NavigationPage> {
-  ColorPackage colors = ColorPackage();
-  FontSizeVariables fontSize = FontSizeVariables();
-  IconSizeVariables iconSizeVariables = IconSizeVariables();
-
   int _currentIndex = 0;
 
   Widget renderScreen(int index) {
@@ -42,33 +36,33 @@ class _NavigationPage extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors.background_color,
+      backgroundColor: ColorVariables.backgroundColor,
       bottomNavigationBar: NavigationBar(
-          backgroundColor: colors.background_color,
-          indicatorColor: colors.primary_color,
+          backgroundColor: ColorVariables.backgroundColor,
+          indicatorColor: ColorVariables.primaryColor,
           destinations: [
             NavigationDestination(
                 icon: Icon(
                   Icons.home,
-                  size: iconSizeVariables.regularSize,
+                  size: IconSizeVariables.regularSize,
                 ),
                 label: ''),
             NavigationDestination(
                 icon: Icon(
                   Icons.search_rounded,
-                  size: iconSizeVariables.regularSize,
+                  size: IconSizeVariables.regularSize,
                 ),
                 label: ''),
             NavigationDestination(
                 icon: Icon(
                   Icons.add,
-                  size: iconSizeVariables.regularSize,
+                  size: IconSizeVariables.regularSize,
                 ),
                 label: ''),
             NavigationDestination(
                 icon: Icon(
                   Icons.person,
-                  size: iconSizeVariables.regularSize,
+                  size: IconSizeVariables.regularSize,
                 ),
                 label: ''),
           ],

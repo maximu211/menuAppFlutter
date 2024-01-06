@@ -4,21 +4,16 @@ import 'package:menuapp/global_variables/color_variables.dart';
 
 import 'package:menuapp/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/global_variables/icon_size_variables.dart';
 
 class SignUpPage extends StatefulWidget {
 
-  SignUpPage({Key? key}) : super(key: key);
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final ColorPackage colors = ColorPackage();
-  final FontSizeVariables fontSize = FontSizeVariables();
-  final IconSizeVariables iconSize = IconSizeVariables();
-
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -60,7 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     const SizedBox(height: 25),
                     Text(
                       "Sign Up",
-                      style: TextStyle(fontSize: fontSize.h1Size, color: Colors.white),
+                      style: TextStyle(fontSize: FontSizeVariables.h1Size, color: Colors.white),
                     ),
                     const SizedBox(height: 25),
                     TextFieldLogin(
@@ -117,12 +112,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: colors.primary_color,
+                            backgroundColor: ColorVariables.primaryColor,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                           ),
                           child: Text(
                             "Register",
-                            style: TextStyle(color: colors.background_color),
+                            style: TextStyle(color: ColorVariables.backgroundColor),
                           ),
                         ),
                       ],

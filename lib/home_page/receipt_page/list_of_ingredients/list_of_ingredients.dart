@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/home_page/components/user_row.dart';
 import 'package:menuapp/home_page/card/card_icons_info.dart';
 import 'package:menuapp/home_page/receipt_page/list_of_ingredients/ingredient.dart';
@@ -17,10 +16,6 @@ class IngredientList extends StatefulWidget {
 }
 
 class _IngredientList extends State<IngredientList> {
-  final ColorPackage colors = ColorPackage();
-  final FontSizeVariables fontSize = FontSizeVariables();
-  final IconSizeVariables iconSize = IconSizeVariables();
-
   ReceiptDetailModel receiptDetailModel = ReceiptDetailModel(
     receiptDescription:
         "asd as aasasdass sdasasda asdasa saasda asdasdas a asdasda sadsas asasd assda asdasdadsa asaadsaasd sdqwasadasd",
@@ -46,7 +41,7 @@ class _IngredientList extends State<IngredientList> {
                   widget.cardReceipt.dishName,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: fontSize.h1Size,
+                      fontSize: FontSizeVariables.h1Size,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
@@ -70,12 +65,12 @@ class _IngredientList extends State<IngredientList> {
           ),
           Text("Ingredients",
               style: TextStyle(
-                  fontSize: fontSize.h2Size, fontWeight: FontWeight.bold)),
+                  fontSize: FontSizeVariables.h2Size, fontWeight: FontWeight.bold)),
           const SizedBox(height: 20),
           Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: colors.primary_color,
+                color: ColorVariables.primaryColor,
                 boxShadow: const [
                   BoxShadow(
                     color: Colors.black,
@@ -100,7 +95,7 @@ class _IngredientList extends State<IngredientList> {
           const SizedBox(height: 20),
           Text("Instructions",
               style: TextStyle(
-                  fontSize: fontSize.h2Size, fontWeight: FontWeight.bold)),
+                  fontSize: FontSizeVariables.h2Size, fontWeight: FontWeight.bold)),
           const SizedBox(
             height: 20,
           ),

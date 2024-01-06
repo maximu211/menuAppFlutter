@@ -1,5 +1,5 @@
 class FontSizeVariables{
-  double regularSize = 15;
-  double h1Size = 20;
-  double h2Size = 18;
+  static double regularSize = 15;
+  static double h1Size = 20;
+  static double h2Size = 18;
 }

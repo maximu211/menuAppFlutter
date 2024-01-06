@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/home_page/card/card.dart';
 import 'package:menuapp/models/models.dart';
 
@@ -14,10 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final ColorPackage colors = ColorPackage();
-  final FontSizeVariables fontSize = FontSizeVariables();
-  final IconSizeVariables iconSize = IconSizeVariables();
-
   final List<CardReceiptModel> cardReceiptList = [
     CardReceiptModel(
         user: UserModel(
@@ -56,17 +50,17 @@ class _HomePageState extends State<HomePage> {
           pinned: false,
           snap: true,
           automaticallyImplyLeading: false,
-          backgroundColor: colors.primary_color,
+          backgroundColor: ColorVariables.primaryColor,
           shadowColor: Colors.black,
           leading: Image.asset(
             "assets/images/logo.png",
-            color: colors.pure_white,
+            color: ColorVariables.backgroundColor,
           ),
           title: Text(
             'Cool App Name',
             style: TextStyle(
-              color: colors.background_color,
-              fontSize: fontSize.h1Size,
+              color: ColorVariables.backgroundColor,
+              fontSize: FontSizeVariables.h1Size,
             ),
           ),
         ),

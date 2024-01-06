@@ -4,7 +4,6 @@ import 'package:menuapp/authorization/sign_up_page/sign_up_page.dart';
 import 'package:menuapp/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/global_variables/icon_size_variables.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,12 +13,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final ColorPackage colors = ColorPackage();
-  final FontSizeVariables fontSize = FontSizeVariables();
-  final IconSizeVariables iconSize = IconSizeVariables();
-
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -49,11 +44,14 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset('assets/images/logo.png', width: 150, color: Colors.white),
+                    Image.asset('assets/images/logo.png',
+                        width: 150, color: Colors.white),
                     const SizedBox(height: 25),
                     Text(
                       "Sign In",
-                      style: TextStyle(fontSize: fontSize.h1Size, color: Colors.white),
+                      style: TextStyle(
+                          fontSize: FontSizeVariables.h1Size,
+                          color: Colors.white),
                     ),
                     const SizedBox(height: 25),
                     TextFieldLogin(
@@ -92,12 +90,14 @@ class _LoginPageState extends State<LoginPage> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: colors.primary_color,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                            backgroundColor: ColorVariables.primaryColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40)),
                           ),
                           child: Text(
                             "Log In",
-                            style: TextStyle(color: colors.background_color),
+                            style: TextStyle(
+                                color: ColorVariables.backgroundColor),
                           ),
                         ),
                       ],
@@ -107,20 +107,30 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         TextButton(
                             onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ForgotPasswordPage()));
                             },
                             child: Text("Forgot password?",
                                 style: TextStyle(
-                                    fontSize: fontSize.regularSize, color: colors.primary_color))),
+                                    fontSize: FontSizeVariables.regularSize,
+                                    color: ColorVariables.primaryColor))),
                         TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context, MaterialPageRoute(builder: (context) => SignUpPage()));
-                            },
-                            child: Text("Sign Up",
-                                style: TextStyle(
-                                    fontSize: fontSize.regularSize, color: colors.primary_color))),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignUpPage()));
+                          },
+                          child: Text(
+                            "Sign Up",
+                            style: TextStyle(
+                                fontSize: FontSizeVariables.regularSize,
+                                color: ColorVariables.primaryColor),
+                          ),
+                        ),
                       ],
                     )
                   ],

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/global_variables/color_variables.dart';
 
-import '../../global_variables/font_size_variables.dart';
-import '../../global_variables/icon_size_variables.dart';
+import 'package:menuapp/global_variables/font_size_variables.dart';
+import 'package:menuapp/global_variables/icon_size_variables.dart';
 
 class CardIconsInfo extends StatelessWidget {
   final String textTime;
@@ -20,10 +19,6 @@ class CardIconsInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    IconSizeVariables iconSizeVariables = IconSizeVariables();
-    ColorPackage colors = ColorPackage();
-    FontSizeVariables fontSize = FontSizeVariables();
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -31,8 +26,15 @@ class CardIconsInfo extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Icon(Icons.access_time_filled, color: iconColor, size: iconSizeVariables.regularSize,),
-              Text(textTime, style: TextStyle(color: iconColor, fontSize: fontSize.regularSize))
+              Icon(
+                Icons.access_time_filled,
+                color: iconColor,
+                size: IconSizeVariables.regularSize,
+              ),
+              Text(textTime,
+                  style: TextStyle(
+                      color: iconColor,
+                      fontSize: FontSizeVariables.regularSize))
             ],
           ),
         ),
@@ -40,8 +42,15 @@ class CardIconsInfo extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Icon(Icons.star, color: iconColor, size: iconSizeVariables.regularSize,),
-              Text(textHardness, style: TextStyle(color: iconColor, fontSize: fontSize.regularSize))
+              Icon(
+                Icons.star,
+                color: iconColor,
+                size: IconSizeVariables.regularSize,
+              ),
+              Text(textHardness,
+                  style: TextStyle(
+                      color: iconColor,
+                      fontSize: FontSizeVariables.regularSize))
             ],
           ),
         ),
@@ -49,8 +58,13 @@ class CardIconsInfo extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Icon(Icons.restaurant, color: iconColor, size: iconSizeVariables.regularSize,),
-              Text(textType, style: TextStyle(color: iconColor, fontSize: fontSize.regularSize))
+              Icon(Icons.restaurant,
+                  color: iconColor, size: IconSizeVariables.regularSize),
+              Text(
+                textType,
+                style: TextStyle(
+                    color: iconColor, fontSize: FontSizeVariables.regularSize),
+              )
             ],
           ),
         ),
