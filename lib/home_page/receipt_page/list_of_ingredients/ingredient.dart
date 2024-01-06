@@ -27,7 +27,8 @@ class _IngredientState extends State<Ingredient> {
             value: isCrossedText,
             activeColor: colors.primary_color,
             checkColor: colors.pure_white,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
             onChanged: (value) {
               setState(() {
                 isCrossedText = value ?? false;
@@ -38,6 +39,7 @@ class _IngredientState extends State<Ingredient> {
             widget.ingradient,
             style: TextStyle(
                 decoration: isCrossedText ? TextDecoration.lineThrough : null,
+                decorationColor: colors.background_color,
                 decorationThickness: 2,
                 color: colors.background_color),
           ),

@@ -1,10 +1,13 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/home_page/card/card.dart';
-import 'package:menuapp/models/card_model.dart';
+import 'package:menuapp/models/models.dart';
+//import 'package:flutter/services.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key});
@@ -13,158 +16,117 @@ class SearchPage extends StatefulWidget {
   State<StatefulWidget> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchPageState extends State<SearchPage>
+    with SingleTickerProviderStateMixin {
   final ColorPackage colors = ColorPackage();
   final FontSizeVariables fontSize = FontSizeVariables();
   final IconSizeVariables iconSize = IconSizeVariables();
 
-  final List<CardReceipt> receiptList = [
-    CardReceipt(
-        dishPhoto: "dishPhoto",
-        userPhoto: "userPhoto",
-        userName: "userName",
-        dishName: "111",
-        cookHardness: "cookHardness",
-        cookTime: "cookTime",
-        cookType: "cookType",
+  final TextEditingController searchController = TextEditingController();
+  var items = [];
+
+  List<CardReceiptModel> _sortedList = [];
+  final List<CardReceiptModel> cardReceiptList = [
+    CardReceiptModel(
+        receiptId: "21asd",
+        userId: "asdsad1",
+        user: UserModel(
+            userName: "Name_asdasd", userPhoto: "assets/images/test.jpg"),
+        cookHardness: "Easy",
+        cookTime: "15 min",
+        cookType: "Drink",
+        dishName: 'Cocktail "Cool guy"',
+        dishPhoto: "assets/images/dish_images/3.jpg",
         isDishSaved: false,
-        savedCount: 100),
-    CardReceipt(
-        dishPhoto: "dishPhoto",
-        userPhoto: "userPhoto",
-        userName: "userName",
-        dishName: "222",
-        cookHardness: "cookHardness",
-        cookTime: "cookTime",
-        cookType: "cookType",
-        isDishSaved: false,
-        savedCount: 100),
-    CardReceipt(
-        dishPhoto: "dishPhoto",
-        userPhoto: "userPhoto",
-        userName: "userName",
-        dishName: "333",
-        cookHardness: "cookHardness",
-        cookTime: "cookTime",
-        cookType: "cookType",
-        isDishSaved: false,
-        savedCount: 100),
+        savedCount: 140,
+        isDishLiked: true),
+    CardReceiptModel(
+        receiptId: "12sa",
+        userId: "asd2asdas",
+        user: UserModel(
+            userName: "Name_user", userPhoto: "assets/images/test.jpg"),
+        cookHardness: "Easy",
+        cookTime: "15 min",
+        cookType: "Drink",
+        dishName: 'aaaaaaa',
+        dishPhoto: "assets/images/dish_images/1.jpg",
+        isDishSaved: true,
+        savedCount: 140,
+        isDishLiked: false),
   ];
-  List<CardReceipt> filtredReceiptList = [];
-  var searchHistory = [];
 
-  final SearchController controller = SearchController();
+  //final
 
-  void search(String query){
-    if(query.isEmpty) {
-      setState(() {
-        filtredReceiptList.clear();
-      });
-    }
-    else{
-      filtredReceiptList = receiptList.where((e) =>
-          e.dishName.toLowerCase().contains(query.toLowerCase())).toList();
-    }
-  }
-
-
-  void queryListener(){
-    search(controller.text);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller.addListener(queryListener);
-  }
-
-  @override
-  void dispose() {
-    controller.removeListener(queryListener);
-    controller.dispose();
-    super.dispose();
+  void listFiltering(String query) {
+    setState(() {
+      if (query.trim().isNotEmpty) {
+        _sortedList = cardReceiptList
+            .where((receipt) => receipt.dishName
+                .toLowerCase()
+                .contains(query.trim().toLowerCase()))
+            .toList();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          SearchAnchor(
-            //searchController: controller,
-            viewHintText: "Input dish name",
-            viewTrailing: [
-              IconButton(onPressed: (){
-                searchHistory.add(controller.text);
-                controller.closeView(controller.text);
-                print(searchHistory.length);
-              },
-                  icon: Icon(Icons.search))
-            ],
-            builder: (context, controller) {
-              return SearchBar(
-                leading: Icon(Icons.search),
-                hintText: "Input dish name",
-                onTap: () {
-                  controller.openView();
-                  print(searchHistory.last);
-                },
-              );
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          foregroundColor: colors.background_color,
+          floating: true,
+          pinned: true,
+          snap: false,
+          automaticallyImplyLeading: false,
+          backgroundColor: colors.primary_color,
+          flexibleSpace: EasySearchBar(
+            backgroundColor: colors.primary_color,
+            foregroundColor: colors.background_color,
+            elevation: 100,
+            searchHintText: 'Soup, pizza e.t.c.',
+            searchClearIconTheme: const IconThemeData(),
+            searchCursorColor: colors.primary_color,
+            systemOverlayStyle: SystemUiOverlayStyle.light,
+            onSearch: (query) {
+              listFiltering(query);
+              if (query.isEmpty) {
+                _sortedList.clear();
+              }
             },
-            suggestionsBuilder: (context, controller) {
-              return  [
-                Wrap(
-                  children: List.generate(searchHistory.length, (index) {
-                    final item = searchHistory[index];
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 4),
-                      child: ChoiceChip(
-                        label: Text(item), selected: item == controller.text,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20))
-                        ),
-                        onSelected: (value){
-                          search(item);
-                          controller.closeView(item);
-                        },
-                      ),
-                    );
-                  })
-                )
-              ];
-            }
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            "Or try our hourly recommendation",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: fontSize.h1Size, color: colors.pure_white),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          MainPageCard(
-            cardReceipt: CardReceipt(
-              userName: "Miles_Davis",
-              userPhoto: "assets/images/test.jpg",
-              cookHardness: "Easy",
-              cookTime: "1 hour",
-              cookType: "Soup",
-              dishName: 'Soup with beans and chicken',
-              dishPhoto: "assets/images/dish_images/4.jpg",
-              isDishSaved: true,
-              savedCount: 200,
+            title: Text(
+              "What do you want to cook today?🤔",
+              style: TextStyle(
+                color: colors.background_color,
+                fontSize: fontSize.h1Size,
+              ),
             ),
           ),
-        ],
-      ),
+        ),
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: ListView.builder(
+                  itemCount: _sortedList.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final item = _sortedList[index];
+                    return Column(
+                      children: [
+                        MainPageCard(cardReceipt: item),
+                        const SizedBox(height: 20)
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

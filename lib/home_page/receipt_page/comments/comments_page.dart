@@ -3,6 +3,7 @@ import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/home_page/receipt_page/comments/comment.dart';
+import 'package:menuapp/models/models.dart';
 
 class CommentsPage extends StatefulWidget {
   const CommentsPage({super.key});
@@ -18,24 +19,26 @@ class _CommentsPage extends State<CommentsPage> {
   final FontSizeVariables fontSize = FontSizeVariables();
   final IconSizeVariables iconSize = IconSizeVariables();
 
-  final List<bool> _selections = [true, false]; // Список для відстеження стану кнопок
+  List<CommentModel> comentList = [
+    CommentModel(
+        commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
+        commentDateTime: DateTime.now(),
+        userId: "userId",
+        user: UserModel(userName: "asd", userPhoto: "assets/images/test.jpg")),
+    CommentModel(
+        commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
+        commentDateTime: DateTime.now(),
+        userId: "userId",
+        user: UserModel(userName: "asd", userPhoto: "assets/images/test.jpg")),
+    CommentModel(
+        commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
+        commentDateTime: DateTime.now(),
+        userId: "userId",
+        user: UserModel(userName: "asd", userPhoto: "assets/images/test.jpg")),
+  ];
+
   bool isNewCommentLiked = true;
   final TextEditingController _commentFieldController = TextEditingController();
-
-  List<Comment> commentsList = [
-    Comment(
-        isLiked: true,
-        commentDateTime: DateTime(2021, 20, 2),
-        commentText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ..."),
-    Comment(
-        isLiked: false,
-        commentDateTime: DateTime(2021, 21, 2),
-        commentText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ..."),
-    Comment(
-        isLiked: false,
-        commentDateTime: DateTime(2021, 23, 2),
-        commentText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ..."),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +47,10 @@ class _CommentsPage extends State<CommentsPage> {
         const SizedBox(
           height: 20,
         ),
-        Text(
-          "Comments",
-          style: TextStyle(fontSize: fontSize.h1Size),
-        ),
+        Text("Comments",
+            style: TextStyle(
+                fontSize: fontSize.h1Size, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 20),
         TextField(
           textAlign: TextAlign.justify,
           maxLines: null,
@@ -62,49 +65,30 @@ class _CommentsPage extends State<CommentsPage> {
             ),
           ),
         ),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            ToggleButtons(
-              isSelected: _selections,
-              selectedColor: colors.primary_color, // Колір кнопок при виборі
-              fillColor: Colors.transparent,
-              renderBorder: false,
-              onPressed: (int index) {
-                setState(() {
-                  // Перевіряємо, чи можна натискати кнопку
-                  if ((index == 0 && !_selections[0]) || (index == 1 && !_selections[1])) {
-                    _selections[index] = !_selections[index];
-                    _selections[(index + 1) % 2] = !_selections[(index + 1) % 2];
-                    if (index == 0) {
-                      isNewCommentLiked = true;
-                    } else if (index == 1) {
-                      isNewCommentLiked = false;
-                    }
-                  }
-                });
-              },
-              children: const <Widget>[
-                Icon(Icons.thumb_up),
-                Icon(Icons.thumb_down),
-              ],
-            ),
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  String commentFieldValue = _commentFieldController.text;
+                  String commentFieldValue =
+                      _commentFieldController.text.trim();
                   if (commentFieldValue.trim().isNotEmpty) {
-                    commentsList.insert(
+                    comentList.insert(
                         0,
-                        Comment(
-                            isLiked: isNewCommentLiked,
+                        CommentModel(
+                            userId: "asd",
                             commentDateTime: DateTime.now(),
-                            commentText: commentFieldValue));
+                            commentText: commentFieldValue,
+                            user: UserModel(
+                                userName: "new_user",
+                                userPhoto: "assets/images/test.jpg")));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: colors.primary_color,
-                        duration: Duration(seconds: 1),
+                        duration: const Duration(seconds: 1),
                         content: Text(
                           "Please enter comment text 😒",
                           style: TextStyle(color: colors.background_color),
@@ -117,7 +101,8 @@ class _CommentsPage extends State<CommentsPage> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: colors.primary_color,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40)),
               ),
               child: Text(
                 "Add comment",
@@ -127,8 +112,15 @@ class _CommentsPage extends State<CommentsPage> {
           ],
         ),
         SingleChildScrollView(
-          child: Column(
-            children: commentsList,
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: comentList.length,
+            itemBuilder: (context, index) {
+              final comment = comentList[index];
+              return Comment(comment: comment);
+            },
           ),
         )
       ],

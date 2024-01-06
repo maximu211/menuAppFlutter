@@ -42,74 +42,54 @@ class _NavigationPage extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: colors.background_color,
-        bottomNavigationBar: NavigationBar(
-            //height: MediaQuery.of(context).size.height * 0.07,
-            backgroundColor: colors.background_color,
-            indicatorColor: colors.primary_color,
-            destinations: [
-              NavigationDestination(
-                  icon: Icon(
-                    Icons.home,
-                    size: iconSizeVariables.regularSize,
-                  ),
-                  label: ''),
-              NavigationDestination(
-                  icon: Icon(
-                    Icons.search_rounded,
-                    size: iconSizeVariables.regularSize,
-                  ),
-                  label: ''),
-              NavigationDestination(
-                  icon: Icon(
-                    Icons.add,
-                    size: iconSizeVariables.regularSize,
-                  ),
-                  label: ''),
-              NavigationDestination(
-                  icon: Icon(
-                    Icons.person,
-                    size: iconSizeVariables.regularSize,
-                  ),
-                  label: ''),
-            ],
-            selectedIndex: _currentIndex,
-            onDestinationSelected: (int index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            }),
-        body: Stack(children: [
+      backgroundColor: colors.background_color,
+      bottomNavigationBar: NavigationBar(
+          backgroundColor: colors.background_color,
+          indicatorColor: colors.primary_color,
+          destinations: [
+            NavigationDestination(
+                icon: Icon(
+                  Icons.home,
+                  size: iconSizeVariables.regularSize,
+                ),
+                label: ''),
+            NavigationDestination(
+                icon: Icon(
+                  Icons.search_rounded,
+                  size: iconSizeVariables.regularSize,
+                ),
+                label: ''),
+            NavigationDestination(
+                icon: Icon(
+                  Icons.add,
+                  size: iconSizeVariables.regularSize,
+                ),
+                label: ''),
+            NavigationDestination(
+                icon: Icon(
+                  Icons.person,
+                  size: iconSizeVariables.regularSize,
+                ),
+                label: ''),
+          ],
+          selectedIndex: _currentIndex,
+          onDestinationSelected: (int index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          }),
+      body: Stack(
+        children: [
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/background_image.png"),
-                fit: BoxFit.fill
-              )
+                  image: AssetImage("assets/images/background_image.png"),
+                  fit: BoxFit.fill),
             ),
           ),
-          CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                floating: true,
-                pinned: false,
-                snap: true,
-                automaticallyImplyLeading: false,
-                backgroundColor: colors.primary_color,
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Text(
-                    'Сool App Name',
-                    style: TextStyle(color: colors.background_color, fontSize: fontSize.h1Size),
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: renderScreen(_currentIndex),
-              ),
-            ],
-          ),
-        ]
-      )
+          renderScreen(_currentIndex)
+        ],
+      ),
     );
   }
 }
