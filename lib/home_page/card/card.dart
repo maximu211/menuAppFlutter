@@ -5,8 +5,8 @@ import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/home_page/receipt_page/receipt_page.dart';
 import 'package:menuapp/models/models.dart';
-import '../components/user_row.dart';
-import 'card_icons_info.dart';
+import 'package:menuapp/home_page/components/user_row.dart';
+import 'package:menuapp/home_page/card/card_icons_info.dart';
 
 class MainPageCard extends StatefulWidget {
   const MainPageCard({Key? key, required this.cardReceipt}) : super(key: key);
@@ -83,7 +83,7 @@ class _MainPageCardState extends State<MainPageCard> {
                       child: Text(
                         "Go to receipt!",
                         style: TextStyle(
-                            fontSize: FontSizeVariables.h1Size,
+                            fontSize: FontSizeVariables.regularSize,
                             fontWeight: FontWeight.bold,
                             color: ColorVariables.primaryColor),
                       ),

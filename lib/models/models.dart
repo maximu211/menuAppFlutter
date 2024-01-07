@@ -5,6 +5,15 @@ class UserModel {
   String userName;
 }
 
+class IdUserModel extends UserModel {
+  IdUserModel(
+      {required super.userName,
+      required super.userPhoto,
+      required this.userId});
+
+  String userId;
+}
+
 class CardReceiptModel {
   CardReceiptModel({
     required this.dishPhoto,
