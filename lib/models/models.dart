@@ -60,5 +60,5 @@ class ReceiptDetailModel {
       {required this.receiptDescription, required this.receiptIngradient});
 
   List<String> receiptIngradient;
-  String receiptDescription;
+  List<String> receiptDescription;
 }
