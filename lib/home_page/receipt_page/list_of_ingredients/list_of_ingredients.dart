@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
@@ -17,8 +18,20 @@ class IngredientList extends StatefulWidget {
 
 class _IngredientList extends State<IngredientList> {
   ReceiptDetailModel receiptDetailModel = ReceiptDetailModel(
-    receiptDescription:
-        "asd as aasasdass sdasasda asdasa saasda asdasdas a asdasda sadsas asasd assda asdasdadsa asaadsaasd sdqwasadasd",
+    receiptDescriptionElemens: [
+      ReceiptDescriptionElement(
+          receiptDescriptionElementText:
+              "asd jasd asd gka guadsg da gasd gjka gsd jkasd kagjksd gjkasd gjk agjkasg jksad gjda gjkda gjkasd gjkasd  gjksad gjksad  gjksadsad gjsad gjads gjads gjksad gukas gkuas gjkasdgjk a jkgads gjk",
+          receiptDescriptionPhoto: 'assets/images/dish_images/4.jpg'),
+      ReceiptDescriptionElement(
+          receiptDescriptionElementText:
+              "asd jasd asd gka guadsg da gasd gjka gsd jkasd kagjksd gjkasd gjk agjkasg jksad gjda gjkda gjkasd gjkasd  gjksad gjksad  gjksadsad gjsad gjads gjads gjksad gukas gkuas gjkasdgjk a jkgads gjk",
+          receiptDescriptionPhoto: 'assets/images/dish_images/2.jpg'),
+      ReceiptDescriptionElement(
+        receiptDescriptionElementText:
+            "asd jasd asd gka guadsg da gasd gjka gsd jkasd kagjksd gjkasd gjk agjkasg jksad gjda gjkda gjkasd gjkasd  gjksad gjksad  gjksadsad gjsad gjads gjads gjksad gukas gkuas gjkasdgjk a jkgads gjk",
+      ),
+    ],
     receiptIngradient: [
       "qwe dllfffs s asdddsa, 121g",
       "qwesa sa sssaasas, 121g",
@@ -30,7 +43,8 @@ class _IngredientList extends State<IngredientList> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return SingleChildScrollView(
+      primary: true,
       child: Column(
         children: [
           Container(
@@ -65,7 +79,8 @@ class _IngredientList extends State<IngredientList> {
           ),
           Text("Ingredients",
               style: TextStyle(
-                  fontSize: FontSizeVariables.h2Size, fontWeight: FontWeight.bold)),
+                  fontSize: FontSizeVariables.h2Size,
+                  fontWeight: FontWeight.bold)),
           const SizedBox(height: 20),
           Container(
             decoration: BoxDecoration(
@@ -93,18 +108,101 @@ class _IngredientList extends State<IngredientList> {
             ),
           ),
           const SizedBox(height: 20),
-          Text("Instructions",
+          Text("Instruction",
               style: TextStyle(
-                  fontSize: FontSizeVariables.h2Size, fontWeight: FontWeight.bold)),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            receiptDetailModel.receiptDescription,
-            textAlign: TextAlign.justify,
+                  fontSize: FontSizeVariables.h2Size,
+                  fontWeight: FontWeight.bold)),
+          const SizedBox(height: 20),
+          ListView.builder(
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: receiptDetailModel.receiptDescriptionElemens.length,
+            itemBuilder: (context, index) {
+              ReceiptDescriptionElement step =
+                  receiptDetailModel.receiptDescriptionElemens[index];
+              int stepIndex = index + 1;
+
+              return Column(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: ColorVariables.primaryColor,
+                      boxShadow: const [
+                        BoxShadow(color: Colors.black, blurRadius: 2),
+                      ],
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        step.receiptDescriptionPhoto != null
+                            ? ClipPath(
+                                clipper: TopRoundedCornersClipper(),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Image.asset(
+                                    step.receiptDescriptionPhoto!,
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                        Text(
+                          'Step $stepIndex',
+                          style: TextStyle(
+                            fontSize: FontSizeVariables.h2Size,
+                            fontWeight: FontWeight.bold,
+                            color: ColorVariables.backgroundColor,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Text(
+                            step.receiptDescriptionElementText,
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              fontSize: FontSizeVariables.regularSize,
+                              color: ColorVariables.backgroundColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              );
+            },
           )
         ],
       ),
     );
+  }
+}
+
+class TopRoundedCornersClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    final radius = 20.0;
+
+    path.moveTo(0, size.height);
+    path.lineTo(0, radius);
+    path.quadraticBezierTo(0, 0, radius, 0);
+    path.lineTo(size.width - radius, 0);
+    path.quadraticBezierTo(size.width, 0, size.width, radius);
+    path.lineTo(size.width, size.height);
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return false;
   }
 }

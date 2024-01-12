@@ -57,8 +57,18 @@ class CommentModel {
 
 class ReceiptDetailModel {
   ReceiptDetailModel(
-      {required this.receiptDescription, required this.receiptIngradient});
+      {required this.receiptDescriptionElemens,
+      required this.receiptIngradient});
 
   List<String> receiptIngradient;
-  List<String> receiptDescription;
+  List<ReceiptDescriptionElement> receiptDescriptionElemens;
+}
+
+class ReceiptDescriptionElement {
+  ReceiptDescriptionElement(
+      {required this.receiptDescriptionElementText,
+      this.receiptDescriptionPhoto});
+
+  String receiptDescriptionElementText;
+  String? receiptDescriptionPhoto = null;
 }
