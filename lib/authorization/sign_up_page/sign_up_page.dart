@@ -6,7 +6,6 @@ import 'package:menuapp/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 
 class SignUpPage extends StatefulWidget {
-
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
@@ -51,11 +50,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset('assets/images/logo.png', width: 150, color: Colors.white),
+                    Image.asset('assets/images/logo.png',
+                        width: 150, color: Colors.white),
                     const SizedBox(height: 25),
                     Text(
                       "Sign Up",
-                      style: TextStyle(fontSize: FontSizeVariables.h1Size, color: Colors.white),
+                      style: TextStyle(
+                          fontSize: FontSizeVariables.h1Size,
+                          color: Colors.white),
                     ),
                     const SizedBox(height: 25),
                     TextFieldLogin(
@@ -106,18 +108,22 @@ class _SignUpPageState extends State<SignUpPage> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()){
+                            if (_formKey.currentState!.validate()) {
                               Navigator.push(
-                                  context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()));
                             }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: ColorVariables.primaryColor,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40)),
                           ),
                           child: Text(
                             "Register",
-                            style: TextStyle(color: ColorVariables.backgroundColor),
+                            style: TextStyle(
+                                color: ColorVariables.backgroundColor),
                           ),
                         ),
                       ],
