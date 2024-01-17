@@ -76,7 +76,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()){
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => ConfirmationCodePage()));
+                                MaterialPageRoute(builder: (context) => const ConfirmationCodePage()));
                           }
                         },
                         style: ElevatedButton.styleFrom(

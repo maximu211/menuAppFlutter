@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:menuapp/add_page/form_components/image_picker/photo_button.dart';
+import 'package:menuapp/add_page/form_components/image_bottom_modal.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 
@@ -23,9 +23,7 @@ class ImagePickerContainer extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(40),
         color: ColorVariables.primaryColor,
-        boxShadow: const [
-          BoxShadow(blurRadius: 5, color: Colors.black),
-        ],
+        boxShadow: const [BoxShadow(blurRadius: 5, color: Colors.black)],
       ),
       child: Center(
         child: Column(
@@ -45,36 +43,7 @@ class ImagePickerContainer extends StatelessWidget {
                 backgroundColor: ColorVariables.backgroundColor,
               ),
               onPressed: () {
-                showModalBottomSheet(
-                  backgroundColor: ColorVariables.primaryColor,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.16,
-                      width: double.infinity,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          PhotoIconButton(
-                            icon: Icons.camera_alt,
-                            onPressed: () {
-                              pickImage(false);
-                            },
-                            buttonText: "Create photo",
-                          ),
-                          PhotoIconButton(
-                            icon: Icons.image,
-                            onPressed: () {
-                              pickImage(true);
-                            },
-                            buttonText: "Choose image from gallery",
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
+                showImageSelectionBottomSheet(context, pickImage);
               },
               child: Text(
                 "Choose image",

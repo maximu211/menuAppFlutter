@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
+import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/home_page/components/toggle_button.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
-import 'package:menuapp/home_page/receipt_page/receipt_page.dart';
 import 'package:menuapp/models/models.dart';
 import 'package:menuapp/home_page/components/user_row.dart';
 import 'package:menuapp/home_page/card/card_icons_info.dart';
@@ -71,8 +71,9 @@ class _MainPageCardState extends State<MainPageCard> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(_createRoute(
+                        Navigator.of(context).push(createRoute(
                           cardReceipt: widget.cardReceipt,
+                          pageType: 'receiptPage',
                         ));
                       },
                       style: ElevatedButton.styleFrom(
@@ -134,26 +135,4 @@ class _MainPageCardState extends State<MainPageCard> {
       ),
     );
   }
-}
-
-Route _createRoute({
-  required dynamic cardReceipt,
-}) {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => ReceiptPage(
-      cardReceipt: cardReceipt,
-    ),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
 }

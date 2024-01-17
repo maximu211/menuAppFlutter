@@ -29,48 +29,50 @@ class _AddPage extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          backgroundColor: ColorVariables.primaryColor,
-          title: Text(
-            "Create new receipt 😍",
-            style: TextStyle(
-              color: ColorVariables.backgroundColor,
-              fontSize: FontSizeVariables.h1Size,
-            ),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: SingleChildScrollView(
-            child: Container(
-              margin: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  ImagePickerContainer(
-                    image: image,
-                    pickImage: pickImage,
-                    clearImage: () {
-                      setState(() {
-                        image = null;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Additional Information',
-                    style: TextStyle(
-                        color: ColorVariables.backgroundColor,
-                        fontSize: FontSizeVariables.h2Size,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 20),
-                ],
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: ColorVariables.primaryColor,
+            title: Text(
+              "Create new receipt 😍",
+              style: TextStyle(
+                color: ColorVariables.backgroundColor,
+                fontSize: FontSizeVariables.h1Size,
               ),
             ),
           ),
-        )
-      ],
+          SliverToBoxAdapter(
+            child: SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    ImagePickerContainer(
+                      image: image,
+                      pickImage: pickImage,
+                      clearImage: () {
+                        setState(() {
+                          image = null;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      'Additional Information',
+                      style: TextStyle(
+                          color: ColorVariables.backgroundColor,
+                          fontSize: FontSizeVariables.h2Size,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

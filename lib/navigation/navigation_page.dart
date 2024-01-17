@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/account_page/account_page.dart';
 import 'package:menuapp/add_page/add_page.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
+import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/home_page/home_page.dart';
 import 'package:menuapp/search_page/search_page.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
@@ -24,8 +25,6 @@ class _NavigationPage extends State<NavigationPage> {
         return const HomePage();
       case 1:
         return const SearchPage();
-      case 2:
-        return const AddPage();
       case 3:
         return const AccountPage();
       default:
@@ -68,9 +67,13 @@ class _NavigationPage extends State<NavigationPage> {
           ],
           selectedIndex: _currentIndex,
           onDestinationSelected: (int index) {
-            setState(() {
-              _currentIndex = index;
-            });
+            if (index == 2) {
+              Navigator.push(context, createRoute(pageType: 'addPage'));
+            } else {
+              setState(() {
+                _currentIndex = index;
+              });
+            }
           }),
       body: Stack(
         children: [

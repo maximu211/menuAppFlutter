@@ -70,5 +70,5 @@ class ReceiptDescriptionElement {
       this.receiptDescriptionPhoto});
 
   String receiptDescriptionElementText;
-  String? receiptDescriptionPhoto = null;
+  String? receiptDescriptionPhoto;
 }
