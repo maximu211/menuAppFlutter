@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:menuapp/add_page/form_components/image_picker/image_picker.dart';
+import 'package:menuapp/add_page/form_components/input_text_field.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -13,64 +16,75 @@ class AddPage extends StatefulWidget {
   State<StatefulWidget> createState() => _AddPage();
 }
 
-class _AddPage extends State<AddPage> {
-  File? image;
-  Future pickImage(bool isGallery) async {
-    try {
-      final image = await ImagePicker().pickImage(
-          source: isGallery ? ImageSource.gallery : ImageSource.camera);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
-    }
-  }
+class FiledMaxLenght {
+  FiledMaxLenght(this.maxLenghtName, this.maxLenghtTime, this.maxLenghtType);
 
+  int? maxLenghtName;
+  int maxLenghtTime;
+  int maxLenghtType;
+}
+
+class _AddPage extends State<AddPage> {
+  PageController _pageController = PageController();
+  int _currentPage = 0;
+  double _value = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: ColorVariables.primaryColor,
-            title: Text(
-              "Create new receipt 😍",
-              style: TextStyle(
-                color: ColorVariables.backgroundColor,
-                fontSize: FontSizeVariables.h1Size,
-              ),
+      appBar: AppBar(
+        title: const Text('PageView Example'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: PageView(
+              controller: _pageController,
+              onPageChanged: (int page) {
+                setState(() {
+                  _currentPage = page;
+                });
+              },
+              children: [
+                Container(
+                  color: Colors.blue,
+                  child: const Center(
+                    child: Text('Page 1'),
+                  ),
+                ),
+                Container(
+                  color: Colors.green,
+                  child: const Center(
+                    child: Text('Page 2'),
+                  ),
+                ),
+                Container(
+                  color: Colors.orange,
+                  child: const Center(
+                    child: Text('Page 3'),
+                  ),
+                ),
+              ],
             ),
           ),
-          SliverToBoxAdapter(
-            child: SingleChildScrollView(
-              child: Container(
-                margin: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    ImagePickerContainer(
-                      image: image,
-                      pickImage: pickImage,
-                      clearImage: () {
-                        setState(() {
-                          image = null;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      'Additional Information',
-                      style: TextStyle(
-                          color: ColorVariables.backgroundColor,
-                          fontSize: FontSizeVariables.h2Size,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
+          Container(
+            margin: const EdgeInsets.all(5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SmoothPageIndicator(
+                  controller: _pageController,
+                  count: 3,
+                  effect: ExpandingDotsEffect(
+                    activeDotColor: ColorVariables.primaryColor,
+                    dotColor: Colors.grey,
+                    dotWidth: 20,
+                    dotHeight: 20,
+                  ),
                 ),
-              ),
+              ],
             ),
-          )
+          ),
         ],
       ),
     );

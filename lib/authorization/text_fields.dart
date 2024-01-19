@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 
 class TextFieldLogin extends StatefulWidget {
-  const TextFieldLogin(
-      {super.key,
-      required this.isPasswordField,
-      required this.labelText,
-      required this.loginFieldController,
-      required this.validator,
+  const TextFieldLogin({
+    super.key,
+    required this.isPasswordField,
+    required this.labelText,
+    required this.loginFieldController,
+    required this.validator,
   });
 
   final bool isPasswordField;
@@ -34,7 +34,8 @@ class _TextFieldsState extends State<TextFieldLogin> {
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: ColorVariables.backgroundColor),
             borderRadius: const BorderRadius.all(Radius.circular(40))),
-        border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(40))),
+        border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(40))),
         labelText: widget.labelText,
         labelStyle: TextStyle(color: ColorVariables.backgroundColor),
       ),

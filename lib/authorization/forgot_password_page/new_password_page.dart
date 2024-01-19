@@ -4,9 +4,9 @@ import 'package:menuapp/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 
 class NewPasswordPage extends StatelessWidget {
-
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _repeatPasswordController = TextEditingController();
+  final TextEditingController _repeatPasswordController =
+      TextEditingController();
 
   NewPasswordPage({super.key});
 
@@ -26,7 +26,8 @@ class NewPasswordPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.asset('assets/images/logo.png', width: 150, color: Colors.white),
+                Image.asset('assets/images/logo.png',
+                    width: 150, color: Colors.white),
                 const SizedBox(height: 25),
                 const Text(
                   "Enter your new password",
@@ -66,15 +67,20 @@ class NewPasswordPage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         String passwordText = _passwordController.text;
-                        String repeatPasswordText = _repeatPasswordController.text;
-                        if ((passwordText.isNotEmpty && repeatPasswordText.isNotEmpty) &&
+                        String repeatPasswordText =
+                            _repeatPasswordController.text;
+                        if ((passwordText.isNotEmpty &&
+                                repeatPasswordText.isNotEmpty) &&
                             (passwordText == repeatPasswordText)) {
                           Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()));
                         } else {
                           //String textError;
                           if (passwordText != repeatPasswordText) {
-                            String textError = "The passwords you entered are not the same";
+                            String textError =
+                                "The passwords you entered are not the same";
                           }
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -82,7 +88,8 @@ class NewPasswordPage extends StatelessWidget {
                               duration: const Duration(seconds: 1),
                               content: Text(
                                 "Please enter all fields 😒",
-                                style: TextStyle(color: ColorVariables.backgroundColor),
+                                style: TextStyle(
+                                    color: ColorVariables.backgroundColor),
                               ),
                             ),
                           );
@@ -90,7 +97,8 @@ class NewPasswordPage extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorVariables.primaryColor,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40)),
                       ),
                       child: Text(
                         "Save new password",

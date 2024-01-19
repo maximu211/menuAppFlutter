@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/account_page/account_page.dart';
-import 'package:menuapp/add_page/add_page.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/home_page/home_page.dart';
