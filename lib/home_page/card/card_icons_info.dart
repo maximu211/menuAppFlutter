@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 

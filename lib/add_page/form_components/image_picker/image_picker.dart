@@ -1,20 +1,22 @@
-import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:menuapp/add_page/form_components/image_bottom_modal.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 
 class ImagePickerContainer extends StatelessWidget {
-  final File? image;
+  final Uint8List? image;
   final Function(bool) pickImage;
   final Function() clearImage;
+  final Function() editImage; // Added function for editing
 
-  const ImagePickerContainer(
-      {Key? key,
-      required this.image,
-      required this.pickImage,
-      required this.clearImage})
-      : super(key: key);
+  const ImagePickerContainer({
+    Key? key,
+    required this.image,
+    required this.pickImage,
+    required this.clearImage,
+    required this.editImage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class ImagePickerContainer extends StatelessWidget {
                     child: Container(
                       margin:
                           const EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: Image.file(image!, fit: BoxFit.cover),
+                      child: Image.memory(image!, fit: BoxFit.cover),
                     ),
                   ),
             ElevatedButton(
@@ -54,14 +56,22 @@ class ImagePickerContainer extends StatelessWidget {
               ),
             ),
             image != null
-                ? ElevatedButton(
-                    onPressed: () {
-                      clearImage();
-                    },
-                    child: const Text(
-                      'Clear image',
-                      style: TextStyle(color: Colors.red),
-                    ),
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: editImage,
+                        child: const Text('Edit Image'),
+                      ),
+                      const SizedBox(width: 16),
+                      ElevatedButton(
+                        onPressed: clearImage,
+                        child: const Text(
+                          'Clear image',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
                   )
                 : const SizedBox(),
           ],

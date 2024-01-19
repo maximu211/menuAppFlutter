@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 
-class FromInputField extends StatelessWidget {
-  const FromInputField({
+class FormInputField extends StatelessWidget {
+  const FormInputField({
     super.key,
     required this.filedController,
     required this.maxLenght,
