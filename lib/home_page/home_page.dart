@@ -17,8 +17,8 @@ class _HomePageState extends State<HomePage> {
         user: UserModel(
             userName: "Name_Guttt", userPhoto: "assets/images/test.jpg"),
         receiptId: "2",
-        cookHardness: "Easy",
-        cookTime: "15 min",
+        cookDifficulty: CookingDifficulty.easy,
+        cookTime: CookingTime.min15,
         cookType: "Drink",
         dishName: 'Cocktail "Cool guy"',
         dishPhoto: "assets/images/dish_images/3.jpg",
@@ -29,8 +29,8 @@ class _HomePageState extends State<HomePage> {
     CardReceiptModel(
         user: UserModel(
             userName: "John_Lennon", userPhoto: "assets/images/test.jpg"),
-        cookHardness: "Easy",
-        cookTime: "15 min",
+        cookDifficulty: CookingDifficulty.medium,
+        cookTime: CookingTime.hour1,
         cookType: "Drink",
         dishName: 'Cocktail "Cool guy"',
         dishPhoto: "assets/images/dish_images/1.jpg",

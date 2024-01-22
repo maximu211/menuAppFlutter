@@ -21,7 +21,7 @@ class CardReceiptModel {
     required this.user,
     required this.userId,
     required this.dishName,
-    required this.cookHardness,
+    required this.cookDifficulty,
     required this.cookTime,
     required this.cookType,
     required this.isDishSaved,
@@ -33,8 +33,8 @@ class CardReceiptModel {
   String receiptId;
   UserModel user;
   String dishName;
-  String cookHardness;
-  String cookTime;
+  CookingDifficulty cookDifficulty;
+  CookingTime cookTime;
   String cookType;
   String userId;
   bool isDishSaved;
@@ -73,7 +73,7 @@ class ReceiptDescriptionElement {
   String? receiptDescriptionPhoto;
 }
 
-enum DishHardness {
+enum CookingDifficulty {
   easy,
   medium,
   hard,

@@ -21,8 +21,9 @@ class _DropDownPickerState<T> extends State<DropDownPicker<T>> {
   @override
   void initState() {
     super.initState();
-    selectedValue =
-        widget.isTime ? CookingTime.lessThan15min as T : DishHardness.easy as T;
+    selectedValue = widget.isTime
+        ? CookingTime.lessThan15min as T
+        : CookingDifficulty.easy as T;
   }
 
   @override
@@ -59,7 +60,7 @@ class _DropDownPickerState<T> extends State<DropDownPicker<T>> {
               selectedValue = newValue ??
                   (widget.isTime
                       ? CookingTime.lessThan15min as T
-                      : DishHardness.easy as T);
+                      : CookingDifficulty.easy as T);
             });
             widget.onChange(newValue);
           },
@@ -73,7 +74,7 @@ class _DropDownPickerState<T> extends State<DropDownPicker<T>> {
                     ),
                   );
                 }).toList()
-              : DishHardness.values.map((DishHardness value) {
+              : CookingDifficulty.values.map((CookingDifficulty value) {
                   return DropdownMenuItem<T>(
                     value: value as T,
                     child: Text(

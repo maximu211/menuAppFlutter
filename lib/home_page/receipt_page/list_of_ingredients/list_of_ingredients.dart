@@ -5,6 +5,7 @@ import 'package:menuapp/home_page/components/user_row.dart';
 import 'package:menuapp/home_page/card/card_icons_info.dart';
 import 'package:menuapp/home_page/receipt_page/list_of_ingredients/ingredient.dart';
 import 'package:menuapp/home_page/receipt_page/list_of_ingredients/step_card.dart';
+import 'package:menuapp/models/mappers.dart';
 import 'package:menuapp/models/models.dart';
 
 class IngredientList extends StatefulWidget {
@@ -70,8 +71,9 @@ class _IngredientList extends State<IngredientList> {
                   ],
                 ),
                 CardIconsInfo(
-                    textTime: widget.cardReceipt.cookTime,
-                    textHardness: widget.cardReceipt.cookHardness,
+                    textHardness: Mapper.mapHardnessToText(
+                        widget.cardReceipt.cookDifficulty),
+                    textTime: Mapper.mapTimeToText(widget.cardReceipt.cookTime),
                     textType: widget.cardReceipt.cookType,
                     iconColor: Colors.black)
               ],

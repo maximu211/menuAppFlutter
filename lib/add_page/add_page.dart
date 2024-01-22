@@ -28,7 +28,7 @@ class _AddPage extends State<AddPage> {
   Uint8List? image;
   final String dishType = '';
   final CookingTime dishCookTime = CookingTime.hour1;
-  final DishHardness dishHardness = DishHardness.easy;
+  final CookingDifficulty dishHardness = CookingDifficulty.easy;
 
   final TextEditingController _fieldNameController = TextEditingController();
   final TextEditingController _dishTypeFieldController =

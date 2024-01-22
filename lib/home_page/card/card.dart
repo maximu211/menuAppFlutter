@@ -4,6 +4,7 @@ import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/home_page/components/toggle_button.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
+import 'package:menuapp/models/mappers.dart';
 import 'package:menuapp/models/models.dart';
 import 'package:menuapp/home_page/components/user_row.dart';
 import 'package:menuapp/home_page/card/card_icons_info.dart';
@@ -59,8 +60,9 @@ class _MainPageCardState extends State<MainPageCard> {
             ),
             const SizedBox(height: 10),
             CardIconsInfo(
-                textHardness: widget.cardReceipt.cookHardness,
-                textTime: widget.cardReceipt.cookTime,
+                textHardness:
+                    Mapper.mapHardnessToText(widget.cardReceipt.cookDifficulty),
+                textTime: Mapper.mapTimeToText(widget.cardReceipt.cookTime),
                 textType: widget.cardReceipt.cookType,
                 iconColor: ColorVariables.backgroundColor),
             Container(

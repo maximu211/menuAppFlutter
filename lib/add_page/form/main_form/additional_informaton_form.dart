@@ -22,7 +22,7 @@ class AdditionalInformationForm extends StatefulWidget {
 
 class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
   CookingTime? selectedCookingTime;
-  DishHardness? selectedDishHardness;
+  CookingDifficulty? selectedDishHardness;
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +46,9 @@ class _AdditionalInformationFormState extends State<AdditionalInformationForm> {
                 },
               ),
               const SizedBox(height: 20),
-              DropDownPicker<DishHardness>(
+              DropDownPicker<CookingDifficulty>(
                 isTime: false,
-                onChange: (DishHardness? selectedValue) {
+                onChange: (CookingDifficulty? selectedValue) {
                   setState(() {
                     selectedDishHardness = selectedValue;
                   });

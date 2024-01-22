@@ -26,8 +26,8 @@ class _SearchPageState extends State<SearchPage> {
         userId: "asdsad1",
         user: UserModel(
             userName: "Name_asdasd", userPhoto: "assets/images/test.jpg"),
-        cookHardness: "Easy",
-        cookTime: "15 min",
+        cookDifficulty: CookingDifficulty.easy,
+        cookTime: CookingTime.min30,
         cookType: "Drink",
         dishName: 'Cocktail "Cool guy"',
         dishPhoto: "assets/images/dish_images/3.jpg",
@@ -39,8 +39,8 @@ class _SearchPageState extends State<SearchPage> {
         userId: "asd2asdas",
         user: UserModel(
             userName: "Name_user", userPhoto: "assets/images/test.jpg"),
-        cookHardness: "Easy",
-        cookTime: "15 min",
+        cookDifficulty: CookingDifficulty.easy,
+        cookTime: CookingTime.min15,
         cookType: "Drink",
         dishName: 'Name',
         dishPhoto: "assets/images/dish_images/1.jpg",

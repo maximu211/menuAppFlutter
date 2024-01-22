@@ -1,15 +1,15 @@
 import 'package:menuapp/models/models.dart';
 
 class Mapper {
-  static String mapHardnessToText(DishHardness hardness) {
+  static String mapHardnessToText(CookingDifficulty hardness) {
     switch (hardness) {
-      case DishHardness.easy:
+      case CookingDifficulty.easy:
         return 'Easy';
-      case DishHardness.medium:
+      case CookingDifficulty.medium:
         return 'Medium';
-      case DishHardness.hard:
+      case CookingDifficulty.hard:
         return 'Hard';
-      case DishHardness.veryHard:
+      case CookingDifficulty.veryHard:
         return 'Very Hard';
     }
   }
