@@ -6,6 +6,7 @@ import 'package:menuapp/add_page/form/main_form/main_form.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/modal_dialog.dart';
+import 'package:menuapp/models/models.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class AddPage extends StatefulWidget {
@@ -26,8 +27,8 @@ class _AddPage extends State<AddPage> {
 
   Uint8List? image;
   final String dishType = '';
-  final String dishCookTime = '';
-  final String dishHardness = '';
+  final CookingTime dishCookTime = CookingTime.hour1;
+  final DishHardness dishHardness = DishHardness.easy;
 
   final TextEditingController _fieldNameController = TextEditingController();
   final TextEditingController _dishTypeFieldController =
