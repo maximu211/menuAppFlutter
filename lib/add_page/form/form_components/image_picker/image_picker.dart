@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:menuapp/add_page/form_components/image_bottom_modal.dart';
+import 'package:menuapp/add_page/form/form_components/image_bottom_modal.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 

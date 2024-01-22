@@ -7,11 +7,13 @@ class FormInputField extends StatelessWidget {
     required this.filedController,
     required this.maxLenght,
     required this.validator,
+    required this.inputLabel,
   });
 
   final TextEditingController filedController;
   final int? maxLenght;
   final String? Function(String?) validator;
+  final String inputLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +24,20 @@ class FormInputField extends StatelessWidget {
       cursorColor: ColorVariables.primaryColor,
       decoration: InputDecoration(
         filled: true,
-        labelText: 'Input dish name',
+        fillColor: const Color.fromARGB(30, 255, 115, 0),
+        labelText: inputLabel,
         focusColor: ColorVariables.primaryColor,
         labelStyle: const TextStyle(color: Colors.black),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: ColorVariables.primaryColor),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: ColorVariables.backgroundColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: ColorVariables.primaryColor),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: Colors.red),
         ),
       ),

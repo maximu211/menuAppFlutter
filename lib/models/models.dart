@@ -72,3 +72,19 @@ class ReceiptDescriptionElement {
   String receiptDescriptionElementText;
   String? receiptDescriptionPhoto;
 }
+
+enum DishHardness {
+  easy,
+  medium,
+  hard,
+  veryHard,
+}
+
+enum CookingTime {
+  lessThan15min,
+  min15,
+  min30,
+  min45,
+  hour1,
+  moreThanHour1,
+}

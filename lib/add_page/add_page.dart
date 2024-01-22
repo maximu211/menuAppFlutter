@@ -1,12 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_editor_plus/image_editor_plus.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:menuapp/add_page/form_components/baner_form/baner_form.dart';
-import 'package:menuapp/add_page/form_components/from_input_field.dart';
-import 'package:menuapp/add_page/form_components/image_picker/image_picker.dart';
+import 'package:menuapp/add_page/form/main_form/main_form.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/modal_dialog.dart';
@@ -20,9 +16,8 @@ class AddPage extends StatefulWidget {
 }
 
 class FiledMaxLenght {
-  static int maxLenghtBannerName = 10;
+  static int maxLenghtDishName = 50;
   static int maxLenghtDishType = 10;
-  static int maxLenghtCookTime = 10;
 }
 
 class _AddPage extends State<AddPage> {
@@ -30,7 +25,13 @@ class _AddPage extends State<AddPage> {
   int _currentPage = 0;
 
   Uint8List? image;
-  TextEditingController _bannerNameConroller = TextEditingController();
+  final String dishType = '';
+  final String dishCookTime = '';
+  final String dishHardness = '';
+
+  final TextEditingController _fieldNameController = TextEditingController();
+  final TextEditingController _dishTypeFieldController =
+      TextEditingController();
 
   Future<Uint8List?> fileToUint8List(File? file) async {
     if (file == null) {
@@ -75,7 +76,7 @@ class _AddPage extends State<AddPage> {
           ),
         ),
         title: Text(
-          'Сreate your masterpiece 😍',
+          'Create your masterpiece 😍',
           style: TextStyle(
             fontSize: FontSizeVariables.h1Size,
             color: ColorVariables.backgroundColor,
@@ -94,20 +95,19 @@ class _AddPage extends State<AddPage> {
                 });
               },
               children: [
-                BannerForm(
-                  pickImage: pickImage,
+                MainForm(
                   image: image,
-                  filedController: _bannerNameConroller,
-                  maxLenght: FiledMaxLenght.maxLenghtBannerName,
-                  validator: (value) {
+                  pickImage: pickImage,
+                  fieldNameController: _fieldNameController,
+                  maxNameLenght: FiledMaxLenght.maxLenghtDishName,
+                  validatorNameField: (value) {
                     return;
                   },
-                ),
-                Container(
-                  color: Colors.green,
-                  child: const Center(
-                    child: Text('Page 2'),
-                  ),
+                  dishTypeFieldController: _dishTypeFieldController,
+                  maxDishTypeLenght: FiledMaxLenght.maxLenghtDishType,
+                  validatorDishTypeField: (value) {
+                    return;
+                  },
                 ),
                 Container(
                   color: Colors.orange,
@@ -125,7 +125,7 @@ class _AddPage extends State<AddPage> {
               children: [
                 SmoothPageIndicator(
                   controller: _pageController,
-                  count: 3,
+                  count: 2,
                   effect: ExpandingDotsEffect(
                     activeDotColor: ColorVariables.primaryColor,
                     dotColor: Colors.grey,
