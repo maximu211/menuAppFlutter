@@ -1,7 +1,21 @@
+import 'package:flutter/services.dart';
+
+class BinaryFileReader {
+  final String filePath;
+
+  BinaryFileReader(this.filePath);
+
+  Future<Uint8List> readBinaryFile() async {
+    final ByteData data = await rootBundle.load(filePath);
+
+    return data.buffer.asUint8List();
+  }
+}
+
 class UserModel {
   UserModel({required this.userName, required this.userPhoto});
 
-  String userPhoto;
+  Uint8List userPhoto;
   String userName;
 }
 
@@ -29,7 +43,7 @@ class CardReceiptModel {
     required this.isDishLiked,
   });
 
-  String dishPhoto;
+  Uint8List dishPhoto;
   String receiptId;
   UserModel user;
   String dishName;
@@ -57,11 +71,11 @@ class CommentModel {
 
 class ReceiptDetailModel {
   ReceiptDetailModel(
-      {required this.receiptDescriptionElemens,
+      {required this.receiptDescriptionElements,
       required this.receiptIngradient});
 
   List<String> receiptIngradient;
-  List<ReceiptDescriptionElement> receiptDescriptionElemens;
+  List<ReceiptDescriptionElement> receiptDescriptionElements;
 }
 
 class ReceiptDescriptionElement {
@@ -70,7 +84,7 @@ class ReceiptDescriptionElement {
       this.receiptDescriptionPhoto});
 
   String receiptDescriptionElementText;
-  String? receiptDescriptionPhoto;
+  Uint8List? receiptDescriptionPhoto;
 }
 
 enum CookingDifficulty {

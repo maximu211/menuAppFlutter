@@ -32,7 +32,7 @@ class StepCard extends StatelessWidget {
                       clipper: TopRoundedCornersClipper(),
                       child: SizedBox(
                         width: double.infinity,
-                        child: Image.asset(
+                        child: Image.memory(
                           step.receiptDescriptionPhoto!,
                           fit: BoxFit.fitHeight,
                         ),

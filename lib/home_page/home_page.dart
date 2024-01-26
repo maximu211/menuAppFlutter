@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
@@ -12,34 +14,55 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<CardReceiptModel> cardReceiptList = [
-    CardReceiptModel(
+  late BinaryFileReader binaryFileReader;
+  late Uint8List binaryData;
+  late Future<List<CardReceiptModel>> cardReceiptsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    cardReceiptsFuture = loadData();
+  }
+
+  Future<List<CardReceiptModel>> loadData() async {
+    binaryFileReader = BinaryFileReader('assets/images/dish_images/image.bin');
+    binaryData = await binaryFileReader.readBinaryFile();
+    print(binaryData);
+    return [
+      CardReceiptModel(
         user: UserModel(
-            userName: "Name_Guttt", userPhoto: "assets/images/test.jpg"),
-        receiptId: "2",
-        cookDifficulty: CookingDifficulty.easy,
-        cookTime: CookingTime.min15,
-        cookType: "Drink",
-        dishName: 'Cocktail "Cool guy"',
-        dishPhoto: "assets/images/dish_images/3.jpg",
-        isDishSaved: false,
-        savedCount: 140,
-        isDishLiked: true,
-        userId: '12'),
-    CardReceiptModel(
-        user: UserModel(
-            userName: "John_Lennon", userPhoto: "assets/images/test.jpg"),
+          userName: "John_Lennon",
+          userPhoto: binaryData,
+        ),
         cookDifficulty: CookingDifficulty.medium,
         cookTime: CookingTime.hour1,
         cookType: "Drink",
         dishName: 'Cocktail "Cool guy"',
-        dishPhoto: "assets/images/dish_images/1.jpg",
+        dishPhoto: binaryData,
         isDishSaved: true,
         savedCount: 140,
         isDishLiked: false,
         receiptId: '21',
-        userId: '12'),
-  ];
+        userId: '12',
+      ),
+      CardReceiptModel(
+        user: UserModel(
+          userName: "John_Lennon",
+          userPhoto: binaryData,
+        ),
+        cookDifficulty: CookingDifficulty.medium,
+        cookTime: CookingTime.hour1,
+        cookType: "Drink",
+        dishName: 'Cocktail "Cool guy"',
+        dishPhoto: binaryData,
+        isDishSaved: true,
+        savedCount: 140,
+        isDishLiked: false,
+        receiptId: '21',
+        userId: '12',
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,20 +90,29 @@ class _HomePageState extends State<HomePage> {
         SliverToBoxAdapter(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: ListView.builder(
-              itemCount: cardReceiptList.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final cardReceipt = cardReceiptList[index];
-                return Column(
-                  children: [
-                    MainPageCard(cardReceipt: cardReceipt),
-                    const SizedBox(
-                      height: 20,
-                    )
-                  ],
-                );
+            child: FutureBuilder<List<CardReceiptModel>>(
+              future: cardReceiptsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      final cardReceipt = snapshot.data![index];
+                      return Column(
+                        children: [
+                          MainPageCard(cardReceipt: cardReceipt),
+                          const SizedBox(height: 20),
+                        ],
+                      );
+                    },
+                  );
+                }
               },
             ),
           ),

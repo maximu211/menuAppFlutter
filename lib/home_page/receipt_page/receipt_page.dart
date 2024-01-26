@@ -37,7 +37,7 @@ class _ReceiptPage extends State<ReceiptPage> {
       backgroundColor: ColorVariables.backgroundColor,
       bottomNavigationBar: NavigationBar(
           backgroundColor: ColorVariables.backgroundColor,
-          indicatorColor: ColorVariables. primaryColor,
+          indicatorColor: ColorVariables.primaryColor,
           destinations: [
             NavigationDestination(
                 icon: Icon(
@@ -96,13 +96,13 @@ class _ReceiptPage extends State<ReceiptPage> {
                       Navigator.of(context).pop();
                     }),
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Image.asset(widget.cardReceipt.dishPhoto,
+                  background: Image.memory(widget.cardReceipt.dishPhoto,
                       fit: BoxFit.cover),
                 ),
               ),
               SliverToBoxAdapter(
                 child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
                   child: renderScreen(_currentIndex),
                 ),
               ),

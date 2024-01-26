@@ -1,7 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:menuapp/add_page/form/instruction_form/instruction_form.dart';
 import 'package:menuapp/add_page/form/main_form/main_form.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
@@ -33,25 +32,6 @@ class _AddPage extends State<AddPage> {
   final TextEditingController _fieldNameController = TextEditingController();
   final TextEditingController _dishTypeFieldController =
       TextEditingController();
-
-  Future<Uint8List?> fileToUint8List(File? file) async {
-    if (file == null) {
-      return null;
-    }
-
-    Uint8List bytes = await file.readAsBytes();
-    return Uint8List.fromList(bytes);
-  }
-
-  Future pickImage(bool isGallery) async {
-    final image = await ImagePicker().pickImage(
-      source: isGallery ? ImageSource.gallery : ImageSource.camera,
-    );
-    if (image == null) return;
-
-    final imageBytes = await fileToUint8List(File(image.path));
-    setState(() => this.image = imageBytes);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +78,6 @@ class _AddPage extends State<AddPage> {
               children: [
                 MainForm(
                   image: image,
-                  pickImage: pickImage,
                   fieldNameController: _fieldNameController,
                   maxNameLenght: FiledMaxLenght.maxLenghtDishName,
                   validatorNameField: (value) {
@@ -110,32 +89,46 @@ class _AddPage extends State<AddPage> {
                     return;
                   },
                 ),
-                Container(
-                  color: Colors.orange,
-                  child: const Center(
-                    child: Text('Page 3'),
-                  ),
-                ),
+                const InstuctionForm(),
               ],
             ),
           ),
-          Container(
-            margin: const EdgeInsets.all(5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SmoothPageIndicator(
-                  controller: _pageController,
-                  count: 2,
-                  effect: ExpandingDotsEffect(
-                    activeDotColor: ColorVariables.primaryColor,
-                    dotColor: Colors.grey,
-                    dotWidth: 20,
-                    dotHeight: 20,
+          Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                width: double.maxFinite,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorVariables.primaryColor),
+                  onPressed: () {},
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(
+                        color: ColorVariables.backgroundColor,
+                        fontSize: FontSizeVariables.h2Size),
                   ),
                 ),
-              ],
-            ),
+              ),
+              Container(
+                margin: const EdgeInsets.all(5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SmoothPageIndicator(
+                      controller: _pageController,
+                      count: 2,
+                      effect: ExpandingDotsEffect(
+                        activeDotColor: ColorVariables.primaryColor,
+                        dotColor: Colors.grey,
+                        dotWidth: 20,
+                        dotHeight: 20,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),

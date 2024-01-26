@@ -1,14 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 
 class UserRow extends StatelessWidget {
   final String userName;
-  final String photoPath;
+  final Uint8List image;
   final Color textColor;
 
   const UserRow({super.key, 
     required this.userName,
-    required this.photoPath,
+    required this.image,
     required this.textColor
   });
 
@@ -25,8 +27,8 @@ class UserRow extends StatelessWidget {
             color: Colors.black,
           ),
           child: ClipOval(
-            child: Image.asset(
-              photoPath,
+            child: Image.memory(
+              image,
               fit: BoxFit.cover,
               width: 50,
               height: 50,

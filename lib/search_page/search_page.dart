@@ -20,49 +20,53 @@ class _SearchPageState extends State<SearchPage> {
   List<CardReceiptModel> _sortedReceiptList = [];
   List<IdUserModel> _sortedUserList = [];
 
-  final List<CardReceiptModel> cardReceiptList = [
-    CardReceiptModel(
-        receiptId: "21asd",
-        userId: "asdsad1",
-        user: UserModel(
-            userName: "Name_asdasd", userPhoto: "assets/images/test.jpg"),
-        cookDifficulty: CookingDifficulty.easy,
-        cookTime: CookingTime.min30,
-        cookType: "Drink",
-        dishName: 'Cocktail "Cool guy"',
-        dishPhoto: "assets/images/dish_images/3.jpg",
-        isDishSaved: false,
-        savedCount: 140,
-        isDishLiked: true),
-    CardReceiptModel(
-        receiptId: "12sa",
-        userId: "asd2asdas",
-        user: UserModel(
-            userName: "Name_user", userPhoto: "assets/images/test.jpg"),
-        cookDifficulty: CookingDifficulty.easy,
-        cookTime: CookingTime.min15,
-        cookType: "Drink",
-        dishName: 'Name',
-        dishPhoto: "assets/images/dish_images/1.jpg",
-        isDishSaved: true,
-        savedCount: 140,
-        isDishLiked: false),
-  ];
+  late BinaryFileReader binaryFileReader;
+  late Uint8List binaryData;
+  late List<CardReceiptModel> cardReceiptList;
+  late List<IdUserModel> userList;
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
 
-  final List<IdUserModel> userList = [
-    IdUserModel(
-        userName: "1", userPhoto: "assets/images/test.jpg", userId: "userId"),
-    IdUserModel(
-        userName: "2", userPhoto: "assets/images/test.jpg", userId: "userId"),
-    IdUserModel(
-        userName: "NAME",
-        userPhoto: "assets/images/test.jpg",
-        userId: "userId"),
-    IdUserModel(
-        userName: "NAME",
-        userPhoto: "assets/images/test.jpg",
-        userId: "userId"),
-  ];
+  Future<void> loadData() async {
+    binaryFileReader = BinaryFileReader('assets/images/dish_images/image.bin');
+    binaryData = await binaryFileReader.readBinaryFile();
+    cardReceiptList = [
+      CardReceiptModel(
+          user: UserModel(userName: "Name_Guttt", userPhoto: binaryData),
+          receiptId: "2",
+          cookDifficulty: CookingDifficulty.easy,
+          cookTime: CookingTime.min15,
+          cookType: "Drink",
+          dishName: 'Cocktail "Cool guy"',
+          dishPhoto: binaryData,
+          isDishSaved: false,
+          savedCount: 140,
+          isDishLiked: true,
+          userId: '12'),
+      CardReceiptModel(
+          user: UserModel(userName: "John_Lennon", userPhoto: binaryData),
+          cookDifficulty: CookingDifficulty.medium,
+          cookTime: CookingTime.hour1,
+          cookType: "Drink",
+          dishName: 'Name',
+          dishPhoto: binaryData,
+          isDishSaved: true,
+          savedCount: 140,
+          isDishLiked: false,
+          receiptId: '21',
+          userId: '12'),
+    ];
+
+    userList = [
+      IdUserModel(userName: "1", userPhoto: binaryData, userId: "userId"),
+      IdUserModel(userName: "2", userPhoto: binaryData, userId: "userId"),
+      IdUserModel(userName: "NAME", userPhoto: binaryData, userId: "userId"),
+      IdUserModel(userName: "NAME", userPhoto: binaryData, userId: "userId"),
+    ];
+  }
 
   void listFiltering(String query) {
     setState(() {
@@ -155,7 +159,7 @@ class _SearchPageState extends State<SearchPage> {
                                         ]),
                                     child: UserRow(
                                         userName: item.userName,
-                                        photoPath: item.userPhoto,
+                                        image: item.userPhoto,
                                         textColor:
                                             ColorVariables.backgroundColor),
                                   ),

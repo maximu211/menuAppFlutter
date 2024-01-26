@@ -7,14 +7,12 @@ import 'package:menuapp/add_page/form/form_components/image_picker/image_picker.
 class BannerForm extends StatefulWidget {
   BannerForm(
       {super.key,
-      required this.pickImage,
       required this.image,
       required this.fieldController,
       required this.maxLenght,
       required this.validator});
 
   Uint8List? image;
-  final Function(bool) pickImage;
   final TextEditingController fieldController;
   final int maxLenght;
   final String? Function(String?) validator;
@@ -38,29 +36,6 @@ class _BannerFormState extends State<BannerForm> {
           const SizedBox(height: 15),
           ImagePickerContainer(
             image: widget.image,
-            pickImage: widget.pickImage,
-            clearImage: () {
-              setState(() {
-                widget.image = null;
-              });
-            },
-            editImage: () async {
-              // ignore: use_build_context_synchronously
-              var editedImage = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ImageCropper(
-                    image: widget.image as Uint8List,
-                  ),
-                ),
-              );
-
-              if (editedImage != null) {
-                setState(() {
-                  widget.image = editedImage;
-                });
-              }
-            },
           ),
         ],
       ),

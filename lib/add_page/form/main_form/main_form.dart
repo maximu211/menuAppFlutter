@@ -7,7 +7,6 @@ import 'package:menuapp/add_page/form/main_form/baner_form.dart';
 class MainForm extends StatefulWidget {
   MainForm(
       {super.key,
-      required this.pickImage,
       required this.fieldNameController,
       required this.maxNameLenght,
       required this.validatorNameField,
@@ -17,7 +16,6 @@ class MainForm extends StatefulWidget {
       required this.image});
 
   Uint8List? image;
-  final Function(bool) pickImage;
   final TextEditingController fieldNameController;
   final int maxNameLenght;
   final String? Function(String?) validatorNameField;
@@ -41,7 +39,6 @@ class _MainFormState extends State<MainForm> {
             BannerForm(
               fieldController: widget.fieldNameController,
               image: widget.image,
-              pickImage: widget.pickImage,
               maxLenght: widget.maxNameLenght,
               validator: widget.validatorNameField,
             ),
