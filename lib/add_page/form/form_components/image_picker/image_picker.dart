@@ -9,10 +9,12 @@ import 'package:menuapp/global_variables/font_size_variables.dart';
 
 class ImagePickerContainer extends StatefulWidget {
   Uint8List? image;
+  final Function(Uint8List?)? onImageChanged;
 
   ImagePickerContainer({
     Key? key,
     required this.image,
+    this.onImageChanged,
   }) : super(key: key);
 
   @override
@@ -36,7 +38,10 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
     if (image == null) return;
 
     final imageBytes = await fileToUint8List(File(image.path));
-    setState(() => this.widget.image = imageBytes);
+
+    widget.onImageChanged?.call(imageBytes);
+
+    setState(() => widget.image = imageBytes);
   }
 
   @override

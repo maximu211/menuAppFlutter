@@ -12,7 +12,7 @@ class StepCard extends StatelessWidget {
 
   final ReceiptDescriptionElement step;
   final int stepIndex;
-
+  void onPressedDeleteButton() {}
   @override
   Widget build(BuildContext context) {
     return Column(

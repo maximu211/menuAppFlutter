@@ -5,12 +5,12 @@ import 'package:menuapp/global_variables/font_size_variables.dart';
 class FormCardButton extends StatelessWidget {
   const FormCardButton(
       {super.key,
-      this.onPressed,
+      required this.onPressed,
       required this.icon,
       required this.label,
       required this.isColorMain});
 
-  final void Function()? onPressed;
+  final void Function() onPressed;
   final IconData icon;
   final String label;
   final bool isColorMain;

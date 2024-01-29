@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/add_page/form/form_components/form_card_button.dart';
-import 'package:menuapp/add_page/form/form_components/image_picker/image_picker.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
+import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/home_page/receipt_page/list_of_ingredients/step_card.dart';
 import 'package:menuapp/models/models.dart';
 
@@ -10,6 +10,7 @@ class StepCardWithButtons extends StepCard {
     Key? key,
     required ReceiptDescriptionElement step,
     required int stepIndex,
+    required void Function() onPressedDeleteButton,
   }) : super(key: key, step: step, stepIndex: stepIndex);
 
   @override
@@ -38,21 +39,13 @@ class StepCardWithButtons extends StepCard {
                         icon: Icons.create,
                         label: "Edit",
                         onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.2,
-                                child: Column(
-                                  children: [
-                                    ImagePickerContainer(
-                                      image: step.receiptDescriptionPhoto,
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
+                          Navigator.push(
+                            context,
+                            createRoute(
+                              pageType: 'editStepPage',
+                              step: step,
+                              stepNum: stepIndex,
+                            ),
                           );
                         },
                       ),
@@ -63,7 +56,7 @@ class StepCardWithButtons extends StepCard {
                         isColorMain: false,
                         icon: Icons.delete,
                         label: "Delete",
-                        onPressed: () {},
+                        onPressed: onPressedDeleteButton,
                       ),
                     ),
                   ],

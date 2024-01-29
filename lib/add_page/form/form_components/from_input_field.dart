@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 
 class FormInputField extends StatelessWidget {
-  const FormInputField({
-    super.key,
-    required this.filedController,
-    required this.maxLenght,
-    required this.validator,
-    required this.inputLabel,
-  });
+  FormInputField(
+      {super.key,
+      this.filedController,
+      required this.maxLenght,
+      required this.validator,
+      required this.inputLabel,
+      this.initTextfieldValue});
 
-  final TextEditingController filedController;
+  TextEditingController? filedController;
   final int? maxLenght;
   final String? Function(String?) validator;
   final String inputLabel;
+  String? initTextfieldValue;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initTextfieldValue,
       controller: filedController,
       maxLength: maxLenght,
       maxLines: null,

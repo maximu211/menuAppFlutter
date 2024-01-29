@@ -36,6 +36,9 @@ class _BannerFormState extends State<BannerForm> {
           const SizedBox(height: 15),
           ImagePickerContainer(
             image: widget.image,
+            onImageChanged: (image) {
+              widget.image = image;
+            },
           ),
         ],
       ),

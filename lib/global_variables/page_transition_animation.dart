@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/add_page/add_page.dart';
+import 'package:menuapp/add_page/form/form_components/instruction_step_card/step_update_page.dart';
 import 'package:menuapp/home_page/receipt_page/receipt_page.dart';
 
 Route createRoute({
   dynamic cardReceipt,
+  dynamic step,
+  dynamic stepNum,
   required String pageType,
 }) {
   late Widget destinationPage;
@@ -12,6 +15,8 @@ Route createRoute({
     destinationPage = ReceiptPage(cardReceipt: cardReceipt);
   } else if (pageType == 'addPage') {
     destinationPage = const AddPage();
+  } else if (pageType == 'editStepPage') {
+    destinationPage = StepUpdatePage(step: step, stepNum: stepNum);
   }
 
   return PageRouteBuilder(

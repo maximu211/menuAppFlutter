@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/home_page/card/card.dart';
@@ -61,6 +62,22 @@ class _HomePageState extends State<HomePage> {
         receiptId: '21',
         userId: '12',
       ),
+      CardReceiptModel(
+        user: UserModel(
+          userName: "John_Lennon",
+          userPhoto: binaryData,
+        ),
+        cookDifficulty: CookingDifficulty.medium,
+        cookTime: CookingTime.hour1,
+        cookType: "Drink",
+        dishName: 'Cocktail "Cool guy"',
+        dishPhoto: binaryData,
+        isDishSaved: true,
+        savedCount: 140,
+        isDishLiked: false,
+        receiptId: '21',
+        userId: '12',
+      ),
     ];
   }
 
@@ -69,6 +86,8 @@ class _HomePageState extends State<HomePage> {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
+          systemOverlayStyle:
+              SystemUiOverlayStyle(statusBarColor: ColorVariables.primaryColor),
           floating: true,
           pinned: false,
           snap: true,

@@ -15,6 +15,7 @@ class InstuctionForm extends StatefulWidget {
 class _InstuctionFormState extends State<InstuctionForm> {
   late BinaryFileReader binaryFileReader;
   late Uint8List binaryData;
+  late List<ReceiptDescriptionElement> stepList = [];
 
   @override
   void initState() {
@@ -26,9 +27,7 @@ class _InstuctionFormState extends State<InstuctionForm> {
     binaryFileReader = BinaryFileReader('assets/images/dish_images/image.bin');
     binaryData = await binaryFileReader.readBinaryFile();
     if (mounted) {
-      setState(() {
-        // Set the state with the loaded binary data
-      });
+      setState(() {});
     }
   }
 
@@ -39,15 +38,43 @@ class _InstuctionFormState extends State<InstuctionForm> {
         margin: const EdgeInsets.all(20),
         child: Column(
           children: [
-            StepCardWithButtons(
-              step: ReceiptDescriptionElement(
-                receiptDescriptionElementText: "asdasda",
-                receiptDescriptionPhoto: binaryData,
-              ),
-              stepIndex: 1,
-            ),
+            stepList.isEmpty
+                ? const SizedBox()
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: stepList.length,
+                    itemBuilder: (context, index) {
+                      final step = stepList[index];
+                      final stepIndex = index + 1;
+
+                      return Column(
+                        children: [
+                          StepCardWithButtons(
+                            step: step,
+                            stepIndex: stepIndex,
+                            onPressedDeleteButton: () {
+                              setState(() {
+                                stepList.removeAt(index);
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 20),
+                        ],
+                      );
+                    },
+                  ),
             FormCardButton(
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  stepList.add(
+                    ReceiptDescriptionElement(
+                      receiptDescriptionElementText: "",
+                      receiptDescriptionPhoto: null,
+                    ),
+                  );
+                });
+              },
               icon: Icons.add,
               label: 'Add new instruction step',
               isColorMain: true,
