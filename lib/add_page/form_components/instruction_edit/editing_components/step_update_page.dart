@@ -107,7 +107,7 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
                             _editedStep.receiptDescriptionElementText;
                         widget.step.receiptDescriptionPhoto =
                             _editedStep.receiptDescriptionPhoto;
-                        Navigator.pop(context, true);
+                        Navigator.pop(context, widget.step);
                       }
                     });
                   },

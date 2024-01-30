@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:menuapp/add_page/form_components/form_card_button.dart';
 import 'package:menuapp/add_page/form_components/instruction_edit/editing_components/instruction_step_card.dart';
+import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/models/models.dart';
 
 class InstuctionForm extends StatefulWidget {
@@ -66,12 +67,25 @@ class _InstuctionFormState extends State<InstuctionForm> {
           FormCardButton(
             onPressed: () {
               setState(() {
-                widget.stepList.add(
-                  ReceiptDescriptionElement(
-                    receiptDescriptionElementText: "",
-                    receiptDescriptionPhoto: null,
-                  ),
+                ReceiptDescriptionElement newStep = ReceiptDescriptionElement(
+                  receiptDescriptionElementText: '',
+                  receiptDescriptionPhoto: null,
                 );
+
+                Navigator.push(
+                  context,
+                  createRoute(
+                    pageType: 'editStepPage',
+                    step: newStep,
+                    stepNum: widget.stepList.length + 1,
+                  ),
+                ).then((_) {
+                  if (newStep.receiptDescriptionElementText.trim().isNotEmpty) {
+                    setState(() {
+                      widget.stepList.add(newStep);
+                    });
+                  }
+                });
               });
             },
             icon: Icons.add,
