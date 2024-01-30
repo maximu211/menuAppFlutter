@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/add_page/form/form_components/dropdown_picker.dart';
-import 'package:menuapp/add_page/form/form_components/from_input_field.dart';
+import 'package:menuapp/add_page/form/form_components/form_input_field.dart';
 import 'package:menuapp/models/models.dart';
 
 class AdditionalInformationForm extends StatefulWidget {

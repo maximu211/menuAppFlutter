@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,9 +25,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<List<CardReceiptModel>> loadData() async {
-    binaryFileReader = BinaryFileReader('assets/images/dish_images/image.bin');
-    binaryData = await binaryFileReader.readBinaryFile();
-    print(binaryData);
+    var data = await rootBundle.load('assets/images/dish_images/1.jpg');
+    setState(() => binaryData = data.buffer.asUint8List());
     return [
       CardReceiptModel(
         user: UserModel(

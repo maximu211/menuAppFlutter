@@ -1,6 +1,6 @@
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/home_page/receipt_page/comments/comment.dart';
@@ -26,8 +26,8 @@ class _CommentsPage extends State<CommentsPage> {
   }
 
   Future<List<CommentModel>> loadData() async {
-    binaryFileReader = BinaryFileReader('assets/images/dish_images/image.bin');
-    binaryData = await binaryFileReader.readBinaryFile();
+    var data = await rootBundle.load('assets/images/dish_images/1.jpg');
+    setState(() => binaryData = data.buffer.asUint8List());
     return [
       CommentModel(
         commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
@@ -56,7 +56,7 @@ class _CommentsPage extends State<CommentsPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           const SizedBox(

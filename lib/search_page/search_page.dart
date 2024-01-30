@@ -31,8 +31,8 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Future<void> loadData() async {
-    binaryFileReader = BinaryFileReader('assets/images/dish_images/image.bin');
-    binaryData = await binaryFileReader.readBinaryFile();
+    var data = await rootBundle.load('assets/images/dish_images/1.jpg');
+    setState(() => binaryData = data.buffer.asUint8List());
     cardReceiptList = [
       CardReceiptModel(
           user: UserModel(userName: "Name_Guttt", userPhoto: binaryData),

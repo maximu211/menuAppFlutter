@@ -1,16 +1,16 @@
 import "dart:typed_data";
 import "package:flutter/material.dart";
-import "package:image_editor_plus/image_editor_plus.dart";
-import 'package:menuapp/add_page/form/form_components/from_input_field.dart';
+import 'package:menuapp/add_page/form/form_components/form_input_field.dart';
 import 'package:menuapp/add_page/form/form_components/image_picker/image_picker.dart';
 
 class BannerForm extends StatefulWidget {
-  BannerForm(
-      {super.key,
-      required this.image,
-      required this.fieldController,
-      required this.maxLenght,
-      required this.validator});
+  BannerForm({
+    Key? key,
+    required this.image,
+    required this.fieldController,
+    required this.maxLenght,
+    required this.validator,
+  }) : super(key: key);
 
   Uint8List? image;
   final TextEditingController fieldController;
@@ -37,7 +37,9 @@ class _BannerFormState extends State<BannerForm> {
           ImagePickerContainer(
             image: widget.image,
             onImageChanged: (image) {
-              widget.image = image;
+              setState(() {
+                widget.image = image;
+              });
             },
           ),
         ],

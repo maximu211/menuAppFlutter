@@ -19,9 +19,6 @@ class FiledMaxLenght {
 }
 
 class _AddPage extends State<AddPage> {
-  final PageController _pageController = PageController();
-  int _currentPage = 0;
-
   Uint8List? image;
   final String dishType = '';
   final CookingTime dishCookTime = CookingTime.hour1;

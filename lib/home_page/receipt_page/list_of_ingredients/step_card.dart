@@ -4,15 +4,14 @@ import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/models/models.dart';
 
 class StepCard extends StatefulWidget {
-  StepCard(
-      {super.key,
-      required this.step,
-      required this.stepIndex,
-      this.onPressedDeleteButton});
+  const StepCard({
+    super.key,
+    required this.step,
+    required this.stepIndex,
+  });
 
   final ReceiptDescriptionElement step;
   final int stepIndex;
-  void Function()? onPressedDeleteButton;
 
   @override
   State<StepCard> createState() => _StepCardState();

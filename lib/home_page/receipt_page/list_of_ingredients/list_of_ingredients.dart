@@ -1,6 +1,6 @@
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/home_page/card/card_icons_info.dart';
@@ -31,8 +31,8 @@ class _IngredientListState extends State<IngredientList> {
   }
 
   Future<ReceiptDetailModel> loadData() async {
-    binaryFileReader = BinaryFileReader('assets/images/dish_images/image.bin');
-    binaryData = await binaryFileReader.readBinaryFile();
+    var data = await rootBundle.load('assets/images/dish_images/1.jpg');
+    setState(() => binaryData = data.buffer.asUint8List());
 
     return ReceiptDetailModel(
       receiptDescriptionElements: [
@@ -102,7 +102,7 @@ class _IngredientListState extends State<IngredientList> {
                 future: receiptDetail,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
@@ -161,7 +161,10 @@ class _IngredientListState extends State<IngredientList> {
                                 .data!.receiptDescriptionElements[index];
                             int stepIndex = index + 1;
 
-                            return StepCard(step: step, stepIndex: stepIndex);
+                            return StepCard(
+                              step: step,
+                              stepIndex: stepIndex,
+                            );
                           },
                         ),
                       ],

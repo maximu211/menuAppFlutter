@@ -6,7 +6,7 @@ import 'package:menuapp/add_page/form/main_form/additional_informaton_form.dart'
 import 'package:menuapp/add_page/form/main_form/baner_form.dart';
 
 class MainForm extends StatefulWidget {
-  MainForm(
+  const MainForm(
       {super.key,
       required this.fieldNameController,
       required this.maxNameLenght,
@@ -16,7 +16,7 @@ class MainForm extends StatefulWidget {
       required this.validatorDishTypeField,
       required this.image});
 
-  Uint8List? image;
+  final Uint8List? image;
   final TextEditingController fieldNameController;
   final int maxNameLenght;
   final String? Function(String?) validatorNameField;
@@ -34,7 +34,7 @@ class _MainFormState extends State<MainForm> {
     return SingleChildScrollView(
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
       child: Container(
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         child: Column(
           children: [
             BannerForm(

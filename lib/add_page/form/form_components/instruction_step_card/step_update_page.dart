@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:menuapp/add_page/form/form_components/form_card_button.dart';
-import 'package:menuapp/add_page/form/form_components/from_input_field.dart';
+import 'package:menuapp/add_page/form/form_components/form_input_field.dart';
 import 'package:menuapp/add_page/form/form_components/image_picker/image_picker.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
@@ -11,7 +11,7 @@ import 'package:menuapp/global_variables/modal_dialog.dart';
 import 'package:menuapp/models/models.dart';
 
 class StepUpdatePage extends StatefulWidget {
-  StepUpdatePage({super.key, required this.step, required this.stepNum});
+  const StepUpdatePage({super.key, required this.step, required this.stepNum});
 
   final ReceiptDescriptionElement step;
   final int stepNum;
@@ -32,8 +32,7 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
   void initState() {
     super.initState();
     _editedStep = widget.step;
-    _textEditingController.text =
-        _editedStep.receiptDescriptionElementText ?? "";
+    _textEditingController.text = _editedStep.receiptDescriptionElementText;
   }
 
   @override
@@ -75,6 +74,7 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
                     if (value!.trim().isEmpty) {
                       return "This field quired";
                     }
+                    return null;
                   },
                   inputLabel: "Instruction description",
                   filedController: _textEditingController,

@@ -8,10 +8,10 @@ import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 
 class ImagePickerContainer extends StatefulWidget {
-  Uint8List? image;
+  final Uint8List? image;
   final Function(Uint8List?)? onImageChanged;
 
-  ImagePickerContainer({
+  const ImagePickerContainer({
     Key? key,
     required this.image,
     this.onImageChanged,
@@ -31,7 +31,7 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
     return Uint8List.fromList(bytes);
   }
 
-  Future pickImage(bool isGallery) async {
+  Future<void> pickImage(bool isGallery) async {
     final image = await ImagePicker().pickImage(
       source: isGallery ? ImageSource.gallery : ImageSource.camera,
     );
@@ -40,11 +40,8 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
     final imageBytes = await fileToUint8List(File(image.path));
 
     setState(() {
-      widget.image = imageBytes;
+      widget.onImageChanged?.call(imageBytes);
     });
-
-    widget.onImageChanged
-        ?.call(widget.image); // Invoke the callback with the updated image
   }
 
   @override
@@ -101,7 +98,7 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
 
                           if (editedImage != null) {
                             setState(() {
-                              widget.image = editedImage;
+                              widget.onImageChanged?.call(editedImage);
                             });
                           }
                         },
@@ -111,7 +108,7 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
                       ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            widget.image = null;
+                            widget.onImageChanged?.call(null);
                           });
                         },
                         child: const Text(
