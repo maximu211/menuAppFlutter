@@ -4,18 +4,18 @@ import 'package:menuapp/models/mappers.dart';
 
 import 'package:menuapp/models/models.dart';
 
-class DropDownPicker<T> extends StatefulWidget {
-  const DropDownPicker({Key? key, required this.onChange, required this.isTime})
+class DropdownPicker<T> extends StatefulWidget {
+  const DropdownPicker({Key? key, required this.onChange, required this.isTime})
       : super(key: key);
 
   final void Function(T?) onChange;
   final bool isTime;
 
   @override
-  State<DropDownPicker<T>> createState() => _DropDownPickerState<T>();
+  State<DropdownPicker<T>> createState() => _DropdownPickerState<T>();
 }
 
-class _DropDownPickerState<T> extends State<DropDownPicker<T>> {
+class _DropdownPickerState<T> extends State<DropdownPicker<T>> {
   late T selectedValue;
 
   @override
@@ -52,7 +52,6 @@ class _DropDownPickerState<T> extends State<DropDownPicker<T>> {
             ),
           ),
           borderRadius: BorderRadius.circular(20),
-          //isExpanded: true,
           dropdownColor: const Color.fromARGB(255, 255, 115, 0),
           value: selectedValue,
           onChanged: (T? newValue) {

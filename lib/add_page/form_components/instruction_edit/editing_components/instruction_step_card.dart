@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/add_page/form/form_components/form_card_button.dart';
+
+import 'package:menuapp/add_page/form_components/form_card_button.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/home_page/receipt_page/list_of_ingredients/step_card.dart';
@@ -55,7 +56,9 @@ class _StepCardWithButtonsState extends State<StepCardWithButtons> {
                               step: widget.step,
                               stepNum: widget.stepIndex,
                             ),
-                          );
+                          ).then((_) {
+                            setState(() {});
+                          });
                         },
                       ),
                     ),

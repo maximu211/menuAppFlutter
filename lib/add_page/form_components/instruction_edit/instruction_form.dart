@@ -1,12 +1,14 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:menuapp/add_page/form/form_components/form_card_button.dart';
-import 'package:menuapp/add_page/form/form_components/instruction_step_card/instruction_step_card.dart';
+import 'package:menuapp/add_page/form_components/form_card_button.dart';
+import 'package:menuapp/add_page/form_components/instruction_edit/editing_components/instruction_step_card.dart';
 import 'package:menuapp/models/models.dart';
 
 class InstuctionForm extends StatefulWidget {
-  const InstuctionForm({super.key});
+  const InstuctionForm({super.key, required this.stepList});
+
+  final List<ReceiptDescriptionElement> stepList;
 
   @override
   State<InstuctionForm> createState() => _InstuctionFormState();
@@ -15,7 +17,6 @@ class InstuctionForm extends StatefulWidget {
 class _InstuctionFormState extends State<InstuctionForm> {
   late BinaryFileReader binaryFileReader;
   late Uint8List binaryData;
-  late List<ReceiptDescriptionElement> stepList = [];
 
   @override
   void initState() {
@@ -36,14 +37,14 @@ class _InstuctionFormState extends State<InstuctionForm> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          stepList.isEmpty
+          widget.stepList.isEmpty
               ? const SizedBox()
               : ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: stepList.length,
+                  itemCount: widget.stepList.length,
                   itemBuilder: (context, index) {
-                    final step = stepList[index];
+                    final step = widget.stepList[index];
                     final stepIndex = index + 1;
 
                     return Column(
@@ -53,7 +54,7 @@ class _InstuctionFormState extends State<InstuctionForm> {
                           stepIndex: stepIndex,
                           onPressedDeleteButton: () {
                             setState(() {
-                              stepList.removeAt(index);
+                              widget.stepList.removeAt(index);
                             });
                           },
                         ),
@@ -65,7 +66,7 @@ class _InstuctionFormState extends State<InstuctionForm> {
           FormCardButton(
             onPressed: () {
               setState(() {
-                stepList.add(
+                widget.stepList.add(
                   ReceiptDescriptionElement(
                     receiptDescriptionElementText: "",
                     receiptDescriptionPhoto: null,

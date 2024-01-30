@@ -37,11 +37,14 @@ class _StepCardState extends State<StepCard> {
                       clipper: TopRoundedCornersClipper(),
                       child: SizedBox(
                         width: double.infinity,
-                        child: SizedBox(
-                          height: 400,
-                          child: Image.memory(
-                            widget.step.receiptDescriptionPhoto!,
-                            fit: BoxFit.cover,
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxHeight: 200),
+                          child: SizedBox(
+                            height: 400,
+                            child: Image.memory(
+                              widget.step.receiptDescriptionPhoto!,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),

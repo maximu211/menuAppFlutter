@@ -2,9 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:menuapp/add_page/form/form_components/form_card_button.dart';
-import 'package:menuapp/add_page/form/form_components/form_input_field.dart';
-import 'package:menuapp/add_page/form/form_components/image_picker/image_picker.dart';
+import 'package:menuapp/add_page/form_components/form_card_button.dart';
+import 'package:menuapp/add_page/form_components/form_input_field.dart';
+import 'package:menuapp/add_page/form_components/image_picker/image_picker.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/modal_dialog.dart';
@@ -107,7 +107,7 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
                             _editedStep.receiptDescriptionElementText;
                         widget.step.receiptDescriptionPhoto =
                             _editedStep.receiptDescriptionPhoto;
-                        Navigator.pop(context);
+                        Navigator.pop(context, true);
                       }
                     });
                   },
