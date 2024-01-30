@@ -3,16 +3,22 @@ import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/models/models.dart';
 
-class StepCard extends StatelessWidget {
-  const StepCard({
-    super.key,
-    required this.step,
-    required this.stepIndex,
-  });
+class StepCard extends StatefulWidget {
+  StepCard(
+      {super.key,
+      required this.step,
+      required this.stepIndex,
+      this.onPressedDeleteButton});
 
   final ReceiptDescriptionElement step;
   final int stepIndex;
-  void onPressedDeleteButton() {}
+  void Function()? onPressedDeleteButton;
+
+  @override
+  State<StepCard> createState() => _StepCardState();
+}
+
+class _StepCardState extends State<StepCard> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,21 +33,24 @@ class StepCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              step.receiptDescriptionPhoto != null
+              widget.step.receiptDescriptionPhoto != null
                   ? ClipPath(
                       clipper: TopRoundedCornersClipper(),
                       child: SizedBox(
                         width: double.infinity,
-                        child: Image.memory(
-                          step.receiptDescriptionPhoto!,
-                          fit: BoxFit.fitHeight,
+                        child: SizedBox(
+                          height: 400,
+                          child: Image.memory(
+                            widget.step.receiptDescriptionPhoto!,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     )
                   : const SizedBox(),
               const SizedBox(height: 7),
               Text(
-                'Step $stepIndex',
+                'Step ${widget.stepIndex}',
                 style: TextStyle(
                   fontSize: FontSizeVariables.h2Size,
                   fontWeight: FontWeight.bold,
@@ -52,7 +61,7 @@ class StepCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 15, bottom: 15, right: 15),
                 child: Text(
-                  step.receiptDescriptionElementText,
+                  widget.step.receiptDescriptionElementText,
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontSize: FontSizeVariables.regularSize,

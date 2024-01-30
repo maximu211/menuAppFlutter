@@ -34,53 +34,50 @@ class _InstuctionFormState extends State<InstuctionForm> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        margin: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            stepList.isEmpty
-                ? const SizedBox()
-                : ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: stepList.length,
-                    itemBuilder: (context, index) {
-                      final step = stepList[index];
-                      final stepIndex = index + 1;
+      child: Column(
+        children: [
+          stepList.isEmpty
+              ? const SizedBox()
+              : ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: stepList.length,
+                  itemBuilder: (context, index) {
+                    final step = stepList[index];
+                    final stepIndex = index + 1;
 
-                      return Column(
-                        children: [
-                          StepCardWithButtons(
-                            step: step,
-                            stepIndex: stepIndex,
-                            onPressedDeleteButton: () {
-                              setState(() {
-                                stepList.removeAt(index);
-                              });
-                            },
-                          ),
-                          const SizedBox(height: 20),
-                        ],
-                      );
-                    },
+                    return Column(
+                      children: [
+                        StepCardWithButtons(
+                          step: step,
+                          stepIndex: stepIndex,
+                          onPressedDeleteButton: () {
+                            setState(() {
+                              stepList.removeAt(index);
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    );
+                  },
+                ),
+          FormCardButton(
+            onPressed: () {
+              setState(() {
+                stepList.add(
+                  ReceiptDescriptionElement(
+                    receiptDescriptionElementText: "",
+                    receiptDescriptionPhoto: null,
                   ),
-            FormCardButton(
-              onPressed: () {
-                setState(() {
-                  stepList.add(
-                    ReceiptDescriptionElement(
-                      receiptDescriptionElementText: "",
-                      receiptDescriptionPhoto: null,
-                    ),
-                  );
-                });
-              },
-              icon: Icons.add,
-              label: 'Add new instruction step',
-              isColorMain: true,
-            ),
-          ],
-        ),
+                );
+              });
+            },
+            icon: Icons.add,
+            label: 'Add new instruction step',
+            isColorMain: true,
+          ),
+        ],
       ),
     );
   }

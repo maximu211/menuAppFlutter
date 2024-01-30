@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:menuapp/add_page/form/instruction_form/instruction_form.dart';
 import 'package:menuapp/add_page/form/main_form/additional_informaton_form.dart';
 import 'package:menuapp/add_page/form/main_form/baner_form.dart';
 
@@ -47,7 +48,9 @@ class _MainFormState extends State<MainForm> {
               fieldController: widget.dishTypeFieldController,
               maxLenght: widget.maxDishTypeLenght,
               validator: widget.validatorDishTypeField,
-            )
+            ),
+            const SizedBox(height: 20),
+            const InstuctionForm(),
           ],
         ),
       ),

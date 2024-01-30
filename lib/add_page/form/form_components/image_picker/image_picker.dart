@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_editor_plus/image_editor_plus.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:menuapp/add_page/form/form_components/image_bottom_modal.dart';
+import 'package:menuapp/add_page/form/form_components/image_picker/image_bottom_modal.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 
@@ -39,9 +39,12 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
 
     final imageBytes = await fileToUint8List(File(image.path));
 
-    widget.onImageChanged?.call(imageBytes);
+    setState(() {
+      widget.image = imageBytes;
+    });
 
-    setState(() => widget.image = imageBytes);
+    widget.onImageChanged
+        ?.call(widget.image); // Invoke the callback with the updated image
   }
 
   @override
@@ -91,7 +94,7 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ImageCropper(
-                                image: widget.image as Uint8List,
+                                image: widget.image!,
                               ),
                             ),
                           );

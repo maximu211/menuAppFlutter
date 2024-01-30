@@ -10,7 +10,7 @@ class FormCardButton extends StatelessWidget {
       required this.label,
       required this.isColorMain});
 
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final IconData icon;
   final String label;
   final bool isColorMain;

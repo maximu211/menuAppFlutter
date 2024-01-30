@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:menuapp/add_page/form/instruction_form/instruction_form.dart';
 import 'package:menuapp/add_page/form/main_form/main_form.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/modal_dialog.dart';
 import 'package:menuapp/models/models.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -68,67 +66,34 @@ class _AddPage extends State<AddPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (int page) {
-                setState(() {
-                  _currentPage = page;
-                });
+            child: MainForm(
+              image: image,
+              fieldNameController: _fieldNameController,
+              maxNameLenght: FiledMaxLenght.maxLenghtDishName,
+              validatorNameField: (value) {
+                return;
               },
-              children: [
-                MainForm(
-                  image: image,
-                  fieldNameController: _fieldNameController,
-                  maxNameLenght: FiledMaxLenght.maxLenghtDishName,
-                  validatorNameField: (value) {
-                    return;
-                  },
-                  dishTypeFieldController: _dishTypeFieldController,
-                  maxDishTypeLenght: FiledMaxLenght.maxLenghtDishType,
-                  validatorDishTypeField: (value) {
-                    return;
-                  },
-                ),
-                const InstuctionForm(),
-              ],
+              dishTypeFieldController: _dishTypeFieldController,
+              maxDishTypeLenght: FiledMaxLenght.maxLenghtDishType,
+              validatorDishTypeField: (value) {
+                return;
+              },
             ),
           ),
-          Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                width: double.maxFinite,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorVariables.primaryColor),
-                  onPressed: () {},
-                  child: Text(
-                    "Submit",
-                    style: TextStyle(
-                        color: ColorVariables.backgroundColor,
-                        fontSize: FontSizeVariables.h2Size),
-                  ),
-                ),
+          Container(
+            margin: const EdgeInsets.only(left: 20, bottom: 20, right: 20),
+            width: double.maxFinite,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorVariables.primaryColor),
+              onPressed: () {},
+              child: Text(
+                "Submit",
+                style: TextStyle(
+                    color: ColorVariables.backgroundColor,
+                    fontSize: FontSizeVariables.h2Size),
               ),
-              Container(
-                margin: const EdgeInsets.all(5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SmoothPageIndicator(
-                      controller: _pageController,
-                      count: 2,
-                      effect: ExpandingDotsEffect(
-                        activeDotColor: ColorVariables.primaryColor,
-                        dotColor: Colors.grey,
-                        dotWidth: 20,
-                        dotHeight: 20,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ),

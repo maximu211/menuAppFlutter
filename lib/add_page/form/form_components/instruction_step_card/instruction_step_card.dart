@@ -5,14 +5,23 @@ import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/home_page/receipt_page/list_of_ingredients/step_card.dart';
 import 'package:menuapp/models/models.dart';
 
-class StepCardWithButtons extends StepCard {
+class StepCardWithButtons extends StatefulWidget {
   const StepCardWithButtons({
-    Key? key,
-    required ReceiptDescriptionElement step,
-    required int stepIndex,
-    required void Function() onPressedDeleteButton,
-  }) : super(key: key, step: step, stepIndex: stepIndex);
+    super.key,
+    required this.step,
+    required this.stepIndex,
+    this.onPressedDeleteButton,
+  });
 
+  final ReceiptDescriptionElement step;
+  final int stepIndex;
+  final void Function()? onPressedDeleteButton;
+
+  @override
+  State<StepCardWithButtons> createState() => _StepCardWithButtonsState();
+}
+
+class _StepCardWithButtonsState extends State<StepCardWithButtons> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,7 +36,7 @@ class StepCardWithButtons extends StepCard {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              super.build(context),
+              StepCard(step: widget.step, stepIndex: widget.stepIndex),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
@@ -43,8 +52,8 @@ class StepCardWithButtons extends StepCard {
                             context,
                             createRoute(
                               pageType: 'editStepPage',
-                              step: step,
-                              stepNum: stepIndex,
+                              step: widget.step,
+                              stepNum: widget.stepIndex,
                             ),
                           );
                         },
@@ -56,7 +65,7 @@ class StepCardWithButtons extends StepCard {
                         isColorMain: false,
                         icon: Icons.delete,
                         label: "Delete",
-                        onPressed: onPressedDeleteButton,
+                        onPressed: widget.onPressedDeleteButton,
                       ),
                     ),
                   ],

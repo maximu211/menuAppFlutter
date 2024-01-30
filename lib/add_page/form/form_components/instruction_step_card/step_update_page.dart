@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:menuapp/add_page/form/form_components/form_card_button.dart';
@@ -8,19 +10,79 @@ import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/modal_dialog.dart';
 import 'package:menuapp/models/models.dart';
 
-class StepUpdatePage extends StatelessWidget {
+class StepUpdatePage extends StatefulWidget {
   StepUpdatePage({super.key, required this.step, required this.stepNum});
 
   final ReceiptDescriptionElement step;
   final int stepNum;
 
+  @override
+  State<StepUpdatePage> createState() => _StepUpdatePageState();
+}
+
+class _StepUpdatePageState extends State<StepUpdatePage> {
+  Uint8List? pickedImage;
+  late ReceiptDescriptionElement _editedStep;
+
+  final TextEditingController _textEditingController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _editedStep = widget.step;
+    _textEditingController.text =
+        _editedStep.receiptDescriptionElementText ?? "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
         backgroundColor: ColorVariables.primaryColor,
+      ),
+      body: SingleChildScrollView(
+        dragStartBehavior: DragStartBehavior.down,
+        child: Container(
+          margin: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Step ${widget.stepNum}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: FontSizeVariables.h2Size,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ImagePickerContainer(
+                  image: pickedImage ?? widget.step.receiptDescriptionPhoto,
+                  onImageChanged: (image) {
+                    setState(() {
+                      pickedImage = image;
+                    });
+                  },
+                ),
+                const SizedBox(height: 30),
+                FormInputField(
+                  maxLenght: 600,
+                  validator: (value) {
+                    if (value!.trim().isEmpty) {
+                      return "This field quired";
+                    }
+                  },
+                  inputLabel: "Instruction description",
+                  filedController: _textEditingController,
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
       persistentFooterButtons: [
         Container(
@@ -33,7 +95,22 @@ class StepUpdatePage extends StatelessWidget {
                   icon: Icons.save,
                   label: "Save",
                   isColorMain: true,
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      if (_formKey.currentState!.validate()) {
+                        _editedStep.receiptDescriptionElementText =
+                            _textEditingController.text.trim();
+                        if (pickedImage != null) {
+                          _editedStep.receiptDescriptionPhoto = pickedImage;
+                        }
+                        widget.step.receiptDescriptionElementText =
+                            _editedStep.receiptDescriptionElementText;
+                        widget.step.receiptDescriptionPhoto =
+                            _editedStep.receiptDescriptionPhoto;
+                        Navigator.pop(context);
+                      }
+                    });
+                  },
                 ),
               ),
               const SizedBox(width: 20),
@@ -59,43 +136,8 @@ class StepUpdatePage extends StatelessWidget {
               ),
             ],
           ),
-        )
-      ],
-      body: SingleChildScrollView(
-        dragStartBehavior: DragStartBehavior.down,
-        child: Container(
-          margin: const EdgeInsets.all(20),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Step ${stepNum}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: FontSizeVariables.h2Size,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                ImagePickerContainer(
-                  image: step.receiptDescriptionPhoto,
-                  onImageChanged: (image) {
-                    step.receiptDescriptionPhoto = image;
-                  },
-                ),
-                const SizedBox(height: 30),
-                FormInputField(
-                  maxLenght: 600,
-                  validator: (value) {},
-                  inputLabel: "Instruction description",
-                  initTextfieldValue: step.receiptDescriptionElementText,
-                ),
-              ],
-            ),
-          ),
         ),
-      ),
+      ],
     );
   }
 }
