@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/account_page/account_page.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/home_page/home_page.dart';
 import 'package:menuapp/search_page/search_page.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
+import 'package:menuapp/user_page/user_page.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
@@ -25,7 +25,7 @@ class _NavigationPage extends State<NavigationPage> {
       case 1:
         return const SearchPage();
       case 3:
-        return const AccountPage();
+        return const UserPage(isCurrentUser: true);
       default:
         return const Text('Невідомий екран');
     }

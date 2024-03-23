@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:menuapp/add_page/form_components/dropdown_picker.dart';
@@ -22,12 +24,12 @@ class FiledMaxLenght {
 }
 
 class _AddPage extends State<AddPage> {
-  late Uint8List? _mainImage = null;
+  Uint8List? _mainImage;
   late String _dishType;
   late String _dishName;
   late CookingTime? _dishCookTime;
   late CookingDifficulty? _dishHardness;
-  late List<ReceiptDescriptionElement> _stepList = [];
+  late final List<ReceiptDescriptionElement> _stepList = [];
 
   bool _isStepListEmpty = false;
   bool _isImageEmpty = false;
@@ -85,6 +87,7 @@ class _AddPage extends State<AddPage> {
                     if (value!.trim().isEmpty) {
                       return "Please input dish name";
                     }
+                    return null;
                   },
                 ),
                 const SizedBox(height: 15),
@@ -116,13 +119,13 @@ class _AddPage extends State<AddPage> {
                   inputLabel: 'Input dish type (salad, drink, etc.)',
                   maxLenght: FiledMaxLenght.maxLenghtDishType,
                   validator: (value) {
-                    if (value!.trim().isEmpty) {
+                    if (value == null || value.trim().isEmpty) {
                       return "Please input dish type";
                     }
-
-                    if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
-                      return "Input should contain only letters";
+                    if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
+                      return "Invalid characters. Only letters and spaces are allowed.";
                     }
+                    return null;
                   },
                 ),
                 DropdownPicker<CookingTime>(
@@ -152,8 +155,9 @@ class _AddPage extends State<AddPage> {
                           Text(
                             "Please add at least one instruction step",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 180, 45, 12),
-                                fontSize: 13),
+                              color: Color.fromARGB(255, 180, 45, 12),
+                              fontSize: 13,
+                            ),
                           ),
                         ],
                       )

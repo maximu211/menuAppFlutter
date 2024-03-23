@@ -21,7 +21,7 @@ class StepUpdatePage extends StatefulWidget {
 }
 
 class _StepUpdatePageState extends State<StepUpdatePage> {
-  Uint8List? pickedImage;
+  late Uint8List? _pickedImage;
   late ReceiptDescriptionElement _editedStep;
 
   final TextEditingController _textEditingController = TextEditingController();
@@ -33,6 +33,7 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
     super.initState();
     _editedStep = widget.step;
     _textEditingController.text = _editedStep.receiptDescriptionElementText;
+    _pickedImage = widget.step.receiptDescriptionPhoto;
   }
 
   @override
@@ -60,10 +61,10 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
                 ),
                 const SizedBox(height: 20),
                 ImagePickerContainer(
-                  image: pickedImage ?? widget.step.receiptDescriptionPhoto,
+                  image: _pickedImage,
                   onImageChanged: (image) {
                     setState(() {
-                      pickedImage = image;
+                      _pickedImage = image;
                     });
                   },
                 ),
@@ -72,7 +73,7 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
                   maxLenght: 600,
                   validator: (value) {
                     if (value!.trim().isEmpty) {
-                      return "This field quired";
+                      return "Instruction description is required";
                     }
                     return null;
                   },
@@ -100,9 +101,8 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
                       if (_formKey.currentState!.validate()) {
                         _editedStep.receiptDescriptionElementText =
                             _textEditingController.text.trim();
-                        if (pickedImage != null) {
-                          _editedStep.receiptDescriptionPhoto = pickedImage;
-                        }
+                        widget.step.receiptDescriptionPhoto = _pickedImage;
+
                         widget.step.receiptDescriptionElementText =
                             _editedStep.receiptDescriptionElementText;
                         widget.step.receiptDescriptionPhoto =

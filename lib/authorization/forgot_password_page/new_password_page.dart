@@ -78,10 +78,7 @@ class NewPasswordPage extends StatelessWidget {
                                   builder: (context) => const LoginPage()));
                         } else {
                           //String textError;
-                          if (passwordText != repeatPasswordText) {
-                            String textError =
-                                "The passwords you entered are not the same";
-                          }
+                          if (passwordText != repeatPasswordText) {}
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               backgroundColor: ColorVariables.primaryColor,
