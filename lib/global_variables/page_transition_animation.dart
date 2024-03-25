@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/add_page/add_page.dart';
-import 'package:menuapp/add_page/form_components/instruction_edit/editing_components/step_update_page.dart';
-import 'package:menuapp/home_page/receipt_page/receipt_page.dart';
+import 'package:menuapp/pages/add_page/add_page.dart';
+import 'package:menuapp/pages/add_page/form_components/instruction_edit/editing_components/step_update_page.dart';
+import 'package:menuapp/pages/home_page/receipt_page/receipt_page.dart';
 
 Route createRoute({
   dynamic cardReceipt,

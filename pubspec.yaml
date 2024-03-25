@@ -32,13 +32,14 @@ dependencies:
   appinio_swiper: ^2.0.3
   card_swiper: ^3.0.1
   intl: ^0.18.1
-  google_fonts: ^6.1.0
+  google_fonts: 6.1.0
   provider: ^6.0.5
   easy_search_bar: ^2.5.0
   fluttericon: ^2.0.0
   flutter_statusbarcolor_ns: ^0.5.0
   sleek_circular_slider: ^2.0.1
   url_launcher: ^6.0.12
+  flutter_secure_storage: ^5.0.3
   
 
   # The following adds the Cupertino Icons font to your application.
@@ -50,6 +51,8 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   image_cropper: ^5.0.1
   image_editor_plus: ^1.0.5
+  http: ^1.2.0
+  device_preview: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +85,8 @@ flutter:
     - assets/images/dish_images/2.jpg
     - assets/images/dish_images/3.jpg
     - assets/images/dish_images/4.jpg
+
+    - assets/certificate.crt
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/page_transition_animation.dart';
-import 'package:menuapp/home_page/home_page.dart';
-import 'package:menuapp/search_page/search_page.dart';
+import 'package:menuapp/pages/home_page/home_page.dart';
+import 'package:menuapp/pages/search_page/search_page.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/user_page/user_page.dart';
 

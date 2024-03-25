@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:menuapp/global_variables/dialog_utils.dart';
+import 'package:menuapp/http/auth/user_requests.dart';
+import 'package:menuapp/main.dart';
+import 'package:menuapp/secure_storage.dart';
 
 class UserPage extends StatefulWidget {
   final bool isCurrentUser;
@@ -14,6 +18,11 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
+  void readAccessToken() async {
+    String? accessToken = await storage.read(key: "AccessToken");
+    print(accessToken);
+  }
 
   @override
   void initState() {
@@ -38,11 +47,38 @@ class _UserPageState extends State<UserPage>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [
-          // Content for Tab 1
-          Center(child: Text('Tab 1 Content')),
-          // Content for Tab 2
-          Center(child: Text('Tab 2 Content')),
+        children: [
+          Center(
+              child: ElevatedButton(
+                  onPressed: () {
+                    DialogUtils.showLeavePageDialog(
+                        context: context,
+                        title: "Log out",
+                        description: "Do you realy want to log out?",
+                        okFunc: () async {
+                          String? accessToken = await SecureStorage()
+                              .storage
+                              .read(key: "AccessToken");
+                          if (accessToken != null) {
+                            UserRequest.logOut(accessToken).then((result) {
+                              if (result.success) {
+                                Navigator.popAndPushNamed(
+                                    context, "/logInPage");
+                                storage.deleteAll();
+                                readAccessToken();
+                              }
+                            });
+                          } else {
+                            print("ZALUPA");
+                            Navigator.popAndPushNamed(context, "/logInPage");
+                          }
+                        },
+                        cancelFunc: () {
+                          Navigator.pop(context);
+                        });
+                  },
+                  child: const Text("Log Out"))),
+          const Center(child: Text('Tab 2 Content')),
         ],
       ),
     );
