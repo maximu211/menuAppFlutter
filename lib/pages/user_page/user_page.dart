@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/http/auth/user_requests.dart';
-import 'package:menuapp/main.dart';
-import 'package:menuapp/secure_storage.dart';
+import 'package:menuapp/utils/secure_storage.dart';
 
 class UserPage extends StatefulWidget {
   final bool isCurrentUser;
@@ -20,7 +19,8 @@ class _UserPageState extends State<UserPage>
   late TabController _tabController;
 
   void readAccessToken() async {
-    String? accessToken = await storage.read(key: "AccessToken");
+    String? accessToken =
+        await SecureStorage().storage.read(key: "AccessToken");
     print(accessToken);
   }
 
@@ -64,13 +64,11 @@ class _UserPageState extends State<UserPage>
                               if (result.success) {
                                 Navigator.popAndPushNamed(
                                     context, "/logInPage");
-                                storage.deleteAll();
-                                readAccessToken();
+                                SecureStorage().storage.deleteAll();
                               }
                             });
                           } else {
-                            print("ZALUPA");
-                            Navigator.popAndPushNamed(context, "/logInPage");
+                            //Navigator.popAndPushNamed(context, "/logInPage");
                           }
                         },
                         cancelFunc: () {

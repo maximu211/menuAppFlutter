@@ -19,23 +19,23 @@ class AddPage extends StatefulWidget {
 }
 
 class FiledMaxLenght {
-  static int maxLenghtDishName = 50;
-  static int maxLenghtDishType = 30;
+  static int maxLenghtrecipeName = 50;
+  static int maxLenghtrecipeType = 30;
 }
 
 class _AddPage extends State<AddPage> {
   Uint8List? _mainImage;
-  late String _dishType;
-  late String _dishName;
-  late CookingTime? _dishCookTime;
-  late CookingDifficulty? _dishHardness;
-  late final List<ReceiptDescriptionElement> _stepList = [];
+  late String _recipeType;
+  late String _recipeName;
+  late CookingTime? _recipeCookTime;
+  late CookingDifficulty? _recipeHardness;
+  late final List<RecipeDescriptionElement> _stepList = [];
 
   bool _isStepListEmpty = false;
   bool _isImageEmpty = false;
 
   final TextEditingController _fieldNameController = TextEditingController();
-  final TextEditingController _dishTypeFieldController =
+  final TextEditingController _recipeTypeFieldController =
       TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -80,12 +80,12 @@ class _AddPage extends State<AddPage> {
             child: Column(
               children: [
                 FormInputField(
-                  inputLabel: 'Input dish name',
+                  inputLabel: 'Input recipe name',
                   filedController: _fieldNameController,
                   maxLenght: 50,
                   validator: (value) {
                     if (value!.trim().isEmpty) {
-                      return "Please input dish name";
+                      return "Please input recipe name";
                     }
                     return null;
                   },
@@ -115,12 +115,12 @@ class _AddPage extends State<AddPage> {
                     : const SizedBox(),
                 const SizedBox(height: 20),
                 FormInputField(
-                  filedController: _dishTypeFieldController,
-                  inputLabel: 'Input dish type (salad, drink, etc.)',
-                  maxLenght: FiledMaxLenght.maxLenghtDishType,
+                  filedController: _recipeTypeFieldController,
+                  inputLabel: 'Input recipe type (salad, drink, etc.)',
+                  maxLenght: FiledMaxLenght.maxLenghtrecipeType,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return "Please input dish type";
+                      return "Please input recipe type";
                     }
                     if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
                       return "Invalid characters. Only letters and spaces are allowed.";
@@ -132,7 +132,7 @@ class _AddPage extends State<AddPage> {
                   isTime: true,
                   onChange: (CookingTime? selectedValue) {
                     setState(() {
-                      _dishCookTime = selectedValue;
+                      _recipeCookTime = selectedValue;
                     });
                   },
                 ),
@@ -141,7 +141,7 @@ class _AddPage extends State<AddPage> {
                   isTime: false,
                   onChange: (CookingDifficulty? selectedValue) {
                     setState(() {
-                      _dishHardness = selectedValue;
+                      _recipeHardness = selectedValue;
                     });
                   },
                 ),
@@ -180,8 +180,8 @@ class _AddPage extends State<AddPage> {
                   _mainImage != null &&
                   _stepList.isNotEmpty) {
                 setState(() {
-                  _dishName = _fieldNameController.text.trim();
-                  _dishType = _dishTypeFieldController.text.trim();
+                  _recipeName = _fieldNameController.text.trim();
+                  _recipeType = _recipeTypeFieldController.text.trim();
                   _isImageEmpty = false;
                   _isStepListEmpty = false;
                 });

@@ -4,7 +4,7 @@ import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/pages/home_page/home_page.dart';
 import 'package:menuapp/pages/search_page/search_page.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
-import 'package:menuapp/user_page/user_page.dart';
+import 'package:menuapp/pages/user_page/user_page.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});

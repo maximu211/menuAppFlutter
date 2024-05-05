@@ -1,19 +1,18 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/pages/home_page/card/card_icons_info.dart';
 import 'package:menuapp/pages/home_page/components/user_row.dart';
-import 'package:menuapp/pages/home_page/receipt_page/list_of_ingredients/ingredient.dart';
-import 'package:menuapp/pages/home_page/receipt_page/list_of_ingredients/step_card.dart';
+import 'package:menuapp/pages/home_page/recipe_page/list_of_ingredients/ingredient.dart';
+import 'package:menuapp/pages/home_page/recipe_page/list_of_ingredients/step_card.dart';
 import 'package:menuapp/models/mappers.dart';
 import 'package:menuapp/models/models.dart';
 
 class IngredientList extends StatefulWidget {
-  const IngredientList({Key? key, required this.cardReceipt}) : super(key: key);
+  const IngredientList({Key? key, required this.cardRecipe}) : super(key: key);
 
-  final CardReceiptModel cardReceipt;
+  final cardRecipeModel cardRecipe;
 
   @override
   State<StatefulWidget> createState() => _IngredientListState();
@@ -22,36 +21,36 @@ class IngredientList extends StatefulWidget {
 class _IngredientListState extends State<IngredientList> {
   late BinaryFileReader binaryFileReader;
   late Uint8List binaryData;
-  late Future<ReceiptDetailModel> receiptDetail;
+  late Future<RecipeDetailModel> recipeDetail;
 
   @override
   void initState() {
     super.initState();
-    receiptDetail = loadData();
+    recipeDetail = loadData();
   }
 
-  Future<ReceiptDetailModel> loadData() async {
-    var data = await rootBundle.load('assets/images/dish_images/1.jpg');
+  Future<RecipeDetailModel> loadData() async {
+    var data = await rootBundle.load('assets/images/recipe_images/1.jpg');
     setState(() => binaryData = data.buffer.asUint8List());
 
-    return ReceiptDetailModel(
-      receiptDescriptionElements: [
-        ReceiptDescriptionElement(
-          receiptDescriptionElementText:
+    return RecipeDetailModel(
+      RecipeDescriptionElements: [
+        RecipeDescriptionElement(
+          RecipeDescriptionElementText:
               "asd jasd asd gka guadsg da gasd gjka gsd jkasd kagjksd gjkasd gjk agjkasg jksad gjda gjkda gjkasd gjkasd  gjksad gjksad  gjksadsad gjsad gjads gjads gjksad gukas gkuas gjkasdgjk a jkgads gjk",
-          receiptDescriptionPhoto: binaryData,
+          recipeDescriptionPhoto: binaryData,
         ),
-        ReceiptDescriptionElement(
-          receiptDescriptionElementText:
+        RecipeDescriptionElement(
+          RecipeDescriptionElementText:
               "asd jasd asd gka guadsg da gasd gjka gsd jkasd kagjksd gjkasd gjk agjkasg jksad gjda gjkda gjkasd gjkasd  gjksad gjksad  gjksadsad gjsad gjads gjads gjksad gukas gkuas gjkasdgjk a jkgads gjk",
-          receiptDescriptionPhoto: binaryData,
+          recipeDescriptionPhoto: binaryData,
         ),
-        ReceiptDescriptionElement(
-          receiptDescriptionElementText:
+        RecipeDescriptionElement(
+          RecipeDescriptionElementText:
               "asd jasd asd gka guadsg da gasd gjka gsd jkasd kagjksd gjkasd gjk agjkasg jksad gjda gjkda gjkasd gjkasd  gjksad gjksad  gjksadsad gjsad gjads gjads gjksad gukas gkuas gjkasdgjk a jkgads gjk",
         ),
       ],
-      receiptIngradient: [
+      recipeIngradient: [
         "qwe dllfffs s asdddsa, 121g",
         "qwesa sa sssaasas, 121g",
         "qwesda d sad as, 12g",
@@ -71,7 +70,7 @@ class _IngredientListState extends State<IngredientList> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              widget.cardReceipt.dishName,
+              widget.cardRecipe.name,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: FontSizeVariables.h1Size,
@@ -83,23 +82,23 @@ class _IngredientListState extends State<IngredientList> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 UserRow(
-                  userName: widget.cardReceipt.user.userName,
-                  image: widget.cardReceipt.user.userPhoto,
+                  userName: widget.cardRecipe.user.userName,
+                  image: widget.cardRecipe.user.userPhoto,
                   textColor: Colors.black,
                 ),
               ],
             ),
             CardIconsInfo(
               textHardness:
-                  Mapper.mapHardnessToText(widget.cardReceipt.cookDifficulty),
-              textTime: Mapper.mapTimeToText(widget.cardReceipt.cookTime),
-              textType: widget.cardReceipt.cookType,
+                  Mapper.mapHardnessToText(widget.cardRecipe.cookingDifficulty),
+              textTime: Mapper.mapTimeToText(widget.cardRecipe.cookingTime),
+              textType: widget.cardRecipe.recipeType,
               iconColor: Colors.black,
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: FutureBuilder<ReceiptDetailModel>(
-                future: receiptDetail,
+              child: FutureBuilder<RecipeDetailModel>(
+                future: recipeDetail,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
@@ -130,13 +129,13 @@ class _IngredientListState extends State<IngredientList> {
                             ],
                           ),
                           child: ListView.builder(
-                            itemCount: snapshot.data!.receiptIngradient.length,
+                            itemCount: snapshot.data!.recipeIngradient.length,
                             shrinkWrap: true,
                             padding: EdgeInsets.zero,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final item =
-                                  snapshot.data!.receiptIngradient[index];
+                                  snapshot.data!.recipeIngradient[index];
                               return Ingredient(ingradient: item);
                             },
                           ),
@@ -155,10 +154,10 @@ class _IngredientListState extends State<IngredientList> {
                           padding: EdgeInsets.zero,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount:
-                              snapshot.data!.receiptDescriptionElements.length,
+                              snapshot.data!.RecipeDescriptionElements.length,
                           itemBuilder: (context, index) {
-                            final step = snapshot
-                                .data!.receiptDescriptionElements[index];
+                            final step =
+                                snapshot.data!.RecipeDescriptionElements[index];
                             int stepIndex = index + 1;
 
                             return StepCard(

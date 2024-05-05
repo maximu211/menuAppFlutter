@@ -6,4 +6,5 @@ class BaseRoutes {
 class UserRoutes {
   static String logIn = "/log_in";
   static String logOut = "/log_out";
+  static String refreshToken = "/refresh_token";
 }

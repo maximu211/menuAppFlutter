@@ -10,7 +10,7 @@ class StepCard extends StatefulWidget {
     required this.stepIndex,
   });
 
-  final ReceiptDescriptionElement step;
+  final RecipeDescriptionElement step;
   final int stepIndex;
 
   @override
@@ -32,7 +32,7 @@ class _StepCardState extends State<StepCard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              widget.step.receiptDescriptionPhoto != null
+              widget.step.recipeDescriptionPhoto != null
                   ? ClipPath(
                       clipper: TopRoundedCornersClipper(),
                       child: SizedBox(
@@ -42,7 +42,7 @@ class _StepCardState extends State<StepCard> {
                           child: SizedBox(
                             height: 400,
                             child: Image.memory(
-                              widget.step.receiptDescriptionPhoto!,
+                              widget.step.recipeDescriptionPhoto!,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -63,7 +63,7 @@ class _StepCardState extends State<StepCard> {
               Padding(
                 padding: const EdgeInsets.only(left: 15, bottom: 15, right: 15),
                 child: Text(
-                  widget.step.receiptDescriptionElementText,
+                  widget.step.RecipeDescriptionElementText,
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontSize: FontSizeVariables.regularSize,

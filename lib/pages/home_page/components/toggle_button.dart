@@ -26,17 +26,17 @@ class ToggleButton extends StatefulWidget {
 }
 
 class ToggleButtonState extends State<ToggleButton> {
-  late bool isDishSaved;
+  late bool isRecipeSaved;
   @override
   void initState() {
     super.initState();
-    isDishSaved = widget.isButtonToggled;
+    isRecipeSaved = widget.isButtonToggled;
   }
 
   void _toggleButton() {
-    bool newState = !isDishSaved;
+    bool newState = !isRecipeSaved;
     setState(() {
-      isDishSaved = newState;
+      isRecipeSaved = newState;
     });
     widget.onTap(newState);
 
@@ -59,7 +59,7 @@ class ToggleButtonState extends State<ToggleButton> {
         onTap: _toggleButton,
         child: AnimatedCrossFade(
           duration: const Duration(milliseconds: 150),
-          crossFadeState: isDishSaved
+          crossFadeState: isRecipeSaved
               ? CrossFadeState.showFirst
               : CrossFadeState.showSecond,
           firstChild: Icon(

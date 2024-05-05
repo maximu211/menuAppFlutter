@@ -9,7 +9,7 @@ import 'package:menuapp/models/models.dart';
 class InstuctionForm extends StatefulWidget {
   const InstuctionForm({super.key, required this.stepList});
 
-  final List<ReceiptDescriptionElement> stepList;
+  final List<RecipeDescriptionElement> stepList;
 
   @override
   State<InstuctionForm> createState() => _InstuctionFormState();
@@ -26,7 +26,8 @@ class _InstuctionFormState extends State<InstuctionForm> {
   }
 
   Future<void> _loadBinaryData() async {
-    binaryFileReader = BinaryFileReader('assets/images/dish_images/image.bin');
+    binaryFileReader =
+        BinaryFileReader('assets/images/recipe_images/image.bin');
     binaryData = await binaryFileReader.readBinaryFile();
     if (mounted) {
       setState(() {});
@@ -67,9 +68,9 @@ class _InstuctionFormState extends State<InstuctionForm> {
           FormCardButton(
             onPressed: () {
               setState(() {
-                ReceiptDescriptionElement newStep = ReceiptDescriptionElement(
-                  receiptDescriptionElementText: '',
-                  receiptDescriptionPhoto: null,
+                RecipeDescriptionElement newStep = RecipeDescriptionElement(
+                  RecipeDescriptionElementText: '',
+                  recipeDescriptionPhoto: null,
                 );
 
                 Navigator.push(
@@ -80,7 +81,7 @@ class _InstuctionFormState extends State<InstuctionForm> {
                     stepNum: widget.stepList.length + 1,
                   ),
                 ).then((_) {
-                  if (newStep.receiptDescriptionElementText.trim().isNotEmpty) {
+                  if (newStep.RecipeDescriptionElementText.trim().isNotEmpty) {
                     setState(() {
                       widget.stepList.add(newStep);
                     });

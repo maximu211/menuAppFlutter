@@ -31,7 +31,7 @@ class _DropdownPickerState<T> extends State<DropdownPicker<T>> {
     return Column(
       children: [
         Text(widget.isTime
-            ? "How long to cook this dish?"
+            ? "How long to cook this recipe?"
             : "How difficult is it to cook?"),
         const SizedBox(height: 6),
         DropdownButtonFormField<T>(

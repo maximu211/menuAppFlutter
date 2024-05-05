@@ -5,7 +5,7 @@ import 'package:menuapp/pages/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/http/auth/user_requests.dart';
-import 'package:menuapp/secure_storage.dart';
+import 'package:menuapp/utils/secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

@@ -53,6 +53,7 @@ dependencies:
   image_editor_plus: ^1.0.5
   http: ^1.2.0
   device_preview: ^1.1.0
+  jwt_decode: ^0.3.1
 
 dev_dependencies:
   flutter_test:
@@ -81,12 +82,11 @@ flutter:
     - assets/images/logo.png
     - assets/images/test.jpg
     - assets/images/background_image.png
-    - assets/images/dish_images/1.jpg
-    - assets/images/dish_images/2.jpg
-    - assets/images/dish_images/3.jpg
-    - assets/images/dish_images/4.jpg
-
-    - assets/certificate.crt
+    - assets/images/recipe_images/1.jpg
+    - assets/images/recipe_images/2.jpg
+    - assets/images/recipe_images/3.jpg
+    - assets/images/recipe_images/4.jpg
+    - assets/images/recipe_images/image.bin
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

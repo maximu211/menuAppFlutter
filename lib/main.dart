@@ -4,20 +4,26 @@ import 'package:device_preview/device_preview.dart';
 import 'package:menuapp/pages/authorization/sign_in_page/sign_in_page.dart';
 import 'package:menuapp/navigation/navigation_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:menuapp/secure_storage.dart';
+import 'package:menuapp/utils/authentification_wraper.dart';
+import 'package:menuapp/utils/http_override.dart';
+import 'package:menuapp/utils/refresh_token.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-final storage = SecureStorage().storage;
-
-void main() {
+void main() async {
   HttpOverrides.global = MyHttpOverrides();
+  WidgetsFlutterBinding.ensureInitialized();
+  //SecureStorage().storage.deleteAll();
+  TokenTimer tokenTimer = TokenTimer();
+
   runApp(
     DevicePreview(
       enabled: true,
       tools: const [
         ...DevicePreview.defaultTools,
       ],
-      builder: (context) => const MyApp(),
+      builder: (context) {
+        return const MyApp();
+      },
     ),
   );
 }
@@ -36,42 +42,6 @@ class MyApp extends StatelessWidget {
       },
       debugShowCheckedModeBanner: false,
       home: const Scaffold(body: AuthenticationWrapper()),
-    );
-  }
-}
-
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-  }
-}
-
-class AuthenticationWrapper extends StatelessWidget {
-  const AuthenticationWrapper({super.key});
-  Future<String?> getTokenFromStorage() async {
-    return await storage.read(key: 'AccessToken');
-  }
-
-  Future<bool> isUserLoggedIn() async {
-    String? token = await getTokenFromStorage();
-    return token != null;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: isUserLoggedIn(),
-      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          final bool isLoggedIn = snapshot.data ?? false;
-          return isLoggedIn ? const NavigationPage() : const LoginPage();
-        }
-      },
     );
   }
 }

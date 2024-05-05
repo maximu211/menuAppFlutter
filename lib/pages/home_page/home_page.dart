@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
@@ -16,65 +15,56 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late BinaryFileReader binaryFileReader;
   late Uint8List binaryData;
-  late Future<List<CardReceiptModel>> cardReceiptsFuture;
+  late Future<List<cardRecipeModel>> cardRecipesFuture;
 
   @override
   void initState() {
     super.initState();
-    cardReceiptsFuture = loadData();
+    cardRecipesFuture = loadData();
   }
 
-  Future<List<CardReceiptModel>> loadData() async {
-    var data = await rootBundle.load('assets/images/dish_images/1.jpg');
+  Future<List<cardRecipeModel>> loadData() async {
+    var data = await rootBundle.load('assets/images/recipe_images/1.jpg');
     setState(() => binaryData = data.buffer.asUint8List());
     return [
-      CardReceiptModel(
+      cardRecipeModel(
         user: UserModel(
-          userName: "John_Lennon",
-          userPhoto: binaryData,
-        ),
-        cookDifficulty: CookingDifficulty.medium,
-        cookTime: CookingTime.hour1,
-        cookType: "Drink",
-        dishName: 'Cocktail "Cool guy"',
-        dishPhoto: binaryData,
-        isDishSaved: true,
-        savedCount: 140,
-        isDishLiked: false,
-        receiptId: '21',
-        userId: '12',
+            userName: "John_Lennon", userPhoto: binaryData, userId: '12'),
+        cookingDifficulty: CookingDifficulty.medium,
+        cookingTime: CookingTime.hour1,
+        recipeType: "Drink",
+        name: 'Cocktail "Cool guy"',
+        recipePhoto: binaryData,
+        isRecipeSaved: true,
+        likesCount: 140,
+        isRecipeLiked: false,
+        recipeId: '21',
       ),
-      CardReceiptModel(
+      cardRecipeModel(
         user: UserModel(
-          userName: "John_Lennon",
-          userPhoto: binaryData,
-        ),
-        cookDifficulty: CookingDifficulty.medium,
-        cookTime: CookingTime.hour1,
-        cookType: "Drink",
-        dishName: 'Cocktail "Cool guy"',
-        dishPhoto: binaryData,
-        isDishSaved: true,
-        savedCount: 140,
-        isDishLiked: false,
-        receiptId: '21',
-        userId: '12',
+            userName: "John_Lennon", userPhoto: binaryData, userId: '12'),
+        cookingDifficulty: CookingDifficulty.medium,
+        cookingTime: CookingTime.hour1,
+        recipeType: "Drink",
+        name: 'Cocktail "Cool guy"',
+        recipePhoto: binaryData,
+        isRecipeSaved: true,
+        likesCount: 140,
+        isRecipeLiked: false,
+        recipeId: '21',
       ),
-      CardReceiptModel(
+      cardRecipeModel(
         user: UserModel(
-          userName: "John_Lennon",
-          userPhoto: binaryData,
-        ),
-        cookDifficulty: CookingDifficulty.medium,
-        cookTime: CookingTime.hour1,
-        cookType: "Drink",
-        dishName: 'Cocktail "Cool guy"',
-        dishPhoto: binaryData,
-        isDishSaved: true,
-        savedCount: 140,
-        isDishLiked: false,
-        receiptId: '21',
-        userId: '12',
+            userName: "John_Lennon", userPhoto: binaryData, userId: '12'),
+        cookingDifficulty: CookingDifficulty.medium,
+        cookingTime: CookingTime.hour1,
+        recipeType: "Drink",
+        name: 'Cocktail "Cool guy"',
+        recipePhoto: binaryData,
+        isRecipeSaved: true,
+        likesCount: 140,
+        isRecipeLiked: false,
+        recipeId: '21',
       ),
     ];
   }
@@ -107,8 +97,8 @@ class _HomePageState extends State<HomePage> {
         SliverToBoxAdapter(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: FutureBuilder<List<CardReceiptModel>>(
-              future: cardReceiptsFuture,
+            child: FutureBuilder<List<cardRecipeModel>>(
+              future: cardRecipesFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -120,10 +110,10 @@ class _HomePageState extends State<HomePage> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      final cardReceipt = snapshot.data![index];
+                      final cardRecipe = snapshot.data![index];
                       return Column(
                         children: [
-                          MainPageCard(cardReceipt: cardReceipt),
+                          MainPageCard(cardRecipe: cardRecipe),
                           const SizedBox(height: 20),
                         ],
                       );

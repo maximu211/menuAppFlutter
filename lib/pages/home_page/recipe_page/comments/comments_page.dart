@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/pages/home_page/receipt_page/comments/comment.dart';
+import 'package:menuapp/pages/home_page/recipe_page/comments/comment.dart';
 import 'package:menuapp/models/models.dart';
 
 class CommentsPage extends StatefulWidget {
@@ -26,26 +25,31 @@ class _CommentsPage extends State<CommentsPage> {
   }
 
   Future<List<CommentModel>> loadData() async {
-    var data = await rootBundle.load('assets/images/dish_images/1.jpg');
+    var data = await rootBundle.load('assets/images/recipe_images/1.jpg');
     setState(() => binaryData = data.buffer.asUint8List());
     return [
       CommentModel(
         commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
         commentDateTime: DateTime.now(),
-        userId: "userId",
-        user: UserModel(userName: "asd", userPhoto: binaryData),
+        user: UserModel(userName: "asd", userPhoto: binaryData, userId: '12'),
       ),
       CommentModel(
         commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
         commentDateTime: DateTime.now(),
-        userId: "userId",
-        user: UserModel(userName: "asd", userPhoto: binaryData),
+        user: UserModel(
+          userName: "asd",
+          userPhoto: binaryData,
+          userId: "userId",
+        ),
       ),
       CommentModel(
         commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
         commentDateTime: DateTime.now(),
-        userId: "userId",
-        user: UserModel(userName: "asd", userPhoto: binaryData),
+        user: UserModel(
+          userName: "asd",
+          userPhoto: binaryData,
+          userId: "userId",
+        ),
       ),
     ];
   }
@@ -94,12 +98,12 @@ class _CommentsPage extends State<CommentsPage> {
                       comentList = loadData().then((list) {
                         return [
                           CommentModel(
-                            userId: "asd",
                             commentDateTime: DateTime.now(),
                             commentText: commentFieldValue,
                             user: UserModel(
                               userName: "new_user",
                               userPhoto: binaryData,
+                              userId: "asd",
                             ),
                           ),
                           ...list,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/pages/add_page/form_components/form_card_button.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/page_transition_animation.dart';
-import 'package:menuapp/pages/home_page/receipt_page/list_of_ingredients/step_card.dart';
+import 'package:menuapp/pages/home_page/recipe_page/list_of_ingredients/step_card.dart';
 import 'package:menuapp/models/models.dart';
 
 class StepCardWithButtons extends StatefulWidget {
@@ -14,7 +14,7 @@ class StepCardWithButtons extends StatefulWidget {
     this.onPressedDeleteButton,
   });
 
-  final ReceiptDescriptionElement step;
+  final RecipeDescriptionElement step;
   final int stepIndex;
   final void Function()? onPressedDeleteButton;
 

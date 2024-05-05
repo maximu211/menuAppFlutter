@@ -13,7 +13,7 @@ import 'package:menuapp/models/models.dart';
 class StepUpdatePage extends StatefulWidget {
   const StepUpdatePage({super.key, required this.step, required this.stepNum});
 
-  final ReceiptDescriptionElement step;
+  final RecipeDescriptionElement step;
   final int stepNum;
 
   @override
@@ -22,7 +22,7 @@ class StepUpdatePage extends StatefulWidget {
 
 class _StepUpdatePageState extends State<StepUpdatePage> {
   late Uint8List? _pickedImage;
-  late ReceiptDescriptionElement _editedStep;
+  late RecipeDescriptionElement _editedStep;
 
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -32,8 +32,8 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
   void initState() {
     super.initState();
     _editedStep = widget.step;
-    _textEditingController.text = _editedStep.receiptDescriptionElementText;
-    _pickedImage = widget.step.receiptDescriptionPhoto;
+    _textEditingController.text = _editedStep.RecipeDescriptionElementText;
+    _pickedImage = widget.step.recipeDescriptionPhoto;
   }
 
   @override
@@ -99,14 +99,14 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
                   onPressed: () {
                     setState(() {
                       if (_formKey.currentState!.validate()) {
-                        _editedStep.receiptDescriptionElementText =
+                        _editedStep.RecipeDescriptionElementText =
                             _textEditingController.text.trim();
-                        widget.step.receiptDescriptionPhoto = _pickedImage;
+                        widget.step.recipeDescriptionPhoto = _pickedImage;
 
-                        widget.step.receiptDescriptionElementText =
-                            _editedStep.receiptDescriptionElementText;
-                        widget.step.receiptDescriptionPhoto =
-                            _editedStep.receiptDescriptionPhoto;
+                        widget.step.RecipeDescriptionElementText =
+                            _editedStep.RecipeDescriptionElementText;
+                        widget.step.recipeDescriptionPhoto =
+                            _editedStep.recipeDescriptionPhoto;
                         Navigator.pop(context, widget.step);
                       }
                     });

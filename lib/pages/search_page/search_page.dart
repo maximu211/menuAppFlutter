@@ -17,13 +17,13 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController searchController = TextEditingController();
 
-  List<CardReceiptModel> _sortedReceiptList = [];
-  List<IdUserModel> _sortedUserList = [];
+  List<cardRecipeModel> _sortedrecipeList = [];
+  List<UserModel> _sortedUserList = [];
 
   late BinaryFileReader binaryFileReader;
   late Uint8List binaryData;
-  late List<CardReceiptModel> cardReceiptList;
-  late List<IdUserModel> userList;
+  late List<cardRecipeModel> cardRecipeList;
+  late List<UserModel> userList;
   @override
   void initState() {
     super.initState();
@@ -31,50 +31,51 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Future<void> loadData() async {
-    var data = await rootBundle.load('assets/images/dish_images/1.jpg');
+    var data = await rootBundle.load('assets/images/recipe_images/1.jpg');
     setState(() => binaryData = data.buffer.asUint8List());
-    cardReceiptList = [
-      CardReceiptModel(
-          user: UserModel(userName: "Name_Guttt", userPhoto: binaryData),
-          receiptId: "2",
-          cookDifficulty: CookingDifficulty.easy,
-          cookTime: CookingTime.min15,
-          cookType: "Drink",
-          dishName: 'Cocktail "Cool guy"',
-          dishPhoto: binaryData,
-          isDishSaved: false,
-          savedCount: 140,
-          isDishLiked: true,
-          userId: '12'),
-      CardReceiptModel(
-          user: UserModel(userName: "John_Lennon", userPhoto: binaryData),
-          cookDifficulty: CookingDifficulty.medium,
-          cookTime: CookingTime.hour1,
-          cookType: "Drink",
-          dishName: 'Name',
-          dishPhoto: binaryData,
-          isDishSaved: true,
-          savedCount: 140,
-          isDishLiked: false,
-          receiptId: '21',
-          userId: '12'),
+    cardRecipeList = [
+      cardRecipeModel(
+        user: UserModel(
+            userName: "Name_Guttt", userPhoto: binaryData, userId: '12'),
+        recipeId: "2",
+        cookingDifficulty: CookingDifficulty.easy,
+        cookingTime: CookingTime.min15,
+        recipeType: "Drink",
+        name: 'Cocktail "Cool guy"',
+        recipePhoto: binaryData,
+        isRecipeSaved: false,
+        likesCount: 140,
+        isRecipeLiked: true,
+      ),
+      cardRecipeModel(
+        user: UserModel(
+            userName: "John_Lennon", userPhoto: binaryData, userId: '12'),
+        cookingDifficulty: CookingDifficulty.medium,
+        cookingTime: CookingTime.hour1,
+        recipeType: "Drink",
+        name: 'Name',
+        recipePhoto: binaryData,
+        isRecipeSaved: true,
+        likesCount: 140,
+        isRecipeLiked: false,
+        recipeId: '21',
+      ),
     ];
 
     userList = [
-      IdUserModel(userName: "1", userPhoto: binaryData, userId: "userId"),
-      IdUserModel(userName: "2", userPhoto: binaryData, userId: "userId"),
-      IdUserModel(userName: "NAME", userPhoto: binaryData, userId: "userId"),
-      IdUserModel(userName: "NAME", userPhoto: binaryData, userId: "userId"),
+      UserModel(userName: "1", userPhoto: binaryData, userId: "userId"),
+      UserModel(userName: "2", userPhoto: binaryData, userId: "userId"),
+      UserModel(userName: "NAME", userPhoto: binaryData, userId: "userId"),
+      UserModel(userName: "NAME", userPhoto: binaryData, userId: "userId"),
     ];
   }
 
   void listFiltering(String query) {
     setState(() {
       if (query.trim().isNotEmpty) {
-        _sortedReceiptList = cardReceiptList
-            .where((receipt) => receipt.dishName
-                .toLowerCase()
-                .contains(query.trim().toLowerCase()))
+        _sortedrecipeList = cardRecipeList
+            .where((recipe) =>
+                recipe.name.toLowerCase().contains(query.trim().toLowerCase()))
             .toList();
 
         _sortedUserList = userList
@@ -108,7 +109,7 @@ class _SearchPageState extends State<SearchPage> {
             onSearch: (query) {
               listFiltering(query);
               if (query.isEmpty) {
-                _sortedReceiptList.clear();
+                _sortedrecipeList.clear();
                 _sortedUserList.clear();
               }
             },
@@ -170,28 +171,28 @@ class _SearchPageState extends State<SearchPage> {
                         ],
                       )
                     : const SizedBox(),
-                _sortedReceiptList.isNotEmpty
+                _sortedrecipeList.isNotEmpty
                     ? Column(
                         children: [
                           const SizedBox(
                             height: 10,
                           ),
                           Text(
-                            "Receipts",
+                            "recipes",
                             style: TextStyle(
                                 color: ColorVariables.backgroundColor,
                                 fontSize: FontSizeVariables.h2Size,
                                 fontWeight: FontWeight.bold),
                           ),
                           ListView.builder(
-                            itemCount: _sortedReceiptList.length,
+                            itemCount: _sortedrecipeList.length,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              final item = _sortedReceiptList[index];
+                              final item = _sortedrecipeList[index];
                               return Column(
                                 children: [
-                                  MainPageCard(cardReceipt: item),
+                                  MainPageCard(cardRecipe: item),
                                   const SizedBox(height: 20)
                                 ],
                               );

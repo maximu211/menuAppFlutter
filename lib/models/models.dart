@@ -13,78 +13,67 @@ class BinaryFileReader {
 }
 
 class UserModel {
-  UserModel({required this.userName, required this.userPhoto});
+  UserModel(
+      {required this.userName, required this.userPhoto, required this.userId});
 
   Uint8List userPhoto;
   String userName;
-}
-
-class IdUserModel extends UserModel {
-  IdUserModel(
-      {required super.userName,
-      required super.userPhoto,
-      required this.userId});
-
   String userId;
 }
 
-class CardReceiptModel {
-  CardReceiptModel({
-    required this.dishPhoto,
-    required this.receiptId,
+class cardRecipeModel {
+  cardRecipeModel({
+    required this.recipePhoto,
+    required this.recipeId,
     required this.user,
-    required this.userId,
-    required this.dishName,
-    required this.cookDifficulty,
-    required this.cookTime,
-    required this.cookType,
-    required this.isDishSaved,
-    required this.savedCount,
-    required this.isDishLiked,
+    required this.name,
+    required this.cookingDifficulty,
+    required this.cookingTime,
+    required this.recipeType,
+    required this.isRecipeSaved,
+    required this.likesCount,
+    required this.isRecipeLiked,
   });
 
-  Uint8List dishPhoto;
-  String receiptId;
+  Uint8List recipePhoto;
+  String recipeId;
   UserModel user;
-  String dishName;
-  CookingDifficulty cookDifficulty;
-  CookingTime cookTime;
-  String cookType;
-  String userId;
-  bool isDishSaved;
-  bool isDishLiked;
-  int savedCount;
+  String name;
+  CookingDifficulty cookingDifficulty;
+  CookingTime cookingTime;
+  String recipeType;
+  bool isRecipeSaved;
+  bool isRecipeLiked;
+  int likesCount;
 }
 
 class CommentModel {
   CommentModel(
       {required this.commentText,
       required this.commentDateTime,
-      required this.userId,
       required this.user});
 
-  String userId;
   UserModel user;
   String commentText;
   DateTime commentDateTime;
 }
 
-class ReceiptDetailModel {
-  ReceiptDetailModel(
-      {required this.receiptDescriptionElements,
-      required this.receiptIngradient});
+class RecipeDetailModel {
+  RecipeDetailModel(
+      {required this.RecipeDescriptionElements,
+      required this.recipeIngradient});
 
-  List<String> receiptIngradient;
-  List<ReceiptDescriptionElement> receiptDescriptionElements;
+  List<String> recipeIngradient;
+  List<RecipeDescriptionElement> RecipeDescriptionElements;
 }
 
-class ReceiptDescriptionElement {
-  ReceiptDescriptionElement(
-      {required this.receiptDescriptionElementText,
-      this.receiptDescriptionPhoto});
+class RecipeDescriptionElement {
+  RecipeDescriptionElement(
+      {required this.RecipeDescriptionElementText,
+      this.recipeDescriptionPhoto});
 
-  String receiptDescriptionElementText;
-  Uint8List? receiptDescriptionPhoto;
+  String RecipeDescriptionElementText;
+  Uint8List? recipeDescriptionPhoto;
 }
 
 enum CookingDifficulty {

@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/pages/home_page/components/toggle_button.dart';
-import 'package:menuapp/pages/home_page/receipt_page/list_of_ingredients/list_of_ingredients.dart';
+import 'package:menuapp/pages/home_page/recipe_page/list_of_ingredients/list_of_ingredients.dart';
 import 'package:menuapp/models/models.dart';
 import 'comments/comments_page.dart';
 
-class ReceiptPage extends StatefulWidget {
-  const ReceiptPage({super.key, required this.cardReceipt});
+class RecipePage extends StatefulWidget {
+  const RecipePage({super.key, required this.cardRecipe});
 
-  final CardReceiptModel cardReceipt;
+  final cardRecipeModel cardRecipe;
 
   @override
   State<StatefulWidget> createState() {
-    return _ReceiptPage();
+    return _RecipePage();
   }
 }
 
-class _ReceiptPage extends State<ReceiptPage> {
+class _RecipePage extends State<RecipePage> {
   int _currentIndex = 0;
 
   Widget renderScreen(int index) {
     switch (index) {
       case 0:
-        return IngredientList(cardReceipt: widget.cardReceipt);
+        return IngredientList(cardRecipe: widget.cardRecipe);
       case 1:
         return const CommentsPage();
       default:
@@ -77,14 +77,14 @@ class _ReceiptPage extends State<ReceiptPage> {
                         onTap: (newState) {
                           setState(
                             () {
-                              widget.cardReceipt.isDishSaved = newState;
+                              widget.cardRecipe.isRecipeSaved = newState;
                             },
                           );
                         },
-                        buttonToggledText: 'Receipt saved to your galery 😀',
+                        buttonToggledText: 'recipe saved to your galery 😀',
                         buttonUntoggledText:
-                            'Receipt deleted from your galery 😢',
-                        isButtonToggled: widget.cardReceipt.isDishSaved,
+                            'recipe deleted from your galery 😢',
+                        isButtonToggled: widget.cardRecipe.isRecipeSaved,
                       ))
                 ],
                 leading: IconButton(
@@ -96,7 +96,7 @@ class _ReceiptPage extends State<ReceiptPage> {
                       Navigator.of(context).pop();
                     }),
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Image.memory(widget.cardReceipt.dishPhoto,
+                  background: Image.memory(widget.cardRecipe.recipePhoto,
                       fit: BoxFit.cover),
                 ),
               ),

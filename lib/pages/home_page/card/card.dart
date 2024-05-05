@@ -10,9 +10,9 @@ import 'package:menuapp/pages/home_page/components/user_row.dart';
 import 'package:menuapp/pages/home_page/card/card_icons_info.dart';
 
 class MainPageCard extends StatefulWidget {
-  const MainPageCard({Key? key, required this.cardReceipt}) : super(key: key);
+  const MainPageCard({Key? key, required this.cardRecipe}) : super(key: key);
 
-  final CardReceiptModel cardReceipt;
+  final cardRecipeModel cardRecipe;
 
   @override
   State<MainPageCard> createState() => _MainPageCardState();
@@ -39,19 +39,19 @@ class _MainPageCardState extends State<MainPageCard> {
           mainAxisSize: MainAxisSize.min,
           children: [
             UserRow(
-              image: widget.cardReceipt.user.userPhoto,
-              userName: widget.cardReceipt.user.userName,
+              image: widget.cardRecipe.user.userPhoto,
+              userName: widget.cardRecipe.user.userName,
               textColor: ColorVariables.backgroundColor,
             ),
             Image.memory(
-              widget.cardReceipt.dishPhoto,
+              widget.cardRecipe.recipePhoto,
               width: double.infinity,
               height: MediaQuery.of(context).size.height * 0.25,
               fit: BoxFit.fill,
             ),
             const SizedBox(height: 10),
             Text(
-              widget.cardReceipt.dishName,
+              widget.cardRecipe.name,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: FontSizeVariables.h1Size,
@@ -60,10 +60,10 @@ class _MainPageCardState extends State<MainPageCard> {
             ),
             const SizedBox(height: 10),
             CardIconsInfo(
-                textHardness:
-                    Mapper.mapHardnessToText(widget.cardReceipt.cookDifficulty),
-                textTime: Mapper.mapTimeToText(widget.cardReceipt.cookTime),
-                textType: widget.cardReceipt.cookType,
+                textHardness: Mapper.mapHardnessToText(
+                    widget.cardRecipe.cookingDifficulty),
+                textTime: Mapper.mapTimeToText(widget.cardRecipe.cookingTime),
+                textType: widget.cardRecipe.recipeType,
                 iconColor: ColorVariables.backgroundColor),
             Container(
               margin: const EdgeInsets.all(10),
@@ -74,8 +74,8 @@ class _MainPageCardState extends State<MainPageCard> {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(createRoute(
-                          cardReceipt: widget.cardReceipt,
-                          pageType: 'receiptPage',
+                          cardRecipe: widget.cardRecipe,
+                          pageType: 'recipePage',
                         ));
                       },
                       style: ElevatedButton.styleFrom(
@@ -84,7 +84,7 @@ class _MainPageCardState extends State<MainPageCard> {
                             borderRadius: BorderRadius.circular(40)),
                       ),
                       child: Text(
-                        "Go to receipt!",
+                        "Go to recipe!",
                         style: TextStyle(
                             fontSize: FontSizeVariables.regularSize,
                             fontWeight: FontWeight.bold,
@@ -97,15 +97,15 @@ class _MainPageCardState extends State<MainPageCard> {
                     child: LikeButton(
                       buttonToggledText: 'Liked 😍',
                       buttonUntoggledText: 'Disliked 😢',
-                      isButtonToggled: widget.cardReceipt.isDishLiked,
+                      isButtonToggled: widget.cardRecipe.isRecipeLiked,
                       onTap: (newState) {
                         setState(
                           () {
-                            widget.cardReceipt.isDishLiked = newState;
+                            widget.cardRecipe.isRecipeLiked = newState;
                             if (newState) {
-                              widget.cardReceipt.savedCount++;
+                              widget.cardRecipe.likesCount++;
                             } else {
-                              widget.cardReceipt.savedCount--;
+                              widget.cardRecipe.likesCount--;
                             }
                           },
                         );
@@ -126,7 +126,7 @@ class _MainPageCardState extends State<MainPageCard> {
                         size: IconSizeVariables.bigSize),
                   ),
                   Text(
-                    widget.cardReceipt.savedCount.toString(),
+                    widget.cardRecipe.likesCount.toString(),
                     style: TextStyle(color: ColorVariables.backgroundColor),
                   )
                 ],
