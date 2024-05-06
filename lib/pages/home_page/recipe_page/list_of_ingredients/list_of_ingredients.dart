@@ -3,16 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/pages/home_page/card/card_icons_info.dart';
-import 'package:menuapp/pages/home_page/components/user_row.dart';
+import 'package:menuapp/pages/common_components/user_row.dart';
 import 'package:menuapp/pages/home_page/recipe_page/list_of_ingredients/ingredient.dart';
 import 'package:menuapp/pages/home_page/recipe_page/list_of_ingredients/step_card.dart';
 import 'package:menuapp/models/mappers.dart';
-import 'package:menuapp/models/models.dart';
+import 'package:menuapp/http/DTOs/models.dart';
 
 class IngredientList extends StatefulWidget {
   const IngredientList({Key? key, required this.cardRecipe}) : super(key: key);
 
-  final cardRecipeModel cardRecipe;
+  final CardRecipeModel cardRecipe;
 
   @override
   State<StatefulWidget> createState() => _IngredientListState();
@@ -34,19 +34,19 @@ class _IngredientListState extends State<IngredientList> {
     setState(() => binaryData = data.buffer.asUint8List());
 
     return RecipeDetailModel(
-      RecipeDescriptionElements: [
+      recipeDescriptionElements: [
         RecipeDescriptionElement(
-          RecipeDescriptionElementText:
+          recipeDescriptionElementText:
               "asd jasd asd gka guadsg da gasd gjka gsd jkasd kagjksd gjkasd gjk agjkasg jksad gjda gjkda gjkasd gjkasd  gjksad gjksad  gjksadsad gjsad gjads gjads gjksad gukas gkuas gjkasdgjk a jkgads gjk",
           recipeDescriptionPhoto: binaryData,
         ),
         RecipeDescriptionElement(
-          RecipeDescriptionElementText:
+          recipeDescriptionElementText:
               "asd jasd asd gka guadsg da gasd gjka gsd jkasd kagjksd gjkasd gjk agjkasg jksad gjda gjkda gjkasd gjkasd  gjksad gjksad  gjksadsad gjsad gjads gjads gjksad gukas gkuas gjkasdgjk a jkgads gjk",
           recipeDescriptionPhoto: binaryData,
         ),
         RecipeDescriptionElement(
-          RecipeDescriptionElementText:
+          recipeDescriptionElementText:
               "asd jasd asd gka guadsg da gasd gjka gsd jkasd kagjksd gjkasd gjk agjkasg jksad gjda gjkda gjkasd gjkasd  gjksad gjksad  gjksadsad gjsad gjads gjads gjksad gukas gkuas gjkasdgjk a jkgads gjk",
         ),
       ],
@@ -154,10 +154,10 @@ class _IngredientListState extends State<IngredientList> {
                           padding: EdgeInsets.zero,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount:
-                              snapshot.data!.RecipeDescriptionElements.length,
+                              snapshot.data!.recipeDescriptionElements.length,
                           itemBuilder: (context, index) {
                             final step =
-                                snapshot.data!.RecipeDescriptionElements[index];
+                                snapshot.data!.recipeDescriptionElements[index];
                             int stepIndex = index + 1;
 
                             return StepCard(

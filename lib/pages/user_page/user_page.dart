@@ -18,12 +18,6 @@ class _UserPageState extends State<UserPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  void readAccessToken() async {
-    String? accessToken =
-        await SecureStorage().storage.read(key: "AccessToken");
-    print(accessToken);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -60,7 +54,7 @@ class _UserPageState extends State<UserPage>
                               .storage
                               .read(key: "AccessToken");
                           if (accessToken != null) {
-                            UserRequest.logOut(accessToken).then((result) {
+                            UserRequest.logOut().then((result) {
                               if (result.success) {
                                 Navigator.popAndPushNamed(
                                     context, "/logInPage");

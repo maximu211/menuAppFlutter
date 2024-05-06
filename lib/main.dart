@@ -11,10 +11,7 @@ import 'package:menuapp/utils/refresh_token.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
-  WidgetsFlutterBinding.ensureInitialized();
-  //SecureStorage().storage.deleteAll();
-  TokenTimer tokenTimer = TokenTimer();
-
+  TokenFetcher.startTokenFetching();
   runApp(
     DevicePreview(
       enabled: true,

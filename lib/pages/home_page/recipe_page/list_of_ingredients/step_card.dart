@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/models/models.dart';
+import 'package:menuapp/http/DTOs/models.dart';
 
 class StepCard extends StatefulWidget {
   const StepCard({
@@ -63,7 +63,7 @@ class _StepCardState extends State<StepCard> {
               Padding(
                 padding: const EdgeInsets.only(left: 15, bottom: 15, right: 15),
                 child: Text(
-                  widget.step.RecipeDescriptionElementText,
+                  widget.step.recipeDescriptionElementText,
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontSize: FontSizeVariables.regularSize,

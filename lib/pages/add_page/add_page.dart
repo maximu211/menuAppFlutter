@@ -9,7 +9,7 @@ import 'package:menuapp/pages/add_page/form_components/instruction_edit/instruct
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/dialog_utils.dart';
-import 'package:menuapp/models/models.dart';
+import 'package:menuapp/http/DTOs/models.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});

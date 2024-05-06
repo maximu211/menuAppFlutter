@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/pages/home_page/components/user_row.dart';
+import 'package:menuapp/pages/common_components/user_row.dart';
 import 'package:intl/intl.dart';
-import 'package:menuapp/models/models.dart';
+import 'package:menuapp/http/DTOs/models.dart';
 
 class Comment extends StatelessWidget {
   Comment(

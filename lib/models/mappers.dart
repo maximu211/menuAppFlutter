@@ -1,4 +1,4 @@
-import 'package:menuapp/models/models.dart';
+import 'package:menuapp/http/DTOs/models.dart';
 
 class Mapper {
   static String mapHardnessToText(CookingDifficulty hardness) {

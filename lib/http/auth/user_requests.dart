@@ -1,45 +1,84 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:menuapp/http/result.dart';
+import 'package:menuapp/http/DTOs/models.dart';
+import 'package:menuapp/http/DTOs/result.dart';
 import 'package:menuapp/http/routes.dart';
+import 'package:menuapp/utils/secure_storage.dart';
 
 class UserRequest {
-  static Future<ServiceResult> _sendRequest(String route, Map<String, dynamic> data) async {
-    StringBuffer url = StringBuffer();
-    url.write(BaseRoutes.baseUrl);
-    url.write(BaseRoutes.user);
-    url.write(route);
+  static Future<TokenFetchResult> logIn(
+      String password, String username) async {
+    final StringBuffer stringBuffer = StringBuffer();
 
-    final body = jsonEncode(data);
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.logIn);
 
     final response = await http.post(
-      Uri.parse(url.toString()),
+      Uri.parse(stringBuffer.toString()),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: body,
+      body: jsonEncode(
+          <String, String>{'password': password, 'username': username}),
     );
 
     if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body);
-      return ServiceResult.fromJson(jsonData);
+      return TokenFetchResult.fromJson(
+          jsonDecode(response.body) as Map<String, dynamic>);
     } else {
-      return ServiceResult(
-        success: false,
-        message: 'Failed to send data: ${response.statusCode}',
-      );
+      throw Exception();
     }
   }
 
-  static Future<ServiceResult> logIn(String username, String password) async {
-    return _sendRequest(UserRoutes.logIn, {'username': username, 'password': password});
+  static Future<ServiceResult> logOut() async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.logOut);
+
+    final String? accessToken =
+        await SecureStorage().storage.read(key: "accessToken");
+
+    final response = await http.post(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return TokenFetchResult.fromJson(
+          jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      throw Exception();
+    }
   }
 
-  static Future<ServiceResult> logOut(String token) async {
-    return _sendRequest(UserRoutes.logOut, {'token': token});
-  }
+  static Future<TokenFetchResult> refreshToken(String refreshToken) async {
+    final StringBuffer stringBuffer = StringBuffer();
 
-  static Future<ServiceResult> refreshToken(String refreshToken) async {
-    return _sendRequest(UserRoutes.refreshToken, {'refreshToken': refreshToken});
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.refreshToken);
+
+    final response = await http.post(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'refreshToken': refreshToken,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return TokenFetchResult.fromJson(
+          jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      throw Exception();
+    }
   }
 }

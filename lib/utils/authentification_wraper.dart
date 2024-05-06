@@ -3,13 +3,15 @@ import 'package:menuapp/navigation/navigation_page.dart';
 import 'package:menuapp/pages/authorization/sign_in_page/sign_in_page.dart';
 import 'package:menuapp/utils/secure_storage.dart';
 import 'package:menuapp/utils/refresh_token.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 class AuthenticationWrapper extends StatelessWidget {
   const AuthenticationWrapper({Key? key});
 
   Future<bool> isUserLoggedIn() async {
     String? token = await SecureStorage().readData("AccessToken");
-    return token != null;
+    var isTokenExpired = Jwt.isExpired(token!);
+    return isTokenExpired || token == null;
   }
 
   @override
@@ -22,7 +24,6 @@ class AuthenticationWrapper extends StatelessWidget {
         } else {
           final bool isLoggedIn = snapshot.data ?? false;
           if (isLoggedIn) {
-            
             return const NavigationPage();
           } else {
             return const LoginPage();

@@ -1,4 +1,6 @@
 import 'package:flutter/services.dart';
+import 'package:menuapp/http/DTOs/result.dart';
+import 'package:http/http.dart' as http;
 
 class BinaryFileReader {
   final String filePath;
@@ -21,8 +23,8 @@ class UserModel {
   String userId;
 }
 
-class cardRecipeModel {
-  cardRecipeModel({
+class CardRecipeModel {
+  CardRecipeModel({
     required this.recipePhoto,
     required this.recipeId,
     required this.user,
@@ -60,19 +62,19 @@ class CommentModel {
 
 class RecipeDetailModel {
   RecipeDetailModel(
-      {required this.RecipeDescriptionElements,
+      {required this.recipeDescriptionElements,
       required this.recipeIngradient});
 
   List<String> recipeIngradient;
-  List<RecipeDescriptionElement> RecipeDescriptionElements;
+  List<RecipeDescriptionElement> recipeDescriptionElements;
 }
 
 class RecipeDescriptionElement {
   RecipeDescriptionElement(
-      {required this.RecipeDescriptionElementText,
+      {required this.recipeDescriptionElementText,
       this.recipeDescriptionPhoto});
 
-  String RecipeDescriptionElementText;
+  String recipeDescriptionElementText;
   Uint8List? recipeDescriptionPhoto;
 }
 
@@ -90,4 +92,32 @@ enum CookingTime {
   min45,
   hour1,
   moreThanHour1,
+}
+
+class TokenFetchResult extends ServiceResult {
+  TokenFetchResult(
+      {required this.accessToken,
+      required this.refreshToken,
+      required super.success,
+      required super.message});
+
+  String accessToken;
+  String refreshToken;
+
+  factory TokenFetchResult.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        'accessToken': String accessToken,
+        'refreshToken': String refreshToken,
+        'success': bool success,
+        'message': String message
+      } =>
+        TokenFetchResult(
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            success: success,
+            message: message),
+      _ => throw const FormatException(),
+    };
+  }
 }

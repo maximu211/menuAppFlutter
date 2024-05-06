@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/pages/home_page/card/card.dart';
-import 'package:menuapp/models/models.dart';
+import 'package:menuapp/http/DTOs/models.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late BinaryFileReader binaryFileReader;
   late Uint8List binaryData;
-  late Future<List<cardRecipeModel>> cardRecipesFuture;
+  late Future<List<CardRecipeModel>> cardRecipesFuture;
 
   @override
   void initState() {
@@ -23,11 +23,11 @@ class _HomePageState extends State<HomePage> {
     cardRecipesFuture = loadData();
   }
 
-  Future<List<cardRecipeModel>> loadData() async {
+  Future<List<CardRecipeModel>> loadData() async {
     var data = await rootBundle.load('assets/images/recipe_images/1.jpg');
     setState(() => binaryData = data.buffer.asUint8List());
     return [
-      cardRecipeModel(
+      CardRecipeModel(
         user: UserModel(
             userName: "John_Lennon", userPhoto: binaryData, userId: '12'),
         cookingDifficulty: CookingDifficulty.medium,
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
         isRecipeLiked: false,
         recipeId: '21',
       ),
-      cardRecipeModel(
+      CardRecipeModel(
         user: UserModel(
             userName: "John_Lennon", userPhoto: binaryData, userId: '12'),
         cookingDifficulty: CookingDifficulty.medium,
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
         isRecipeLiked: false,
         recipeId: '21',
       ),
-      cardRecipeModel(
+      CardRecipeModel(
         user: UserModel(
             userName: "John_Lennon", userPhoto: binaryData, userId: '12'),
         cookingDifficulty: CookingDifficulty.medium,
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
         SliverToBoxAdapter(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: FutureBuilder<List<cardRecipeModel>>(
+            child: FutureBuilder<List<CardRecipeModel>>(
               future: cardRecipesFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {

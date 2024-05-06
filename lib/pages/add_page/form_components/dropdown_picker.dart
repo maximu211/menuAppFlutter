@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/models/mappers.dart';
 
-import 'package:menuapp/models/models.dart';
+import 'package:menuapp/http/DTOs/models.dart';
 
 class DropdownPicker<T> extends StatefulWidget {
   const DropdownPicker({Key? key, required this.onChange, required this.isTime})

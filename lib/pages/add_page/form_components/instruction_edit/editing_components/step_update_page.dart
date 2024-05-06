@@ -8,7 +8,7 @@ import 'package:menuapp/pages/add_page/form_components/image_picker/image_picker
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/dialog_utils.dart';
-import 'package:menuapp/models/models.dart';
+import 'package:menuapp/http/DTOs/models.dart';
 
 class StepUpdatePage extends StatefulWidget {
   const StepUpdatePage({super.key, required this.step, required this.stepNum});
@@ -32,7 +32,7 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
   void initState() {
     super.initState();
     _editedStep = widget.step;
-    _textEditingController.text = _editedStep.RecipeDescriptionElementText;
+    _textEditingController.text = _editedStep.recipeDescriptionElementText;
     _pickedImage = widget.step.recipeDescriptionPhoto;
   }
 
@@ -99,12 +99,12 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
                   onPressed: () {
                     setState(() {
                       if (_formKey.currentState!.validate()) {
-                        _editedStep.RecipeDescriptionElementText =
+                        _editedStep.recipeDescriptionElementText =
                             _textEditingController.text.trim();
                         widget.step.recipeDescriptionPhoto = _pickedImage;
 
-                        widget.step.RecipeDescriptionElementText =
-                            _editedStep.RecipeDescriptionElementText;
+                        widget.step.recipeDescriptionElementText =
+                            _editedStep.recipeDescriptionElementText;
                         widget.step.recipeDescriptionPhoto =
                             _editedStep.recipeDescriptionPhoto;
                         Navigator.pop(context, widget.step);

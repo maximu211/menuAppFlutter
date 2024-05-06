@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/pages/home_page/card/card.dart';
-import 'package:menuapp/pages/home_page/components/user_row.dart';
-import 'package:menuapp/models/models.dart';
+import 'package:menuapp/pages/common_components/user_row.dart';
+import 'package:menuapp/http/DTOs/models.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -17,12 +17,12 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController searchController = TextEditingController();
 
-  List<cardRecipeModel> _sortedrecipeList = [];
+  List<CardRecipeModel> _sortedrecipeList = [];
   List<UserModel> _sortedUserList = [];
 
   late BinaryFileReader binaryFileReader;
   late Uint8List binaryData;
-  late List<cardRecipeModel> cardRecipeList;
+  late List<CardRecipeModel> cardRecipeList;
   late List<UserModel> userList;
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _SearchPageState extends State<SearchPage> {
     var data = await rootBundle.load('assets/images/recipe_images/1.jpg');
     setState(() => binaryData = data.buffer.asUint8List());
     cardRecipeList = [
-      cardRecipeModel(
+      CardRecipeModel(
         user: UserModel(
             userName: "Name_Guttt", userPhoto: binaryData, userId: '12'),
         recipeId: "2",
@@ -47,7 +47,7 @@ class _SearchPageState extends State<SearchPage> {
         likesCount: 140,
         isRecipeLiked: true,
       ),
-      cardRecipeModel(
+      CardRecipeModel(
         user: UserModel(
             userName: "John_Lennon", userPhoto: binaryData, userId: '12'),
         cookingDifficulty: CookingDifficulty.medium,

@@ -104,13 +104,12 @@ class _LoginPageState extends State<LoginPage> {
                                   if (result.success) {
                                     Navigator.popAndPushNamed(
                                         currentContext, '/startPage');
-
                                     secureStorage.write(
                                         key: "AccessToken",
-                                        value: result.data["accessToken"]);
+                                        value: result.accessToken);
                                     secureStorage.write(
                                         key: "RefreshToken",
-                                        value: result.data["refreshToken"]);
+                                        value: result.refreshToken);
                                   }
                                 });
                               }

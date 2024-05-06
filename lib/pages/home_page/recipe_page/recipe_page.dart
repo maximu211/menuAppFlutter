@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
-import 'package:menuapp/pages/home_page/components/toggle_button.dart';
+import 'package:menuapp/pages/common_components/toggle_button.dart';
 import 'package:menuapp/pages/home_page/recipe_page/list_of_ingredients/list_of_ingredients.dart';
-import 'package:menuapp/models/models.dart';
+import 'package:menuapp/http/DTOs/models.dart';
 import 'comments/comments_page.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({super.key, required this.cardRecipe});
 
-  final cardRecipeModel cardRecipe;
+  final CardRecipeModel cardRecipe;
 
   @override
   State<StatefulWidget> createState() {
