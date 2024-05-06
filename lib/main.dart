@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:menuapp/utils/authentification_wraper.dart';
 import 'package:menuapp/utils/http_override.dart';
 import 'package:menuapp/utils/refresh_token.dart';
+import 'package:menuapp/utils/secure_storage.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {

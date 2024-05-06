@@ -95,29 +95,25 @@ enum CookingTime {
 }
 
 class TokenFetchResult extends ServiceResult {
-  TokenFetchResult(
-      {required this.accessToken,
-      required this.refreshToken,
-      required super.success,
-      required super.message});
-
   String accessToken;
   String refreshToken;
+  bool isEmailSubmitted;
+
+  TokenFetchResult({
+    required bool success,
+    required String message,
+    required this.accessToken,
+    required this.refreshToken,
+    required this.isEmailSubmitted,
+  }) : super(success: success, message: message);
 
   factory TokenFetchResult.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        'accessToken': String accessToken,
-        'refreshToken': String refreshToken,
-        'success': bool success,
-        'message': String message
-      } =>
-        TokenFetchResult(
-            accessToken: accessToken,
-            refreshToken: refreshToken,
-            success: success,
-            message: message),
-      _ => throw const FormatException(),
-    };
+    return TokenFetchResult(
+      success: json['success'] ?? false,
+      message: json['message'] ?? '',
+      accessToken: json['data']['accessToken'] ?? '',
+      refreshToken: json['data']['refreshToken'] ?? '',
+      isEmailSubmitted: json['data']['isEmailSubmited'] ?? false,
+    );
   }
 }

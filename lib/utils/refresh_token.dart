@@ -6,19 +6,20 @@ import 'package:menuapp/utils/secure_storage.dart';
 
 class TokenFetcher {
   static void startTokenFetching() {
-    Isolate.spawn(tokenFetchIsolate, null);
+    Timer.periodic(const Duration(seconds: 1), (_) {
+      tokenFetchIsolate();
+    });
   }
 
-  static void tokenFetchIsolate(_) async {
+  static void tokenFetchIsolate() async {
     String? accessToken =
         await SecureStorage().storage.read(key: "AccessToken");
 
     if (accessToken != null) {
       DateTime? decodedToken = Jwt.getExpiryDate(accessToken);
-      DateTime refreshTime = decodedToken!.subtract(const Duration(minutes: 2));
-      Duration timeUntilExpiry = refreshTime.difference(DateTime.now());
+      Duration timeUntilExpiry = decodedToken!.difference(DateTime.now());
 
-      Timer(timeUntilExpiry, () async {
+      if (timeUntilExpiry <= Duration.zero) {
         UserRequest.refreshToken(
                 await SecureStorage().storage.read(key: "RefreshToken") ?? '')
             .then((result) {
@@ -31,7 +32,8 @@ class TokenFetcher {
                 .write(key: "RefreshToken", value: result.refreshToken);
           }
         });
-      });
+        print("refreshed");
+      }
     }
   }
 }

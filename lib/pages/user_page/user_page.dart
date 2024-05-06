@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/http/auth/user_requests.dart';
 import 'package:menuapp/utils/secure_storage.dart';
@@ -50,20 +51,14 @@ class _UserPageState extends State<UserPage>
                         title: "Log out",
                         description: "Do you realy want to log out?",
                         okFunc: () async {
-                          String? accessToken = await SecureStorage()
-                              .storage
-                              .read(key: "AccessToken");
-                          if (accessToken != null) {
-                            UserRequest.logOut().then((result) {
-                              if (result.success) {
-                                Navigator.popAndPushNamed(
-                                    context, "/logInPage");
-                                SecureStorage().storage.deleteAll();
-                              }
-                            });
-                          } else {
-                            //Navigator.popAndPushNamed(context, "/logInPage");
-                          }
+                          Navigator.popAndPushNamed(context, "/logInPage");
+                          SecureStorage().storage.deleteAll();
+                          await UserRequest.logOut().then((result) {
+                            if (result.success) {
+                              Navigator.popAndPushNamed(context, "/logInPage");
+                              SecureStorage().storage.deleteAll();
+                            }
+                          });
                         },
                         cancelFunc: () {
                           Navigator.pop(context);

@@ -1,4 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:jwt_decode/jwt_decode.dart';
+import 'package:menuapp/navigation/navigation_page.dart';
 import 'package:menuapp/pages/authorization/forgot_password_page/forgot_password_page.dart';
 import 'package:menuapp/pages/authorization/sign_up_page/sign_up_page.dart';
 import 'package:menuapp/pages/authorization/text_fields.dart';
@@ -95,23 +99,34 @@ class _LoginPageState extends State<LoginPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                BuildContext currentContext = context;
-                                UserRequest.logIn(_userNameController.text,
-                                        _passwordController.text)
-                                    .then((result) {
-                                  if (result.success) {
-                                    Navigator.popAndPushNamed(
-                                        currentContext, '/startPage');
-                                    secureStorage.write(
-                                        key: "AccessToken",
-                                        value: result.accessToken);
-                                    secureStorage.write(
-                                        key: "RefreshToken",
-                                        value: result.refreshToken);
-                                  }
-                                });
+                                final result = await UserRequest.logIn(
+                                  _passwordController.text,
+                                  _userNameController.text,
+                                );
+                                if (result.success) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const NavigationPage(),
+                                    ),
+                                  );
+                                  await secureStorage.write(
+                                    key: "AccessToken",
+                                    value: result.accessToken,
+                                  );
+                                  final String? accessToken =
+                                      await SecureStorage()
+                                          .storage
+                                          .read(key: "AccessToken");
+                                  print(Jwt.getExpiryDate(accessToken!));
+                                  await secureStorage.write(
+                                    key: "RefreshToken",
+                                    value: result.refreshToken,
+                                  );
+                                }
                               }
                             },
                             style: ElevatedButton.styleFrom(

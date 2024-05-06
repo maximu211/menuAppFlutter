@@ -39,7 +39,8 @@ class UserRequest {
     stringBuffer.write(UserRoutes.logOut);
 
     final String? accessToken =
-        await SecureStorage().storage.read(key: "accessToken");
+        await SecureStorage().storage.read(key: "AccessToken");
+    print(accessToken);
 
     final response = await http.post(
       Uri.parse(stringBuffer.toString()),
@@ -50,7 +51,7 @@ class UserRequest {
     );
 
     if (response.statusCode == 200) {
-      return TokenFetchResult.fromJson(
+      return ServiceResult.fromJson(
           jsonDecode(response.body) as Map<String, dynamic>);
     } else {
       throw Exception();
