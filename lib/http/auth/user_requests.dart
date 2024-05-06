@@ -40,7 +40,6 @@ class UserRequest {
 
     final String? accessToken =
         await SecureStorage().storage.read(key: "AccessToken");
-    print(accessToken);
 
     final response = await http.post(
       Uri.parse(stringBuffer.toString()),

@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:menuapp/pages/add_page/form_components/dropdown_picker.dart';
-import 'package:menuapp/pages/add_page/form_components/form_input_field.dart';
-import 'package:menuapp/pages/add_page/form_components/image_picker/image_picker.dart';
+import 'package:menuapp/pages/common_components/form_input_field.dart';
+import 'package:menuapp/pages/common_components/image_picker/image_picker.dart';
 import 'package:menuapp/pages/add_page/form_components/instruction_edit/instruction_form.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';

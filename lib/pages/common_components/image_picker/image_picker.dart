@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_editor_plus/image_editor_plus.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:menuapp/pages/add_page/form_components/image_picker/image_bottom_modal.dart';
+import 'package:menuapp/pages/common_components/image_picker/image_bottom_modal.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 

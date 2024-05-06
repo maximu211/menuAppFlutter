@@ -1,10 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:menuapp/navigation/navigation_page.dart';
 import 'package:menuapp/pages/authorization/forgot_password_page/forgot_password_page.dart';
-import 'package:menuapp/pages/authorization/sign_up_page/sign_up_page.dart';
+import 'package:menuapp/pages/authorization/register_page/register_page.dart';
 import 'package:menuapp/pages/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
@@ -30,10 +29,6 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void readAccessToken() async {
-    String? accessToken = await secureStorage.read(key: "AccessToken");
-    print(accessToken);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,11 +112,6 @@ class _LoginPageState extends State<LoginPage> {
                                     key: "AccessToken",
                                     value: result.accessToken,
                                   );
-                                  final String? accessToken =
-                                      await SecureStorage()
-                                          .storage
-                                          .read(key: "AccessToken");
-                                  print(Jwt.getExpiryDate(accessToken!));
                                   await secureStorage.write(
                                     key: "RefreshToken",
                                     value: result.refreshToken,

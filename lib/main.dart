@@ -1,13 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:menuapp/pages/authorization/sign_in_page/sign_in_page.dart';
+import 'package:menuapp/pages/authorization/log_in_page/log_in_page.dart';
 import 'package:menuapp/navigation/navigation_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:menuapp/utils/authentification_wraper.dart';
 import 'package:menuapp/utils/http_override.dart';
 import 'package:menuapp/utils/refresh_token.dart';
-import 'package:menuapp/utils/secure_storage.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {

@@ -27,7 +27,7 @@ class FormInputField extends StatelessWidget {
       cursorColor: ColorVariables.primaryColor,
       decoration: InputDecoration(
         filled: true,
-        fillColor: const Color.fromARGB(30, 255, 115, 0),
+        fillColor: ColorVariables.formFieldColor,
         labelText: inputLabel,
         focusColor: ColorVariables.primaryColor,
         labelStyle: const TextStyle(color: Colors.black),

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/http/auth/user_requests.dart';
 import 'package:menuapp/navigation/navigation_page.dart';
-import 'package:menuapp/pages/authorization/sign_in_page/sign_in_page.dart';
+import 'package:menuapp/pages/authorization/log_in_page/log_in_page.dart';
 import 'package:menuapp/utils/secure_storage.dart';
-import 'package:menuapp/utils/refresh_token.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 class AuthenticationWrapper extends StatelessWidget {
-  const AuthenticationWrapper({Key? key});
+  const AuthenticationWrapper({super.key});
 
   Future<String?> getAccessToken() async {
     return SecureStorage().readData("AccessToken");

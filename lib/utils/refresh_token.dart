@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:isolate';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:menuapp/http/auth/user_requests.dart';
 import 'package:menuapp/utils/secure_storage.dart';
@@ -32,7 +31,6 @@ class TokenFetcher {
                 .write(key: "RefreshToken", value: result.refreshToken);
           }
         });
-        print("refreshed");
       }
     }
   }

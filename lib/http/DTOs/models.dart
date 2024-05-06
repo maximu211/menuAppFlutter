@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:menuapp/http/DTOs/result.dart';
-import 'package:http/http.dart' as http;
 
 class BinaryFileReader {
   final String filePath;

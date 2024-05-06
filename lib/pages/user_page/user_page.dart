@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/http/auth/user_requests.dart';
 import 'package:menuapp/utils/secure_storage.dart';

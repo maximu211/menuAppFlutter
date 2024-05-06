@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/pages/add_page/form_components/image_picker/photo_button.dart';
+import 'package:menuapp/pages/common_components/image_picker/photo_button.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 
 void showImageSelectionBottomSheet(

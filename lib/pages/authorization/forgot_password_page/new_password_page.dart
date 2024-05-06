@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/pages/authorization/sign_in_page/sign_in_page.dart';
+import 'package:menuapp/pages/authorization/log_in_page/log_in_page.dart';
 import 'package:menuapp/pages/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 

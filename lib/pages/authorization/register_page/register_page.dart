@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/pages/authorization/sign_in_page/sign_in_page.dart';
+import 'package:menuapp/pages/authorization/log_in_page/log_in_page.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
-
 import 'package:menuapp/pages/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 
@@ -61,7 +60,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 25),
                     TextFieldLogin(
-                      //validationKey: UniqueKey(),
                       isPasswordField: false,
                       labelText: "E-Mail",
                       loginFieldController: _userNameController,
@@ -74,7 +72,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 20),
                     TextFieldLogin(
-                      //validationKey: UniqueKey(),
                       isPasswordField: false,
                       labelText: "User Name",
                       loginFieldController: _emailController,
@@ -89,7 +86,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 20,
                     ),
                     TextFieldLogin(
-                      //validationKey: UniqueKey(),
                       isPasswordField: true,
                       labelText: "Password",
                       loginFieldController: _passwordController,
