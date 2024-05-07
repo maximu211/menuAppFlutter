@@ -4,14 +4,14 @@ import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/pages/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+class RegisterUserPage extends StatefulWidget {
+  const RegisterUserPage({Key? key}) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<RegisterUserPage> createState() => _RegisterUserPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _RegisterUserPageState extends State<RegisterUserPage> {
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 
-class TextFieldLogin extends StatefulWidget {
+class TextFieldLogin extends StatelessWidget {
   const TextFieldLogin({
     super.key,
     required this.isPasswordField,
@@ -16,29 +16,30 @@ class TextFieldLogin extends StatefulWidget {
   final String? Function(String?) validator;
 
   @override
-  State<TextFieldLogin> createState() => _TextFieldsState();
-}
-
-class _TextFieldsState extends State<TextFieldLogin> {
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: TextStyle(color: ColorVariables.backgroundColor),
-      controller: widget.loginFieldController,
-      obscureText: widget.isPasswordField,
-      validator: widget.validator,
+      style: const TextStyle(color: Colors.black),
+      controller: loginFieldController,
+      obscureText: isPasswordField,
+      validator: validator,
       decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: ColorVariables.backgroundColor),
-            borderRadius: const BorderRadius.all(Radius.circular(40))),
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: ColorVariables.backgroundColor),
-            borderRadius: const BorderRadius.all(Radius.circular(40))),
-        border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(40))),
-        labelText: widget.labelText,
-        labelStyle: TextStyle(color: ColorVariables.backgroundColor),
-      ),
+          enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.all(Radius.circular(40))),
+          focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.all(Radius.circular(40))),
+          border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(40))),
+          labelText: labelText,
+          labelStyle: const TextStyle(color: Colors.black),
+          errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Color.fromARGB(255, 250, 4, 0)),
+              borderRadius: BorderRadius.all(Radius.circular(40))),
+          focusedErrorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Color.fromARGB(255, 250, 4, 0)),
+              borderRadius: BorderRadius.all(Radius.circular(40))),
+          errorStyle: const TextStyle(color: Color.fromARGB(255, 250, 4, 0))),
     );
   }
 }

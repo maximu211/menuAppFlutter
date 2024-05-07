@@ -4,32 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/navigation/navigation_page.dart';
 import 'package:menuapp/pages/authorization/forgot_password_page/forgot_password_page.dart';
-import 'package:menuapp/pages/authorization/register_pages/register_email_page.dart';
+import 'package:menuapp/pages/authorization/log_in_page/log_in_page.dart';
 import 'package:menuapp/pages/authorization/register_pages/register_user_page.dart';
+import 'package:menuapp/pages/authorization/register_pages/verify_code_page.dart';
 import 'package:menuapp/pages/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/http/auth/user_requests.dart';
 import 'package:menuapp/utils/secure_storage.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterEmailPage extends StatefulWidget {
+  const RegisterEmailPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterEmailPage> createState() => _RegisterEmailPage();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _userNameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class _RegisterEmailPage extends State<RegisterEmailPage> {
+  final TextEditingController _emailController = TextEditingController();
   final secureStorage = SecureStorage().storage;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String errorMessage = "";
 
-  void clearErrors() {
-    setState(() {
-      _formKey.currentState?.validate();
-    });
+  bool _isValidEmail(String email) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(email);
   }
 
   @override
@@ -55,16 +53,13 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.all(20),
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: Form(
-                  onChanged: () => clearErrors(),
                   key: _formKey,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset('assets/images/logo.png',
-                          width: 150, color: Colors.black),
                       const SizedBox(height: 25),
                       Text(
-                        "Sign In",
+                        "Input your email to send verify code",
                         style: TextStyle(
                             fontSize: FontSizeVariables.h1Size,
                             color: Colors.black),
@@ -72,31 +67,17 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 25),
                       TextFieldLogin(
                         isPasswordField: false,
-                        labelText: "User name",
-                        loginFieldController: _userNameController,
+                        labelText: "Email",
+                        loginFieldController: _emailController,
                         validator: (value) {
                           if (value!.trim().isEmpty) {
-                            return 'Please enter user name';
+                            return 'Please enter Email';
+                          } else if (!_isValidEmail(value)) {
+                            return 'Please enter a valid Email';
                           }
                           return null;
                         },
                       ),
-                      const SizedBox(height: 20),
-                      TextFieldLogin(
-                        isPasswordField: true,
-                        labelText: "Password",
-                        loginFieldController: _passwordController,
-                        validator: (value) {
-                          if (value!.trim().isEmpty) {
-                            return 'Please enter password';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      Text(errorMessage,
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 250, 4, 0))),
                       const SizedBox(height: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -104,30 +85,20 @@ class _LoginPageState extends State<LoginPage> {
                           ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                final result = await UserRequest.logIn(
-                                  _passwordController.text,
-                                  _userNameController.text,
-                                );
+                                final result = await UserRequest.registerEmail(
+                                    _emailController.text);
                                 if (result.success) {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const NavigationPage(),
+                                          const VerifyCodePage(), //
                                     ),
                                   );
                                   await secureStorage.write(
-                                    key: "AccessToken",
-                                    value: result.accessToken,
+                                    key: "AuthToken",
+                                    value: result.authToken,
                                   );
-                                  await secureStorage.write(
-                                    key: "RefreshToken",
-                                    value: result.refreshToken,
-                                  );
-                                } else {
-                                  setState(() {
-                                    errorMessage = result.message;
-                                  });
                                 }
                               }
                             },
@@ -137,45 +108,24 @@ class _LoginPageState extends State<LoginPage> {
                                   borderRadius: BorderRadius.circular(40)),
                             ),
                             child: Text(
-                              "Log In",
+                              "Verify email",
                               style: TextStyle(
                                   color: ColorVariables.backgroundColor),
                             ),
                           ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ForgotPasswordPage()));
-                              },
-                              child: Text("Forgot password?",
-                                  style: TextStyle(
-                                      fontSize: FontSizeVariables.regularSize,
-                                      color: Colors.black))),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegisterEmailPage()));
-                            },
-                            child: Text(
-                              "Sign Up",
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()));
+                          },
+                          child: Text("Already have an account? Log in!",
                               style: TextStyle(
                                   fontSize: FontSizeVariables.regularSize,
-                                  color: Colors.black),
-                            ),
-                          ),
-                        ],
-                      )
+                                  color: Colors.black)))
                     ],
                   ),
                 ),

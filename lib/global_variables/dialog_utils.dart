@@ -52,4 +52,35 @@ class DialogUtils {
       ),
     );
   }
+
+  static void showMessage(
+      {required BuildContext context, required String text}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        backgroundColor: ColorVariables.primaryColor,
+        title: Text(
+          text,
+          style: TextStyle(
+            color: ColorVariables.backgroundColor,
+            fontSize: FontSizeVariables.h1Size,
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "Ok",
+              style: TextStyle(
+                color: ColorVariables.backgroundColor,
+                fontSize: FontSizeVariables.regularSize,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }

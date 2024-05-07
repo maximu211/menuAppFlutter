@@ -94,25 +94,44 @@ enum CookingTime {
 }
 
 class TokenFetchResult extends ServiceResult {
-  String accessToken;
-  String refreshToken;
-  bool isEmailSubmitted;
+  String? accessToken;
+  String? refreshToken;
+  bool? isEmailSubmitted;
 
   TokenFetchResult({
     required bool success,
     required String message,
-    required this.accessToken,
-    required this.refreshToken,
-    required this.isEmailSubmitted,
+    this.accessToken,
+    this.refreshToken,
+    this.isEmailSubmitted,
   }) : super(success: success, message: message);
 
   factory TokenFetchResult.fromJson(Map<String, dynamic> json) {
     return TokenFetchResult(
       success: json['success'] ?? false,
       message: json['message'] ?? '',
-      accessToken: json['data']['accessToken'] ?? '',
-      refreshToken: json['data']['refreshToken'] ?? '',
-      isEmailSubmitted: json['data']['isEmailSubmited'] ?? false,
+      accessToken: json['data'] != null ? json['data']['accessToken'] : null,
+      refreshToken: json['data'] != null ? json['data']['refreshToken'] : null,
+      isEmailSubmitted:
+          json['data'] != null ? json['data']['isEmailSubmited'] : null,
+    );
+  }
+}
+
+class AuthTokenFetch extends ServiceResult {
+  String? authToken;
+
+  AuthTokenFetch({
+    required bool success,
+    required String message,
+    this.authToken,
+  }) : super(success: success, message: message);
+
+  factory AuthTokenFetch.fromJson(Map<String, dynamic> json) {
+    return AuthTokenFetch(
+      success: json['success'] ?? false,
+      message: json['message'] ?? '',
+      authToken: json['data'] != null ? json['data']['accessToken'] : null,
     );
   }
 }

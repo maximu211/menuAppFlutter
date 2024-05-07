@@ -23,12 +23,8 @@ class UserRequest {
           <String, String>{'password': password, 'username': username}),
     );
 
-    if (response.statusCode == 200) {
-      return TokenFetchResult.fromJson(
-          jsonDecode(response.body) as Map<String, dynamic>);
-    } else {
-      throw Exception();
-    }
+    return TokenFetchResult.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
   }
 
   static Future<ServiceResult> logOut() async {
@@ -80,5 +76,192 @@ class UserRequest {
     } else {
       throw Exception();
     }
+  }
+
+  static Future<AuthTokenFetch> registerEmail(String email) async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.registerEmail);
+
+    final response = await http.post(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': email,
+      }),
+    );
+
+    return AuthTokenFetch.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<ServiceResult> verifyEmail(String code) async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.verifyEmail);
+
+    final String? authToken =
+        await SecureStorage().storage.read(key: "AuthToken");
+
+    final response = await http.post(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $authToken',
+      },
+      body: jsonEncode(<String, String>{
+        'confirmationCode': code,
+      }),
+    );
+
+    return ServiceResult.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<ServiceResult> updateEmail(String newEmail) async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.updateEmailAndSendCode);
+
+    final String? authToken =
+        await SecureStorage().storage.read(key: "AuthToken");
+
+    final response = await http.post(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $authToken',
+      },
+      body: jsonEncode(<String, String>{
+        'newEmail': newEmail,
+      }),
+    );
+
+    return ServiceResult.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<ServiceResult> resendConfirmationCode() async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.resendConfirmationCode);
+
+    final String? authToken =
+        await SecureStorage().storage.read(key: "AuthToken");
+
+    final response = await http.get(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $authToken',
+      },
+    );
+
+    return ServiceResult.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<AuthTokenFetch> sendCodeToRecoverPassword(
+      String userName) async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.sendCodeToRecoverPassword);
+
+    final response = await http.post(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'username': userName,
+      }),
+    );
+
+    return AuthTokenFetch.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<ServiceResult> verifyPasswordRecover(String code) async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.verifyPasswordRecover);
+
+    final response = await http.post(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'verificationCode': code,
+      }),
+    );
+
+    return ServiceResult.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<ServiceResult> setNewPassword(
+      String password, String repeatPassword) async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.setNewPassword);
+
+    final response = await http.post(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "password": password,
+        "repeatPassword": repeatPassword
+      }),
+    );
+
+    return ServiceResult.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<ServiceResult> registerUser(
+      String password, String repeatPassword, String username) async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.setNewPassword);
+
+    final String? authToken =
+        await SecureStorage().storage.read(key: "AuthToken");
+
+    final response = await http.post(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $authToken',
+      },
+      body: jsonEncode(<String, String>{
+        "password": password,
+        "repeatePassword": repeatPassword,
+        "username": username
+      }),
+    );
+
+    return ServiceResult.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
   }
 }

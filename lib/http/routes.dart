@@ -7,4 +7,13 @@ class UserRoutes {
   static String logIn = "/log_in";
   static String logOut = "/log_out";
   static String refreshToken = "/refresh_token";
+  static String registerEmail = "/register_email";
+  static String verifyEmail = "/verify_email";
+  static String updateEmailAndSendCode = "/update_email_and_send_code";
+  static String resendConfirmationCode = "/resend_confirmation_code";
+  static String sendCodeToRecoverPassword =
+      "/send_verification_code_to_recover_password";
+  static String verifyPasswordRecover = "/verify_password_recover";
+  static String setNewPassword = "/set_new_password";
+  static String registerUser = "/register_user";
 }
