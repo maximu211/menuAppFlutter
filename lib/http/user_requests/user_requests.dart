@@ -264,4 +264,51 @@ class UserRequest {
     return ServiceResult.fromJson(
         jsonDecode(response.body) as Map<String, dynamic>);
   }
+
+  static Future<ServiceResult> setUserImage(String image) async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.setUserImage);
+
+    final String? accessToken =
+        await SecureStorage().storage.read(key: "AccessToken");
+
+    final response = await http.post(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $accessToken',
+      },
+      body: jsonEncode(<String, String>{
+        "image": image,
+      }),
+    );
+
+    return ServiceResult.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<FetchUserImage> getUserImage() async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.getUserImage);
+
+    final String? accessToken =
+        await SecureStorage().storage.read(key: "AccessToken");
+
+    final response = await http.get(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    return FetchUserImage.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  }
 }

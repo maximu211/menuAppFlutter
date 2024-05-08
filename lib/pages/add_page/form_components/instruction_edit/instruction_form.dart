@@ -70,7 +70,7 @@ class _InstuctionFormState extends State<InstuctionForm> {
               setState(() {
                 RecipeDescriptionElement newStep = RecipeDescriptionElement(
                   recipeDescriptionElementText: '',
-                  recipeDescriptionPhoto: null,
+                  recipeDescriptionImage: null,
                 );
 
                 Navigator.push(

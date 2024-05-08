@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:jwt_decode/jwt_decode.dart';
-import 'package:menuapp/http/auth/user_requests.dart';
+import 'package:menuapp/http/user_requests/user_requests.dart';
 import 'package:menuapp/utils/secure_storage.dart';
 
 class TokenFetcher {

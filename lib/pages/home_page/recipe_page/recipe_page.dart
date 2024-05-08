@@ -96,7 +96,7 @@ class _RecipePage extends State<RecipePage> {
                       Navigator.of(context).pop();
                     }),
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Image.memory(widget.cardRecipe.recipePhoto,
+                  background: Image.memory(widget.cardRecipe.recipeImage,
                       fit: BoxFit.cover),
                 ),
               ),

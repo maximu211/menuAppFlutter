@@ -35,38 +35,42 @@ class _SearchPageState extends State<SearchPage> {
     setState(() => binaryData = data.buffer.asUint8List());
     cardRecipeList = [
       CardRecipeModel(
+        id: 'фів',
         user: UserModel(
-            userName: "Name_Guttt", userPhoto: binaryData, userId: '12'),
+            userName: "Name_Guttt", userImage: binaryData, userId: '12'),
         recipeId: "2",
         cookingDifficulty: CookingDifficulty.easy,
         cookingTime: CookingTime.min15,
         recipeType: "Drink",
         name: 'Cocktail "Cool guy"',
-        recipePhoto: binaryData,
+        recipeImage: binaryData,
         isRecipeSaved: false,
         likesCount: 140,
         isRecipeLiked: true,
+        isOwner: false,
       ),
       CardRecipeModel(
+        id: 'фів',
         user: UserModel(
-            userName: "John_Lennon", userPhoto: binaryData, userId: '12'),
+            userName: "John_Lennon", userImage: binaryData, userId: '12'),
         cookingDifficulty: CookingDifficulty.medium,
         cookingTime: CookingTime.hour1,
         recipeType: "Drink",
         name: 'Name',
-        recipePhoto: binaryData,
+        recipeImage: binaryData,
         isRecipeSaved: true,
         likesCount: 140,
         isRecipeLiked: false,
         recipeId: '21',
+        isOwner: false,
       ),
     ];
 
     userList = [
-      UserModel(userName: "1", userPhoto: binaryData, userId: "userId"),
-      UserModel(userName: "2", userPhoto: binaryData, userId: "userId"),
-      UserModel(userName: "NAME", userPhoto: binaryData, userId: "userId"),
-      UserModel(userName: "NAME", userPhoto: binaryData, userId: "userId"),
+      UserModel(userName: "1", userImage: binaryData, userId: "userId"),
+      UserModel(userName: "2", userImage: binaryData, userId: "userId"),
+      UserModel(userName: "NAME", userImage: binaryData, userId: "userId"),
+      UserModel(userName: "NAME", userImage: binaryData, userId: "userId"),
     ];
   }
 
@@ -160,7 +164,7 @@ class _SearchPageState extends State<SearchPage> {
                                         ]),
                                     child: UserRow(
                                         userName: item.userName,
-                                        image: item.userPhoto,
+                                        image: item.userImage,
                                         textColor:
                                             ColorVariables.backgroundColor),
                                   ),

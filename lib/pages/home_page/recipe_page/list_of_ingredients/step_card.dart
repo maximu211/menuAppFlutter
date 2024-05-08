@@ -32,7 +32,7 @@ class _StepCardState extends State<StepCard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              widget.step.recipeDescriptionPhoto != null
+              widget.step.recipeDescriptionImage != null
                   ? ClipPath(
                       clipper: TopRoundedCornersClipper(),
                       child: SizedBox(
@@ -42,7 +42,7 @@ class _StepCardState extends State<StepCard> {
                           child: SizedBox(
                             height: 400,
                             child: Image.memory(
-                              widget.step.recipeDescriptionPhoto!,
+                              widget.step.recipeDescriptionImage!,
                               fit: BoxFit.cover,
                             ),
                           ),

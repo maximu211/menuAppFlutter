@@ -21,7 +21,7 @@ class Comment extends StatelessWidget {
           children: [
             UserRow(
               textColor: Colors.black,
-              image: comment.user.userPhoto,
+              image: comment.user.userImage,
               userName: comment.user.userName,
             ),
           ],

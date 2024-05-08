@@ -33,7 +33,7 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
     super.initState();
     _editedStep = widget.step;
     _textEditingController.text = _editedStep.recipeDescriptionElementText;
-    _pickedImage = widget.step.recipeDescriptionPhoto;
+    _pickedImage = widget.step.recipeDescriptionImage;
   }
 
   @override
@@ -101,12 +101,12 @@ class _StepUpdatePageState extends State<StepUpdatePage> {
                       if (_formKey.currentState!.validate()) {
                         _editedStep.recipeDescriptionElementText =
                             _textEditingController.text.trim();
-                        widget.step.recipeDescriptionPhoto = _pickedImage;
+                        widget.step.recipeDescriptionImage = _pickedImage;
 
                         widget.step.recipeDescriptionElementText =
                             _editedStep.recipeDescriptionElementText;
-                        widget.step.recipeDescriptionPhoto =
-                            _editedStep.recipeDescriptionPhoto;
+                        widget.step.recipeDescriptionImage =
+                            _editedStep.recipeDescriptionImage;
                         Navigator.pop(context, widget.step);
                       }
                     });

@@ -21,7 +21,7 @@ class IngredientList extends StatefulWidget {
 class _IngredientListState extends State<IngredientList> {
   late BinaryFileReader binaryFileReader;
   late Uint8List binaryData;
-  late Future<RecipeDetailModel> recipeDetail;
+  late Future<RecipeDescriptionElements> recipeDetail;
 
   @override
   void initState() {
@@ -29,21 +29,21 @@ class _IngredientListState extends State<IngredientList> {
     recipeDetail = loadData();
   }
 
-  Future<RecipeDetailModel> loadData() async {
+  Future<RecipeDescriptionElements> loadData() async {
     var data = await rootBundle.load('assets/images/recipe_images/1.jpg');
     setState(() => binaryData = data.buffer.asUint8List());
 
-    return RecipeDetailModel(
+    return RecipeDescriptionElements(
       recipeDescriptionElements: [
         RecipeDescriptionElement(
           recipeDescriptionElementText:
               "asd jasd asd gka guadsg da gasd gjka gsd jkasd kagjksd gjkasd gjk agjkasg jksad gjda gjkda gjkasd gjkasd  gjksad gjksad  gjksadsad gjsad gjads gjads gjksad gukas gkuas gjkasdgjk a jkgads gjk",
-          recipeDescriptionPhoto: binaryData,
+          recipeDescriptionImage: binaryData,
         ),
         RecipeDescriptionElement(
           recipeDescriptionElementText:
               "asd jasd asd gka guadsg da gasd gjka gsd jkasd kagjksd gjkasd gjk agjkasg jksad gjda gjkda gjkasd gjkasd  gjksad gjksad  gjksadsad gjsad gjads gjads gjksad gukas gkuas gjkasdgjk a jkgads gjk",
-          recipeDescriptionPhoto: binaryData,
+          recipeDescriptionImage: binaryData,
         ),
         RecipeDescriptionElement(
           recipeDescriptionElementText:
@@ -83,7 +83,7 @@ class _IngredientListState extends State<IngredientList> {
               children: [
                 UserRow(
                   userName: widget.cardRecipe.user.userName,
-                  image: widget.cardRecipe.user.userPhoto,
+                  image: widget.cardRecipe.user.userImage,
                   textColor: Colors.black,
                 ),
               ],
@@ -97,7 +97,7 @@ class _IngredientListState extends State<IngredientList> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: FutureBuilder<RecipeDetailModel>(
+              child: FutureBuilder<RecipeDescriptionElements>(
                 future: recipeDetail,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {

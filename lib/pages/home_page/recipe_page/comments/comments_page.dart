@@ -31,23 +31,26 @@ class _CommentsPage extends State<CommentsPage> {
       CommentModel(
         commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
         commentDateTime: DateTime.now(),
-        user: UserModel(userName: "asd", userPhoto: binaryData, userId: '12'),
+        user: UserModel(userName: "asd", userImage: binaryData, userId: '12'),
+        isOwner: false,
       ),
       CommentModel(
         commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
         commentDateTime: DateTime.now(),
         user: UserModel(
           userName: "asd",
-          userPhoto: binaryData,
+          userImage: binaryData,
           userId: "userId",
         ),
+        isOwner: false,
       ),
       CommentModel(
         commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
         commentDateTime: DateTime.now(),
+        isOwner: false,
         user: UserModel(
           userName: "asd",
-          userPhoto: binaryData,
+          userImage: binaryData,
           userId: "userId",
         ),
       ),
@@ -98,11 +101,12 @@ class _CommentsPage extends State<CommentsPage> {
                       comentList = loadData().then((list) {
                         return [
                           CommentModel(
+                            isOwner: true,
                             commentDateTime: DateTime.now(),
                             commentText: commentFieldValue,
                             user: UserModel(
                               userName: "new_user",
-                              userPhoto: binaryData,
+                              userImage: binaryData,
                               userId: "asd",
                             ),
                           ),
