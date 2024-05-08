@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/pages/home_page/recipe_page/comments/comment.dart';
-import 'package:menuapp/http/DTOs/models.dart';
+import 'package:menuapp/models/models.dart';
 
 class CommentsPage extends StatefulWidget {
   const CommentsPage({super.key});

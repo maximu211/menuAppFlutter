@@ -5,7 +5,7 @@ import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/pages/home_page/card/card.dart';
 import 'package:menuapp/pages/common_components/user_row.dart';
-import 'package:menuapp/http/DTOs/models.dart';
+import 'package:menuapp/models/models.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

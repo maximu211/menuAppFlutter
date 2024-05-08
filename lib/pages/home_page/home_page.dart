@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/pages/home_page/card/card.dart';
-import 'package:menuapp/http/DTOs/models.dart';
+import 'package:menuapp/models/models.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

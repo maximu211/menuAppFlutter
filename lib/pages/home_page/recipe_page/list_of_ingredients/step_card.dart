@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/http/DTOs/models.dart';
+import 'package:menuapp/models/models.dart';
 
 class StepCard extends StatefulWidget {
   const StepCard({

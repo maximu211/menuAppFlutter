@@ -7,7 +7,7 @@ import 'package:menuapp/pages/common_components/user_row.dart';
 import 'package:menuapp/pages/home_page/recipe_page/list_of_ingredients/ingredient.dart';
 import 'package:menuapp/pages/home_page/recipe_page/list_of_ingredients/step_card.dart';
 import 'package:menuapp/models/mappers.dart';
-import 'package:menuapp/http/DTOs/models.dart';
+import 'package:menuapp/models/models.dart';
 
 class IngredientList extends StatefulWidget {
   const IngredientList({Key? key, required this.cardRecipe}) : super(key: key);

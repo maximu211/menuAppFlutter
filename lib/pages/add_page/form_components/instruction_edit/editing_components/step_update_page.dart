@@ -8,7 +8,7 @@ import 'package:menuapp/pages/common_components/image_picker/image_picker.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/dialog_utils.dart';
-import 'package:menuapp/http/DTOs/models.dart';
+import 'package:menuapp/models/models.dart';
 
 class StepUpdatePage extends StatefulWidget {
   const StepUpdatePage({super.key, required this.step, required this.stepNum});

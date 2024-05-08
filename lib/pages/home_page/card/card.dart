@@ -5,7 +5,7 @@ import 'package:menuapp/pages/common_components/toggle_button.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/models/mappers.dart';
-import 'package:menuapp/http/DTOs/models.dart';
+import 'package:menuapp/models/models.dart';
 import 'package:menuapp/pages/common_components/user_row.dart';
 import 'package:menuapp/pages/home_page/card/card_icons_info.dart';
 

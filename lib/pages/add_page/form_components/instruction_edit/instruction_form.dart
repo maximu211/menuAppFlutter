@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/pages/add_page/form_components/form_card_button.dart';
 import 'package:menuapp/pages/add_page/form_components/instruction_edit/editing_components/instruction_step_card.dart';
 import 'package:menuapp/global_variables/page_transition_animation.dart';
-import 'package:menuapp/http/DTOs/models.dart';
+import 'package:menuapp/models/models.dart';
 
 class InstuctionForm extends StatefulWidget {
   const InstuctionForm({super.key, required this.stepList});
