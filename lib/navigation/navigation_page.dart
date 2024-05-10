@@ -25,7 +25,7 @@ class _NavigationPage extends State<NavigationPage> {
       case 1:
         return const SearchPage();
       case 3:
-        return const UserPage(isCurrentUser: true);
+        return const UserPage();
       default:
         return const Text('Невідомий екран');
     }

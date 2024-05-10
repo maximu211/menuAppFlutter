@@ -39,6 +39,7 @@ class _MainPageCardState extends State<MainPageCard> {
           mainAxisSize: MainAxisSize.min,
           children: [
             UserRow(
+              userId: "asd",
               userName: widget.cardRecipe.user.userName,
               textColor: ColorVariables.backgroundColor,
               image: widget.cardRecipe.user.userImage,

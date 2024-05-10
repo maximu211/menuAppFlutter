@@ -3,8 +3,8 @@ import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 
-class PhotoIconButton extends StatelessWidget {
-  const PhotoIconButton(
+class BottomModalButton extends StatelessWidget {
+  const BottomModalButton(
       {super.key,
       required this.icon,
       required this.onPressed,

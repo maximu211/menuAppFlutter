@@ -15,14 +15,14 @@ void showImageSelectionBottomSheet(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PhotoIconButton(
+            BottomModalButton(
               icon: Icons.camera_alt,
               onPressed: () {
                 pickImage(false);
               },
               buttonText: "Create photo",
             ),
-            PhotoIconButton(
+            BottomModalButton(
               icon: Icons.image,
               onPressed: () {
                 pickImage(true);

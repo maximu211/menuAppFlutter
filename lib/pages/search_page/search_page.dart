@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
+import 'package:menuapp/pages/common_components/user_card.dart';
 import 'package:menuapp/pages/home_page/card/card.dart';
 import 'package:menuapp/pages/common_components/user_row.dart';
 import 'package:menuapp/models/models.dart';
@@ -153,21 +154,7 @@ class _SearchPageState extends State<SearchPage> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: ColorVariables.primaryColor,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                              color: Colors.black,
-                                              blurRadius: 5)
-                                        ]),
-                                    child: UserRow(
-                                        userName: item.userName,
-                                        image: item.userImage,
-                                        textColor:
-                                            ColorVariables.backgroundColor),
-                                  ),
+                                  UserCard(userModel: item),
                                 ],
                               );
                             },

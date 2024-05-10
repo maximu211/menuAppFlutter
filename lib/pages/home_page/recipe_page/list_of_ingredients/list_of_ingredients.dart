@@ -82,6 +82,7 @@ class _IngredientListState extends State<IngredientList> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 UserRow(
+                  userId: "asd",
                   userName: widget.cardRecipe.user.userName,
                   image: widget.cardRecipe.user.userImage,
                   textColor: Colors.black,

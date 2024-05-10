@@ -7,12 +7,14 @@ class UserRow extends StatelessWidget {
   final String userName;
   final Uint8List image;
   final Color textColor;
+  final String userId;
 
-  const UserRow({super.key, 
-    required this.userName,
-    required this.image,
-    required this.textColor
-  });
+  const UserRow(
+      {super.key,
+      required this.userName,
+      required this.image,
+      required this.textColor,
+      required this.userId});
 
   @override
   Widget build(BuildContext context) {

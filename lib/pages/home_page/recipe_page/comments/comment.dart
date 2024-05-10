@@ -4,9 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:menuapp/models/models.dart';
 
 class Comment extends StatelessWidget {
-  Comment(
-      {super.key,
-      required this.comment});
+  Comment({super.key, required this.comment});
 
   final CommentModel comment;
 
@@ -20,6 +18,7 @@ class Comment extends StatelessWidget {
         Row(
           children: [
             UserRow(
+              userId: "asd",
               textColor: Colors.black,
               image: comment.user.userImage,
               userName: comment.user.userName,
@@ -30,7 +29,8 @@ class Comment extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Text("Posted ${f.format(comment.commentDateTime)}", textAlign: TextAlign.start),
+        Text("Posted ${f.format(comment.commentDateTime)}",
+            textAlign: TextAlign.start),
         const Divider(
           height: 12,
           color: Colors.black,
