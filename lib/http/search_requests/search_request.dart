@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:menuapp/http/DTOs/DTOs.dart';
-
 import 'package:menuapp/http/routes.dart';
 import 'package:menuapp/utils/secure_storage.dart';
 
 class SubscriptionRequests {
-  static Future<SearchResultDto> getSearchResult() async {
+  static Future<SearchResultDto> getSearchResult(String query) async {
     final StringBuffer stringBuffer = StringBuffer();
 
     stringBuffer.write(BaseRoutes.baseUrl);
-    stringBuffer.write(BaseRoutes.subscription);
-    stringBuffer.write(SubscriptionRoutes.getSbuscribedUsers);
+    stringBuffer.write(BaseRoutes.search);
+    stringBuffer.write(SearchRoutes.search);
+    stringBuffer.write("/$query");
 
     final String? accessToken =
         await SecureStorage().storage.read(key: "AccessToken");

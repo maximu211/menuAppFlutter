@@ -211,3 +211,35 @@ class FetchUserImage extends ServiceResult {
     );
   }
 }
+
+class CreateRecipeDTO {
+  String name;
+  CookingTime cookingTime;
+  CookingDifficulty difficulty;
+  String recipeType;
+  String image;
+  List<RecipeDescriptionElement> recipeDescElements;
+  List<String> recipeIngredients;
+
+  CreateRecipeDTO(
+      {required this.name,
+      required this.image,
+      required this.cookingTime,
+      required this.difficulty,
+      required this.recipeDescElements,
+      required this.recipeIngredients,
+      required this.recipeType});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'cookTime': cookingTime,
+      'image': image,
+      'cookingDifficulty': difficulty,
+      'recipeType': recipeType,
+      'recipeDescriptionElements':
+          recipeDescElements.map((e) => e.toJson()).toList(),
+      'recipeIngredients': recipeIngredients,
+    };
+  }
+}

@@ -2,6 +2,13 @@ class BaseRoutes {
   static String baseUrl = "https://10.0.2.2:5001/api";
   static String user = "/User";
   static String subscription = "/Subscription";
+  static String recipe = "/Recipe";
+  static String comment = "/Comment";
+  static String search = "/Search";
+}
+
+class SearchRoutes {
+  static String search = "/search";
 }
 
 class UserRoutes {
@@ -26,4 +33,26 @@ class SubscriptionRoutes {
   static String unsubscribeFrom = "/unsubscribe_from";
   static String getSubscribers = "/get_subscribers";
   static String getSbuscribedUsers = "/get_subscribed_users";
+}
+
+class RecipeRoutes {
+  static String createRecipe = "/create_recipe";
+  static String getRecipesByUserId = "/get_recipes_by_userId";
+  static String getRecipesBySubs = "/get_recipes_by_subscriptions";
+  static String getSavedRecipes = "/get_user_saved_recipes";
+  static String deleteRecipe = "/delete_recipe";
+  static String updateRecipe = "/update_recipe";
+  static String likeRecipe = "/like_recipe";
+  static String saveRecipe = "/save_recipe";
+  static String dislikeRecipe = "/dislike_recipe";
+  static String deleteFromSaved = "/delete_from_saved_recipe";
+  static String getRecipeDetails = "/get_recipe_details";
+  static String getRecipeById = "/get_recipe_by_id";
+}
+
+class CommentRoutes {
+  static String leaveComment = "/leave_comment";
+  static String getCommentsByRecipeId = "/get_comments_by_recipeId";
+  static String deleteComment = "/delete_comment";
+  static String updateComment = "/update_comment";
 }

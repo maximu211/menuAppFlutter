@@ -32,8 +32,6 @@ class UserModel {
   }
 }
 
-
-
 class CardRecipeModel {
   String id;
   Uint8List recipeImage;
@@ -80,18 +78,16 @@ class CardRecipeModel {
   }
 }
 
-
-
-
-
 class CommentModel {
   CommentModel(
-      {required this.commentText,
+      {required this.id,
+      required this.commentText,
       required this.commentDateTime,
       required this.user,
       required this.isOwner});
 
   UserModel user;
+  String id;
   String commentText;
   DateTime commentDateTime;
   bool isOwner;
@@ -101,11 +97,10 @@ class CommentModel {
         commentDateTime: json['createdAt'],
         commentText: json['comment'],
         user: UserModel.fromJson(json['user']),
-        isOwner: json['isOwner']);
+        isOwner: json['isOwner'],
+        id: json['id']);
   }
 }
-
-
 
 class RecipeDescriptionElements {
   RecipeDescriptionElements(
@@ -129,9 +124,14 @@ class RecipeDescriptionElement {
         recipeDescriptionElementText: json['recipeDescriptionElementText'],
         recipeDescriptionImage: json['recipeDescriptionElementImage']);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'recipeDescriptionElementText': recipeDescriptionElementText,
+      'recipeDescriptionElementImage': recipeDescriptionImage,
+    };
+  }
 }
-
-
 
 enum CookingDifficulty {
   easy,
@@ -148,4 +148,3 @@ enum CookingTime {
   hour1,
   moreThanHour1,
 }
-

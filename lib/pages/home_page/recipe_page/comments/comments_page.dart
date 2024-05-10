@@ -31,12 +31,14 @@ class _CommentsPage extends State<CommentsPage> {
       CommentModel(
         commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
         commentDateTime: DateTime.now(),
+        id: "asd",
         user: UserModel(userName: "asd", userImage: binaryData, userId: '12'),
         isOwner: false,
       ),
       CommentModel(
         commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
         commentDateTime: DateTime.now(),
+        id: "asd",
         user: UserModel(
           userName: "asd",
           userImage: binaryData,
@@ -48,6 +50,7 @@ class _CommentsPage extends State<CommentsPage> {
         commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
         commentDateTime: DateTime.now(),
         isOwner: false,
+        id: "asd",
         user: UserModel(
           userName: "asd",
           userImage: binaryData,
@@ -104,6 +107,7 @@ class _CommentsPage extends State<CommentsPage> {
                             isOwner: true,
                             commentDateTime: DateTime.now(),
                             commentText: commentFieldValue,
+                            id: "qaasd",
                             user: UserModel(
                               userName: "new_user",
                               userImage: binaryData,
