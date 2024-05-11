@@ -38,16 +38,55 @@ class _MainPageCardState extends State<MainPageCard> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            UserRow(
-              userId: "asd",
-              userName: widget.cardRecipe.user.userName,
-              textColor: ColorVariables.backgroundColor,
-              image: widget.cardRecipe.user.userImage,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                UserRow(
+                  userId: "asd",
+                  userName: widget.cardRecipe.user.userName,
+                  textColor: ColorVariables.backgroundColor,
+                  image: widget.cardRecipe.user.userImage,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      right: 20), // Додайте відступ з правого боку
+                  child: PopupMenuButton<String>(
+                    color: ColorVariables.backgroundColor,
+                    icon: Icon(
+                      Icons.more_horiz,
+                      size: IconSizeVariables.regularSize,
+                      color: ColorVariables.backgroundColor,
+                    ),
+                    itemBuilder: (BuildContext context) =>
+                        <PopupMenuEntry<String>>[
+                      const PopupMenuItem<String>(
+                        value: 'update',
+                        child: Text('Update recipe'),
+                      ),
+                      const PopupMenuItem<String>(
+                        value: 'delete',
+                        child: Text('Delete recipe'),
+                      ),
+                    ],
+                    onSelected: (String value) {
+                      // Додайте обробник події, який викликається при виборі пункту меню
+                      switch (value) {
+                        case 'update':
+                          // Ваші дії для пункту меню 1
+                          break;
+                        case 'delete':
+                          // Ваші дії для пункту меню 2
+                          break;
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
             Image.memory(
               widget.cardRecipe.recipeImage,
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.25,
+              //height: MediaQuery.of(context).size.height * 0.25,
               fit: BoxFit.fill,
             ),
             const SizedBox(height: 10),

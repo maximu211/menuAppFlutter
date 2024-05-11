@@ -1,11 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/navigation/navigation_page.dart';
 import 'package:menuapp/pages/authorization/forgot_password_page/forgot_password_page.dart';
 import 'package:menuapp/pages/authorization/register_pages/register_email_page.dart';
-import 'package:menuapp/pages/authorization/register_pages/register_user_page.dart';
 import 'package:menuapp/pages/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';

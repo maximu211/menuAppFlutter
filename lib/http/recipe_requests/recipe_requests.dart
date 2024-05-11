@@ -6,15 +6,7 @@ import 'package:menuapp/http/routes.dart';
 import 'package:menuapp/utils/secure_storage.dart';
 
 class RecipeRequests {
-  static Future<ServiceResult> createRecipe(Cre
-  
-  
-  
-  
-  
-  
-  
-  ateRecipeDTO recipe) async {
+  static Future<ServiceResult> createRecipe(CreateRecipeDTO recipe) async {
     final StringBuffer stringBuffer = StringBuffer();
 
     stringBuffer.write(BaseRoutes.baseUrl);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/global_variables/color_variables.dart';
 
 class TextFieldLogin extends StatelessWidget {
   const TextFieldLogin({

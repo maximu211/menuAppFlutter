@@ -34,58 +34,46 @@ class _NavigationPage extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorVariables.backgroundColor,
-      bottomNavigationBar: NavigationBar(
-          backgroundColor: ColorVariables.backgroundColor,
-          indicatorColor: ColorVariables.primaryColor,
-          destinations: [
-            NavigationDestination(
-                icon: Icon(
-                  Icons.home,
-                  size: IconSizeVariables.regularSize,
-                ),
-                label: ''),
-            NavigationDestination(
-                icon: Icon(
-                  Icons.search_rounded,
-                  size: IconSizeVariables.regularSize,
-                ),
-                label: ''),
-            NavigationDestination(
-                icon: Icon(
-                  Icons.add,
-                  size: IconSizeVariables.regularSize,
-                ),
-                label: ''),
-            NavigationDestination(
-                icon: Icon(
-                  Icons.person,
-                  size: IconSizeVariables.regularSize,
-                ),
-                label: ''),
-          ],
-          selectedIndex: _currentIndex,
-          onDestinationSelected: (int index) {
-            if (index == 2) {
-              Navigator.push(context, createRoute(pageType: 'addPage'));
-            } else {
-              setState(() {
-                _currentIndex = index;
-              });
-            }
-          }),
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/background_image.png"),
-                  fit: BoxFit.fill),
-            ),
-          ),
-          renderScreen(_currentIndex)
-        ],
-      ),
-    );
+        backgroundColor: ColorVariables.backgroundColor,
+        bottomNavigationBar: NavigationBar(
+            backgroundColor: ColorVariables.backgroundColor,
+            indicatorColor: ColorVariables.primaryColor,
+            destinations: [
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.home,
+                    size: IconSizeVariables.regularSize,
+                  ),
+                  label: ''),
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.search_rounded,
+                    size: IconSizeVariables.regularSize,
+                  ),
+                  label: ''),
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.add,
+                    size: IconSizeVariables.regularSize,
+                  ),
+                  label: ''),
+              NavigationDestination(
+                  icon: Icon(
+                    Icons.person,
+                    size: IconSizeVariables.regularSize,
+                  ),
+                  label: ''),
+            ],
+            selectedIndex: _currentIndex,
+            onDestinationSelected: (int index) {
+              if (index == 2) {
+                Navigator.push(context, createRoute(pageType: 'addPage'));
+              } else {
+                setState(() {
+                  _currentIndex = index;
+                });
+              }
+            }),
+        body: renderScreen(_currentIndex));
   }
 }

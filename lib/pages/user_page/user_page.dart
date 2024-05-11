@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
-import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
-import 'package:menuapp/http/user_requests/user_requests.dart';
 import 'package:menuapp/models/models.dart';
 import 'package:menuapp/pages/common_components/image_picker/photo_button.dart';
-import 'package:menuapp/pages/common_components/user_row.dart';
 import 'package:menuapp/pages/home_page/card/card.dart';
-import 'package:menuapp/utils/secure_storage.dart';
+import 'package:menuapp/pages/user_page/saved_recipe_page.dart';
+import 'package:menuapp/pages/user_page/subs_list_page.dart';
 
 class UserPage extends StatefulWidget {
   final bool isCurrentUser = true;
@@ -133,7 +131,12 @@ class _UserPageState extends State<UserPage> {
                                 BottomModalButton(
                                   icon: Icons.bookmark_rounded,
                                   onPressed: () {
-                                    print("object");
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SavedRecipesPage()));
                                   },
                                   buttonText: "Gallery",
                                 ),
@@ -223,7 +226,16 @@ class _UserPageState extends State<UserPage> {
                               ),
                               const SizedBox(height: 10),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SubsListPage(
+                                        isSubscribersPage: true,
+                                      ),
+                                    ),
+                                  );
+                                },
                                 child: Text(
                                   "Subscribers: ${widget.subsCount}",
                                   style: TextStyle(
@@ -234,7 +246,16 @@ class _UserPageState extends State<UserPage> {
                               ),
                               const SizedBox(height: 10),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SubsListPage(
+                                        isSubscribersPage: false,
+                                      ),
+                                    ),
+                                  );
+                                },
                                 child: Text(
                                   "Subscribed to: ${widget.subsToCount}",
                                   style: TextStyle(
