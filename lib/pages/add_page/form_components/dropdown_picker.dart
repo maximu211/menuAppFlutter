@@ -5,11 +5,16 @@ import 'package:menuapp/models/mappers.dart';
 import 'package:menuapp/models/models.dart';
 
 class DropdownPicker<T> extends StatefulWidget {
-  const DropdownPicker({Key? key, required this.onChange, required this.isTime})
+  const DropdownPicker(
+      {Key? key,
+      required this.onChange,
+      required this.isTime,
+      required this.initialValue})
       : super(key: key);
 
   final void Function(T?) onChange;
   final bool isTime;
+  final T initialValue; // Додано поле для початкового значення
 
   @override
   State<DropdownPicker<T>> createState() => _DropdownPickerState<T>();
@@ -21,9 +26,7 @@ class _DropdownPickerState<T> extends State<DropdownPicker<T>> {
   @override
   void initState() {
     super.initState();
-    selectedValue = widget.isTime
-        ? CookingTime.lessThan15min as T
-        : CookingDifficulty.easy as T;
+    selectedValue = widget.initialValue; // Встановлено початкове значення
   }
 
   @override
@@ -56,10 +59,7 @@ class _DropdownPickerState<T> extends State<DropdownPicker<T>> {
           value: selectedValue,
           onChanged: (T? newValue) {
             setState(() {
-              selectedValue = newValue ??
-                  (widget.isTime
-                      ? CookingTime.lessThan15min as T
-                      : CookingDifficulty.easy as T);
+              selectedValue = newValue ?? widget.initialValue;
             });
             widget.onChange(newValue);
           },

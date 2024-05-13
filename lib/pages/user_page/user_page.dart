@@ -4,10 +4,12 @@ import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/models/models.dart';
+import 'package:menuapp/pages/authorization/log_in_page/log_in_page.dart';
 import 'package:menuapp/pages/common_components/image_picker/photo_button.dart';
 import 'package:menuapp/pages/home_page/card/card.dart';
 import 'package:menuapp/pages/user_page/saved_recipe_page.dart';
 import 'package:menuapp/pages/user_page/subs_list_page.dart';
+import 'package:menuapp/utils/secure_storage.dart';
 
 class UserPage extends StatefulWidget {
   final bool isCurrentUser = true;
@@ -115,7 +117,7 @@ class _UserPageState extends State<UserPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.16,
+                            height: MediaQuery.of(context).size.height * 0.2,
                             width: double.infinity,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -139,6 +141,18 @@ class _UserPageState extends State<UserPage> {
                                                 const SavedRecipesPage()));
                                   },
                                   buttonText: "Gallery",
+                                ),
+                                BottomModalButton(
+                                  icon: Icons.exit_to_app,
+                                  onPressed: () {
+                                    SecureStorage().storage.deleteAll();
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginPage()));
+                                  },
+                                  buttonText: "Log out",
                                 ),
                               ],
                             ),

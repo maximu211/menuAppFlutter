@@ -7,6 +7,7 @@ Route createRoute({
   dynamic cardRecipe,
   dynamic step,
   dynamic stepNum,
+  dynamic fullRecipe,
   required String pageType,
 }) {
   late Widget destinationPage;
@@ -14,7 +15,7 @@ Route createRoute({
   if (pageType == 'recipePage') {
     destinationPage = RecipePage(cardRecipe: cardRecipe);
   } else if (pageType == 'addPage') {
-    destinationPage = const AddPage();
+    destinationPage =  AddPage(recipe: fullRecipe);
   } else if (pageType == 'editStepPage') {
     destinationPage = StepUpdatePage(step: step, stepNum: stepNum);
   }

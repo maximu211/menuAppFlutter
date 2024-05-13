@@ -7,31 +7,18 @@ import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/models/models.dart';
 
 class InstuctionForm extends StatefulWidget {
-  const InstuctionForm({super.key, required this.stepList});
+  InstuctionForm({super.key, required this.stepList});
 
-  final List<RecipeDescriptionElement> stepList;
+  late List<RecipeDescriptionElement> stepList;
 
   @override
   State<InstuctionForm> createState() => _InstuctionFormState();
 }
 
 class _InstuctionFormState extends State<InstuctionForm> {
-  late BinaryFileReader binaryFileReader;
-  late Uint8List binaryData;
-
   @override
   void initState() {
     super.initState();
-    _loadBinaryData();
-  }
-
-  Future<void> _loadBinaryData() async {
-    binaryFileReader =
-        BinaryFileReader('assets/images/recipe_images/image.bin');
-    binaryData = await binaryFileReader.readBinaryFile();
-    if (mounted) {
-      setState(() {});
-    }
   }
 
   @override
@@ -41,12 +28,11 @@ class _InstuctionFormState extends State<InstuctionForm> {
         children: [
           widget.stepList.isEmpty
               ? const SizedBox()
-              : ListView.builder(
+              : ListView(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: widget.stepList.length,
-                  itemBuilder: (context, index) {
-                    final step = widget.stepList[index];
+                  children: widget.stepList.map((step) {
+                    final index = widget.stepList.indexOf(step);
                     final stepIndex = index + 1;
 
                     return Column(
@@ -63,7 +49,7 @@ class _InstuctionFormState extends State<InstuctionForm> {
                         const SizedBox(height: 20),
                       ],
                     );
-                  },
+                  }).toList(),
                 ),
           FormCardButton(
             onPressed: () {

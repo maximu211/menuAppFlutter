@@ -6,7 +6,7 @@ import 'package:menuapp/http/routes.dart';
 import 'package:menuapp/utils/secure_storage.dart';
 
 class RecipeRequests {
-  static Future<ServiceResult> createRecipe(CreateRecipeDTO recipe) async {
+  static Future<ServiceResult> createRecipe(FullRecipeDto recipe) async {
     final StringBuffer stringBuffer = StringBuffer();
 
     stringBuffer.write(BaseRoutes.baseUrl);
@@ -120,7 +120,7 @@ class RecipeRequests {
   }
 
   static Future<ServiceResult> updateRecipe(
-      String recipeId, CreateRecipeDTO recipe) async {
+      String recipeId, FullRecipeDto recipe) async {
     final StringBuffer stringBuffer = StringBuffer();
 
     stringBuffer.write(BaseRoutes.baseUrl);

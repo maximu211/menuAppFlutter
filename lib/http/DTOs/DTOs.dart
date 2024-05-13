@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
 import 'package:menuapp/http/DTOs/result.dart';
 import 'package:menuapp/models/models.dart';
 
@@ -212,16 +215,16 @@ class FetchUserImage extends ServiceResult {
   }
 }
 
-class CreateRecipeDTO {
+class FullRecipeDto {
   String name;
   CookingTime cookingTime;
   CookingDifficulty difficulty;
   String recipeType;
-  String image;
+  Uint8List? image;
   List<RecipeDescriptionElement> recipeDescElements;
   List<String> recipeIngredients;
 
-  CreateRecipeDTO(
+  FullRecipeDto(
       {required this.name,
       required this.image,
       required this.cookingTime,
@@ -241,5 +244,18 @@ class CreateRecipeDTO {
           recipeDescElements.map((e) => e.toJson()).toList(),
       'recipeIngredients': recipeIngredients,
     };
+  }
+}
+
+class RecipeNotifier extends ChangeNotifier {
+  FullRecipeDto _recipe;
+
+  RecipeNotifier(this._recipe);
+
+  FullRecipeDto get recipe => _recipe;
+
+  set recipe(FullRecipeDto newRecipe) {
+    _recipe = newRecipe;
+    notifyListeners();
   }
 }

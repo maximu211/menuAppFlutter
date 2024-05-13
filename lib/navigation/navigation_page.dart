@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/page_transition_animation.dart';
+import 'package:menuapp/http/DTOs/DTOs.dart';
+import 'package:menuapp/models/models.dart';
 import 'package:menuapp/pages/home_page/home_page.dart';
 import 'package:menuapp/pages/search_page/search_page.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
@@ -67,7 +69,18 @@ class _NavigationPage extends State<NavigationPage> {
             selectedIndex: _currentIndex,
             onDestinationSelected: (int index) {
               if (index == 2) {
-                Navigator.push(context, createRoute(pageType: 'addPage'));
+                Navigator.push(
+                    context,
+                    createRoute(
+                        pageType: 'addPage',
+                        fullRecipe: RecipeNotifier(FullRecipeDto(
+                            cookingTime: CookingTime.min15,
+                            difficulty: CookingDifficulty.easy,
+                            image: null,
+                            name: '',
+                            recipeDescElements: [],
+                            recipeIngredients: [],
+                            recipeType: ''))));
               } else {
                 setState(() {
                   _currentIndex = index;

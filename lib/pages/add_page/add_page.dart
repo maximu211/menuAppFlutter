@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:menuapp/http/DTOs/DTOs.dart';
 import 'package:menuapp/pages/add_page/form_components/dropdown_picker.dart';
+import 'package:menuapp/pages/add_page/form_components/form_card_button.dart';
 import 'package:menuapp/pages/common_components/form_input_field.dart';
 import 'package:menuapp/pages/common_components/image_picker/image_picker.dart';
 import 'package:menuapp/pages/add_page/form_components/instruction_edit/instruction_form.dart';
@@ -12,7 +14,9 @@ import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/models/models.dart';
 
 class AddPage extends StatefulWidget {
-  const AddPage({super.key});
+  AddPage({super.key, required this.recipe});
+
+  RecipeNotifier recipe;
 
   @override
   State<StatefulWidget> createState() => _AddPage();
@@ -24,21 +28,25 @@ class FiledMaxLenght {
 }
 
 class _AddPage extends State<AddPage> {
-  Uint8List? _mainImage;
-  late String _recipeType;
-  late String _recipeName;
-  late CookingTime? _recipeCookTime;
-  late CookingDifficulty? _recipeHardness;
-  late final List<RecipeDescriptionElement> _stepList = [];
+  @override
+  void initState() {
+    _recipeTypeFieldController.text = widget.recipe.recipe.recipeType;
+    _fieldNameController.text = widget.recipe.recipe.name;
+    super.initState();
+  }
 
   bool _isStepListEmpty = false;
   bool _isImageEmpty = false;
+  bool _isIngredientListEmpty = false;
 
   final TextEditingController _fieldNameController = TextEditingController();
   final TextEditingController _recipeTypeFieldController =
       TextEditingController();
+  final TextEditingController _ingredientFieldController =
+      TextEditingController();
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _globalFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _ingredientFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +84,7 @@ class _AddPage extends State<AddPage> {
         child: Container(
           margin: const EdgeInsets.all(20),
           child: Form(
-            key: _formKey,
+            key: _globalFormKey,
             child: Column(
               children: [
                 FormInputField(
@@ -92,10 +100,10 @@ class _AddPage extends State<AddPage> {
                 ),
                 const SizedBox(height: 15),
                 ImagePickerContainer(
-                  image: _mainImage,
+                  image: widget.recipe.recipe.image,
                   onImageChanged: (image) {
                     setState(() {
-                      _mainImage = image;
+                      widget.recipe.recipe.image = image;
                     });
                   },
                 ),
@@ -128,25 +136,107 @@ class _AddPage extends State<AddPage> {
                     return null;
                   },
                 ),
-                DropdownPicker<CookingTime>(
-                  isTime: true,
-                  onChange: (CookingTime? selectedValue) {
-                    setState(() {
-                      _recipeCookTime = selectedValue;
-                    });
-                  },
-                ),
-                const SizedBox(height: 20),
                 DropdownPicker<CookingDifficulty>(
                   isTime: false,
+                  initialValue: widget.recipe.recipe.difficulty,
                   onChange: (CookingDifficulty? selectedValue) {
                     setState(() {
-                      _recipeHardness = selectedValue;
+                      widget.recipe.recipe.difficulty = selectedValue!;
                     });
                   },
                 ),
                 const SizedBox(height: 20),
-                InstuctionForm(stepList: _stepList),
+                DropdownPicker<CookingTime>(
+                  isTime: true,
+                  initialValue:
+                      widget.recipe.recipe.cookingTime, // Початкове значення
+                  onChange: (CookingTime? selectedValue) {
+                    setState(() {
+                      widget.recipe.recipe.cookingTime = selectedValue!;
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
+                ExpansionTile(
+                  title: const Text('Ingredients'),
+                  children: [
+                    ListView(
+                      shrinkWrap: true,
+                      children: [
+                        for (var ingredient
+                            in widget.recipe.recipe.recipeIngredients)
+                          Row(
+                            children: [
+                              Text(ingredient),
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  setState(() {
+                                    widget.recipe.recipe.recipeIngredients
+                                        .remove(ingredient);
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        Form(
+                          key: _ingredientFormKey,
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value!.trim().isEmpty) {
+                                return "Please input ingredient";
+                              } else {
+                                return null;
+                              }
+                            },
+                            controller: _ingredientFieldController,
+                            decoration: const InputDecoration(
+                                hintText: "Input ingredient and count"),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        FormCardButton(
+                          onPressed: () {
+                            if (_ingredientFormKey.currentState!.validate()) {
+                              setState(() {
+                                // Створення нового списку і додавання елементів зі старого списку
+                                List<String> updatedIngredientsList = List.from(
+                                    widget.recipe.recipe.recipeIngredients);
+                                updatedIngredientsList
+                                    .add(_ingredientFieldController.text);
+                                widget.recipe.recipe.recipeIngredients =
+                                    updatedIngredientsList;
+                                _ingredientFieldController.text = "";
+                              });
+                            }
+                          },
+                          icon: Icons.add,
+                          isColorMain: true,
+                          label: "Add ingredient",
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  ],
+                ),
+                _isIngredientListEmpty
+                    ? const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 6),
+                          Text(
+                            "Please add at least one ingredient",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 180, 45, 12),
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      )
+                    : const SizedBox(),
+                const SizedBox(height: 20),
+                InstuctionForm(
+                    stepList: widget.recipe.recipe.recipeDescElements),
                 _isStepListEmpty
                     ? const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,24 +266,32 @@ class _AddPage extends State<AddPage> {
               backgroundColor: ColorVariables.primaryColor,
             ),
             onPressed: () {
-              if (_formKey.currentState!.validate() &&
-                  _mainImage != null &&
-                  _stepList.isNotEmpty) {
+              if (_globalFormKey.currentState!.validate() &&
+                  widget.recipe.recipe.image != null &&
+                  widget.recipe.recipe.recipeDescElements.isNotEmpty) {
                 setState(() {
-                  _recipeName = _fieldNameController.text.trim();
-                  _recipeType = _recipeTypeFieldController.text.trim();
+                  widget.recipe.recipe.name = _fieldNameController.text.trim();
+                  widget.recipe.recipe.recipeType =
+                      _recipeTypeFieldController.text.trim();
                   _isImageEmpty = false;
                   _isStepListEmpty = false;
+                  _isIngredientListEmpty = false;
                 });
               } else {
                 setState(() {
-                  if (_mainImage == null) {
+                  if (widget.recipe.recipe.image == null) {
                     _isImageEmpty = true;
                   } else {
                     _isImageEmpty = false;
                   }
 
-                  if (_stepList.isEmpty) {
+                  if (widget.recipe.recipe.recipeIngredients.isEmpty) {
+                    _isIngredientListEmpty = true;
+                  } else {
+                    _isIngredientListEmpty = false;
+                  }
+
+                  if (widget.recipe.recipe.recipeDescElements.isEmpty) {
                     _isStepListEmpty = true;
                   } else {
                     _isStepListEmpty = false;
