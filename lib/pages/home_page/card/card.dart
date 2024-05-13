@@ -1,6 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
+import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/global_variables/page_transition_animation.dart';
+import 'package:menuapp/http/DTOs/DTOs.dart';
+import 'package:menuapp/http/recipe_requests/recipe_requests.dart';
 import 'package:menuapp/pages/common_components/toggle_button.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
@@ -49,8 +56,7 @@ class _MainPageCardState extends State<MainPageCard> {
                 ),
                 widget.cardRecipe.isOwner
                     ? Padding(
-                        padding: const EdgeInsets.only(
-                            right: 20),
+                        padding: const EdgeInsets.only(right: 20),
                         child: PopupMenuButton<String>(
                           color: ColorVariables.backgroundColor,
                           icon: Icon(
@@ -69,13 +75,31 @@ class _MainPageCardState extends State<MainPageCard> {
                               child: Text('Delete recipe'),
                             ),
                           ],
-                          onSelected: (String value) {
+                          onSelected: (String value) async {
                             switch (value) {
                               case 'update':
-                                
+                                var result = await RecipeRequests.getRecipeById(
+                                    widget.cardRecipe.id);
+                                Navigator.push(
+                                  context,
+                                  NavigationService.createAddPageRoute(
+                                      RecipeNotifier(result), true),
+                                );
                                 break;
                               case 'delete':
-                                // Ваші дії для пункту меню 2
+                                DialogUtils.showLeavePageDialog(
+                                  context: context,
+                                  title: "Delete recipe",
+                                  description: "Do you want to delete recipe?",
+                                  okFunc: () {
+                                    RecipeRequests.deleteRecipe(
+                                        widget.cardRecipe.id);
+                                    Navigator.pop(context);
+                                  },
+                                  cancelFunc: () {
+                                    Navigator.pop(context);
+                                  },
+                                );
                                 break;
                             }
                           },
@@ -84,11 +108,12 @@ class _MainPageCardState extends State<MainPageCard> {
                     : Container(),
               ],
             ),
-            Image.memory(
-              widget.cardRecipe.recipeImage,
-              width: double.infinity,
-              //height: MediaQuery.of(context).size.height * 0.25,
-              fit: BoxFit.fill,
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.memory(
+                base64Decode(widget.cardRecipe.recipeImage),
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(height: 10),
             Text(
@@ -114,9 +139,9 @@ class _MainPageCardState extends State<MainPageCard> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(createRoute(
-                          cardRecipe: widget.cardRecipe,
-                          pageType: 'recipePage',
+                        Navigator.of(context)
+                            .push(NavigationService.createRecipePageRoute(
+                          widget.cardRecipe,
                         ));
                       },
                       style: ElevatedButton.styleFrom(
@@ -144,8 +169,11 @@ class _MainPageCardState extends State<MainPageCard> {
                           () {
                             widget.cardRecipe.isRecipeLiked = newState;
                             if (newState) {
+                              RecipeRequests.likeRecipe(widget.cardRecipe.id);
                               widget.cardRecipe.likesCount++;
                             } else {
+                              RecipeRequests.dislikeRecipe(
+                                  widget.cardRecipe.id);
                               widget.cardRecipe.likesCount--;
                             }
                           },

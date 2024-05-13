@@ -70,17 +70,21 @@ class _NavigationPage extends State<NavigationPage> {
             onDestinationSelected: (int index) {
               if (index == 2) {
                 Navigator.push(
-                    context,
-                    createRoute(
-                        pageType: 'addPage',
-                        fullRecipe: RecipeNotifier(FullRecipeDto(
-                            cookingTime: CookingTime.min15,
-                            difficulty: CookingDifficulty.easy,
-                            image: null,
-                            name: '',
-                            recipeDescElements: [],
-                            recipeIngredients: [],
-                            recipeType: ''))));
+                  context,
+                  NavigationService.createAddPageRoute(
+                    RecipeNotifier(
+                      FullRecipeDto(
+                          cookingTime: CookingTime.min15,
+                          difficulty: CookingDifficulty.easy,
+                          image: null,
+                          name: '',
+                          recipeDescElements: [],
+                          recipeIngredients: [],
+                          recipeType: ''),
+                    ),
+                    false,
+                  ),
+                );
               } else {
                 setState(() {
                   _currentIndex = index;

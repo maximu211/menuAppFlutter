@@ -1,8 +1,10 @@
 // ignore_for_file: unused_field
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:menuapp/http/DTOs/DTOs.dart';
+import 'package:menuapp/http/recipe_requests/recipe_requests.dart';
 import 'package:menuapp/pages/add_page/form_components/dropdown_picker.dart';
 import 'package:menuapp/pages/add_page/form_components/form_card_button.dart';
 import 'package:menuapp/pages/common_components/form_input_field.dart';
@@ -14,8 +16,14 @@ import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/models/models.dart';
 
 class AddPage extends StatefulWidget {
-  AddPage({super.key, required this.recipe});
+  AddPage(
+      {super.key,
+      required this.recipe,
+      required this.isUpdate,
+      required this.recipeId});
 
+  String recipeId;
+  bool isUpdate;
   RecipeNotifier recipe;
 
   @override
@@ -100,10 +108,16 @@ class _AddPage extends State<AddPage> {
                 ),
                 const SizedBox(height: 15),
                 ImagePickerContainer(
-                  image: widget.recipe.recipe.image,
+                  image: widget.recipe.recipe.image != null
+                      ? base64Decode(widget.recipe.recipe.image!)
+                      : null,
                   onImageChanged: (image) {
                     setState(() {
-                      widget.recipe.recipe.image = image;
+                      if (image != null) {
+                        widget.recipe.recipe.image = base64Encode(image);
+                      } else {
+                        widget.recipe.recipe.image = null;
+                      }
                     });
                   },
                 ),
@@ -268,11 +282,22 @@ class _AddPage extends State<AddPage> {
             onPressed: () {
               if (_globalFormKey.currentState!.validate() &&
                   widget.recipe.recipe.image != null &&
-                  widget.recipe.recipe.recipeDescElements.isNotEmpty) {
+                  widget.recipe.recipe.recipeDescElements.isNotEmpty &&
+                  widget.recipe.recipe.recipeIngredients.isNotEmpty) {
                 setState(() {
                   widget.recipe.recipe.name = _fieldNameController.text.trim();
                   widget.recipe.recipe.recipeType =
                       _recipeTypeFieldController.text.trim();
+
+                  widget.recipe.recipe.recipeDescElements;
+
+                  if (widget.isUpdate) {
+                    RecipeRequests.updateRecipe(
+                        widget.recipeId, widget.recipe.recipe);
+                  } else {
+                    RecipeRequests.createRecipe(widget.recipe.recipe);
+                  }
+
                   _isImageEmpty = false;
                   _isStepListEmpty = false;
                   _isIngredientListEmpty = false;

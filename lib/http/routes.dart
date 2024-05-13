@@ -45,7 +45,7 @@ class RecipeRoutes {
   static String likeRecipe = "/like_recipe";
   static String saveRecipe = "/save_recipe";
   static String dislikeRecipe = "/dislike_recipe";
-  static String deleteFromSaved = "/delete_from_saved_recipe";
+  static String deleteFromSaved = "/delete_recipe_from_saved";
   static String getRecipeDetails = "/get_recipe_details";
   static String getRecipeById = "/get_recipe_by_id";
 }

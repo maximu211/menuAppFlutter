@@ -51,10 +51,9 @@ class _StepCardWithButtonsState extends State<StepCardWithButtons> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            createRoute(
-                              pageType: 'editStepPage',
-                              step: widget.step,
-                              stepNum: widget.stepIndex,
+                            NavigationService.createEditStepPageRoute(
+                              widget.step,
+                              widget.stepIndex,
                             ),
                           ).then((_) {
                             setState(() {});

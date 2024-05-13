@@ -30,4 +30,21 @@ class Mapper {
         return '1 hour+';
     }
   }
+
+  static CookingDifficulty getCookingDifficultyByIndex(int index) {
+    return CookingDifficulty.values[index];
+  }
+
+// Функція для отримання CookingTime за int значенням
+  static CookingTime getCookingTimeByIndex(int index) {
+    return CookingTime.values[index];
+  }
+
+  static int cookingTimeToInt(CookingTime time) {
+    return time.index;
+  }
+
+  static int cookingDifficultyToInt(CookingDifficulty difficulty) {
+    return difficulty.index;
+  }
 }

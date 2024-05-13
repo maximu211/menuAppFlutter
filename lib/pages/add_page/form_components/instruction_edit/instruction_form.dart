@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:menuapp/pages/add_page/form_components/form_card_button.dart';
 import 'package:menuapp/pages/add_page/form_components/instruction_edit/editing_components/instruction_step_card.dart';
@@ -61,10 +59,9 @@ class _InstuctionFormState extends State<InstuctionForm> {
 
                 Navigator.push(
                   context,
-                  createRoute(
-                    pageType: 'editStepPage',
-                    step: newStep,
-                    stepNum: widget.stepList.length + 1,
+                  NavigationService.createEditStepPageRoute(
+                    newStep,
+                    widget.stepList.length + 1,
                   ),
                 ).then((_) {
                   if (newStep.recipeDescriptionElementText.trim().isNotEmpty) {

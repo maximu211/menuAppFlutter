@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
+import 'package:menuapp/models/mappers.dart';
 
 class BinaryFileReader {
   final String filePath;
@@ -26,7 +29,7 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       userName: json['username'],
-      userImage: json['image'],
+      userImage: base64Decode(json['image']),
       userId: json['id'],
     );
   }
@@ -34,8 +37,7 @@ class UserModel {
 
 class CardRecipeModel {
   String id;
-  Uint8List recipeImage;
-  String recipeId;
+  String recipeImage;
   UserModel user;
   String name;
   CookingDifficulty cookingDifficulty;
@@ -48,7 +50,6 @@ class CardRecipeModel {
 
   CardRecipeModel(
       {required this.recipeImage,
-      required this.recipeId,
       required this.user,
       required this.name,
       required this.cookingDifficulty,
@@ -64,11 +65,11 @@ class CardRecipeModel {
     return CardRecipeModel(
       id: json['id'],
       recipeImage: json['recipeImage'],
-      recipeId: json['recipeId'],
       user: UserModel.fromJson(json['user']),
       name: json['name'],
-      cookingDifficulty: json['cookingDifficulty'],
-      cookingTime: json['cookingTime'],
+      cookingDifficulty:
+          Mapper.getCookingDifficultyByIndex(json['cookingDifficulty']),
+      cookingTime: Mapper.getCookingTimeByIndex(json['cookingTime']),
       recipeType: json['recipeType'],
       isRecipeSaved: json['isRecipeSaved'],
       isRecipeLiked: json['isRecipeLiked'],
@@ -94,7 +95,7 @@ class CommentModel {
 
   factory CommentModel.fromJson(Map<String, dynamic> json) {
     return CommentModel(
-        commentDateTime: json['createdAt'],
+        commentDateTime: DateTime.parse(json['createdAt']),
         commentText: json['comment'],
         user: UserModel.fromJson(json['user']),
         isOwner: json['isOwner'],
@@ -122,7 +123,8 @@ class RecipeDescriptionElement {
   factory RecipeDescriptionElement.fromJson(Map<String, dynamic> json) {
     return RecipeDescriptionElement(
         recipeDescriptionElementText: json['recipeDescriptionElementText'],
-        recipeDescriptionImage: json['recipeDescriptionElementImage']);
+        recipeDescriptionImage:
+            base64Decode(json['recipeDescriptionElementImage']));
   }
 
   Map<String, dynamic> toJson() {

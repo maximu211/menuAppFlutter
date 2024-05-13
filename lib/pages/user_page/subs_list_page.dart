@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/models/models.dart';
 import 'package:menuapp/pages/common_components/user_card.dart';
-import 'package:menuapp/pages/home_page/card/card.dart';
 
 class SubsListPage extends StatefulWidget {
   SubsListPage({super.key, required this.isSubscribersPage});

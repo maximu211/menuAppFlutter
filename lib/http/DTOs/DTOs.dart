@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:menuapp/http/DTOs/result.dart';
@@ -24,7 +23,7 @@ class UserDto {
 }
 
 class CardRecipeDto extends ServiceResult {
-  List<CardRecipeModel>? recipeList;
+  List<CardRecipeModel> recipeList;
 
   CardRecipeDto(
       {required super.success,
@@ -34,14 +33,13 @@ class CardRecipeDto extends ServiceResult {
   factory CardRecipeDto.fromJson(Map<String, dynamic> json) {
     final bool success = json['success'] ?? false;
     final String message = json['message'] ?? '';
-    final List<dynamic>? recipeJsonList = json['data'];
+    final List<dynamic> recipeJsonList = json['data'];
 
-    List<CardRecipeModel>? recipeList;
-    if (recipeJsonList != null) {
-      recipeList = recipeJsonList.map((recipeJson) {
-        return CardRecipeModel.fromJson(recipeJson);
-      }).toList();
-    }
+    List<CardRecipeModel> recipeList;
+
+    recipeList = recipeJsonList.map((recipeJson) {
+      return CardRecipeModel.fromJson(recipeJson);
+    }).toList();
 
     return CardRecipeDto(
       recipeList: recipeList,
@@ -94,7 +92,7 @@ class SearchResultDto {
 }
 
 class CommentModelDto extends ServiceResult {
-  List<CommentModel>? commentList;
+  List<CommentModel> commentList;
   CommentModelDto(
       {required super.success,
       required super.message,
@@ -104,11 +102,10 @@ class CommentModelDto extends ServiceResult {
     final List<dynamic>? commentJsonList = json['data'];
 
     List<CommentModel>? commentList;
-    if (commentJsonList != null) {
-      commentList = commentJsonList.map((commentJson) {
-        return CommentModel.fromJson(commentJson);
-      }).toList();
-    }
+
+    commentList = commentJsonList!.map((commentJson) {
+      return CommentModel.fromJson(commentJson);
+    }).toList();
 
     return CommentModelDto(
         success: json['success'],
@@ -118,8 +115,8 @@ class CommentModelDto extends ServiceResult {
 }
 
 class RecipeDescriptionElementsDto extends ServiceResult {
-  List<RecipeDescriptionElement>? recipeDescElements;
-  List<String>? recipeIngradients;
+  List<RecipeDescriptionElement> recipeDescElements;
+  List<String> recipeIngradients;
   RecipeDescriptionElementsDto(
       {required super.success,
       required super.message,
@@ -132,19 +129,17 @@ class RecipeDescriptionElementsDto extends ServiceResult {
     final List<dynamic>? recipeIngradientsJsonList =
         json['data']['recipeIngradients'];
 
-    List<RecipeDescriptionElement>? recipeDescElementList;
-    if (recipeDescJsonList != null) {
-      recipeDescElementList = recipeDescJsonList.map((descJson) {
-        return RecipeDescriptionElement.fromJson(descJson);
-      }).toList();
-    }
+    List<RecipeDescriptionElement> recipeDescElementList;
 
-    List<String>? recipeIngradientsList;
-    if (recipeIngradientsJsonList != null) {
-      recipeIngradientsList = recipeIngradientsJsonList.map((ingrJson) {
-        return ingrJson.toString();
-      }).toList();
-    }
+    recipeDescElementList = recipeDescJsonList!.map((descJson) {
+      return RecipeDescriptionElement.fromJson(descJson);
+    }).toList();
+
+    List<String> recipeIngradientsList;
+
+    recipeIngradientsList = recipeIngradientsJsonList!.map((ingrJson) {
+      return ingrJson.toString();
+    }).toList();
 
     return RecipeDescriptionElementsDto(
         success: json['success'],
@@ -220,7 +215,7 @@ class FullRecipeDto {
   CookingTime cookingTime;
   CookingDifficulty difficulty;
   String recipeType;
-  Uint8List? image;
+  String? image;
   List<RecipeDescriptionElement> recipeDescElements;
   List<String> recipeIngredients;
 
@@ -236,14 +231,42 @@ class FullRecipeDto {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'cookTime': cookingTime,
+      'cookTime': cookingTime.index,
       'image': image,
-      'cookingDifficulty': difficulty,
+      'cookingDifficulty': difficulty.index,
       'recipeType': recipeType,
       'recipeDescriptionElements':
           recipeDescElements.map((e) => e.toJson()).toList(),
       'recipeIngredients': recipeIngredients,
     };
+  }
+
+  factory FullRecipeDto.fromJson(Map<String, dynamic> json) {
+    final List<dynamic>? recipeDescJsonList =
+        json['data']['recipeDescriptionElements'];
+    final List<dynamic>? recipeIngradientsJsonList =
+        json['data']['recipeIngradients'];
+
+    List<RecipeDescriptionElement> recipeDescElementList;
+    recipeDescElementList = recipeDescJsonList!.map((descJson) {
+      return RecipeDescriptionElement.fromJson(descJson);
+    }).toList();
+
+    List<String> recipeIngradientsList;
+    recipeIngradientsList = recipeIngradientsJsonList!.map((ingrJson) {
+      return ingrJson.toString();
+    }).toList();
+
+    return FullRecipeDto(
+      name: json['data'] != null ? json['data']['name'] : null,
+      cookingTime: json['data'] != null ? json['data']['cookTime'] : null,
+      difficulty:
+          json['data'] != null ? json['data']['cookingDifficulty'] : null,
+      image: json['data'] != null ? json['data']['image'] : null,
+      recipeDescElements: recipeDescElementList,
+      recipeIngredients: recipeIngradientsList,
+      recipeType: json['data'] != null ? json['data']['recipeType'] : null,
+    );
   }
 }
 

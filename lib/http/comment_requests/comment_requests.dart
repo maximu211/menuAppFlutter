@@ -24,7 +24,7 @@ class CommentRequests {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $accessToken',
       },
-      body: jsonEncode(<String, String>{'comment': comment}),
+      body: jsonEncode(comment),
     );
 
     return ServiceResult.fromJson(

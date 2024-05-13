@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
+import 'package:menuapp/http/recipe_requests/recipe_requests.dart';
 import 'package:menuapp/pages/common_components/toggle_button.dart';
 import 'package:menuapp/pages/home_page/recipe_page/list_of_ingredients/list_of_ingredients.dart';
 import 'package:menuapp/models/models.dart';
@@ -25,7 +28,7 @@ class _RecipePage extends State<RecipePage> {
       case 0:
         return IngredientList(cardRecipe: widget.cardRecipe);
       case 1:
-        return const CommentsPage();
+        return CommentsPage(recipeId: widget.cardRecipe.id);
       default:
         return const Text('Невідомий екран');
     }
@@ -70,22 +73,24 @@ class _RecipePage extends State<RecipePage> {
                 expandedHeight: MediaQuery.of(context).size.height * 0.5,
                 backgroundColor: ColorVariables.primaryColor,
                 actions: [
-                  Positioned(
-                      right: 16,
-                      top: 16,
-                      child: SaveButton(
-                        onTap: (newState) {
-                          setState(
-                            () {
-                              widget.cardRecipe.isRecipeSaved = newState;
-                            },
-                          );
+                  SaveButton(
+                    onTap: (newState) {
+                      setState(
+                        () {
+                          widget.cardRecipe.isRecipeSaved = newState;
+                          if (newState) {
+                            RecipeRequests.saveRecipe(widget.cardRecipe.id);
+                          } else {
+                            RecipeRequests.deleteRecipeFromSaved(
+                                widget.cardRecipe.id);
+                          }
                         },
-                        buttonToggledText: 'recipe saved to your galery 😀',
-                        buttonUntoggledText:
-                            'recipe deleted from your galery 😢',
-                        isButtonToggled: widget.cardRecipe.isRecipeSaved,
-                      ))
+                      );
+                    },
+                    buttonToggledText: 'recipe saved to your galery 😀',
+                    buttonUntoggledText: 'recipe deleted from your galery 😢',
+                    isButtonToggled: widget.cardRecipe.isRecipeSaved,
+                  )
                 ],
                 leading: IconButton(
                     icon: Icon(
@@ -96,7 +101,8 @@ class _RecipePage extends State<RecipePage> {
                       Navigator.of(context).pop();
                     }),
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Image.memory(widget.cardRecipe.recipeImage,
+                  background: Image.memory(
+                      base64Decode(widget.cardRecipe.recipeImage),
                       fit: BoxFit.cover),
                 ),
               ),

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
+import 'package:menuapp/http/DTOs/DTOs.dart';
+import 'package:menuapp/http/comment_requests/comment_requests.dart';
 import 'package:menuapp/pages/home_page/recipe_page/comments/comment.dart';
-import 'package:menuapp/models/models.dart';
 
 class CommentsPage extends StatefulWidget {
-  const CommentsPage({super.key});
+  CommentsPage({super.key, required this.recipeId});
+  String recipeId;
 
   @override
   State<StatefulWidget> createState() {
@@ -15,53 +16,23 @@ class CommentsPage extends StatefulWidget {
 }
 
 class _CommentsPage extends State<CommentsPage> {
-  late BinaryFileReader binaryFileReader;
-  late Uint8List binaryData;
-  late Future<List<CommentModel>> comentList;
+  late Future<CommentModelDto> _commentsFuture;
+  final TextEditingController _commentFieldController = TextEditingController();
+  final GlobalKey<FormState> _commentFieldKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
-    comentList = loadData();
+    _loadComments();
   }
 
-  Future<List<CommentModel>> loadData() async {
-    var data = await rootBundle.load('assets/images/recipe_images/1.jpg');
-    setState(() => binaryData = data.buffer.asUint8List());
-    return [
-      CommentModel(
-        commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
-        commentDateTime: DateTime.now(),
-        id: "asd",
-        user: UserModel(userName: "asd", userImage: binaryData, userId: '12'),
-        isOwner: false,
-      ),
-      CommentModel(
-        commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
-        commentDateTime: DateTime.now(),
-        id: "asd",
-        user: UserModel(
-          userName: "asd",
-          userImage: binaryData,
-          userId: "userId",
-        ),
-        isOwner: false,
-      ),
-      CommentModel(
-        commentText: "eqweqweqw e qwe qweqweqwe qweqweq qweq ",
-        commentDateTime: DateTime.now(),
-        isOwner: false,
-        id: "asd",
-        user: UserModel(
-          userName: "asd",
-          userImage: binaryData,
-          userId: "userId",
-        ),
-      ),
-    ];
+  Future<void> _loadComments() async {
+    try {
+      _commentsFuture = CommentRequests.getCommentsByRecipeId(widget.recipeId);
+    } catch (error) {
+      print('Error loading comments: $error');
+    }
   }
-
-  bool isNewCommentLiked = true;
-  final TextEditingController _commentFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,25 +40,34 @@ class _CommentsPage extends State<CommentsPage> {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Text("Comments",
-              style: TextStyle(
-                  fontSize: FontSizeVariables.h1Size,
-                  fontWeight: FontWeight.bold)),
           const SizedBox(height: 20),
-          TextField(
-            textAlign: TextAlign.justify,
-            maxLines: null,
-            controller: _commentFieldController,
-            decoration: InputDecoration(
-              labelText: "Write your comment",
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: ColorVariables.primaryColor),
-              ),
-              labelStyle: const TextStyle(
-                color: Colors.black,
+          Text(
+            "Comments",
+            style: TextStyle(
+              fontSize: FontSizeVariables.h1Size,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Form(
+            key: _commentFieldKey,
+            child: TextFormField(
+              validator: (value) {
+                if (value!.trim().isEmpty) {
+                  return "Please enter comment";
+                } else {
+                  return null;
+                }
+              },
+              textAlign: TextAlign.justify,
+              maxLines: null,
+              controller: _commentFieldController,
+              decoration: InputDecoration(
+                labelText: "Write your comment",
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: ColorVariables.primaryColor),
+                ),
+                labelStyle: const TextStyle(color: Colors.black),
               ),
             ),
           ),
@@ -97,47 +77,13 @@ class _CommentsPage extends State<CommentsPage> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    String commentFieldValue =
-                        _commentFieldController.text.trim();
-                    if (commentFieldValue.trim().isNotEmpty) {
-                      comentList = loadData().then((list) {
-                        return [
-                          CommentModel(
-                            isOwner: true,
-                            commentDateTime: DateTime.now(),
-                            commentText: commentFieldValue,
-                            id: "qaasd",
-                            user: UserModel(
-                              userName: "new_user",
-                              userImage: binaryData,
-                              userId: "asd",
-                            ),
-                          ),
-                          ...list,
-                        ];
-                      });
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: ColorVariables.primaryColor,
-                          duration: const Duration(seconds: 1),
-                          content: Text(
-                            "Please enter comment text 😒",
-                            style: TextStyle(
-                              color: ColorVariables.backgroundColor,
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                    _commentFieldController.clear();
-                  });
+                  _addComment();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ColorVariables.primaryColor,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
+                    borderRadius: BorderRadius.circular(40),
+                  ),
                 ),
                 child: Text(
                   "Add comment",
@@ -146,31 +92,43 @@ class _CommentsPage extends State<CommentsPage> {
               ),
             ],
           ),
-          FutureBuilder(
-            future: comentList,
+          FutureBuilder<CommentModelDto>(
+            future: _commentsFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
+                final commentList = snapshot.data!.commentList;
                 return SingleChildScrollView(
                   child: ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data!.length,
+                    itemCount: commentList.length,
                     itemBuilder: (context, index) {
-                      final comment = snapshot.data![index];
+                      final comment = commentList[index];
                       return Comment(comment: comment);
                     },
                   ),
                 );
               }
             },
-          )
+          ),
         ],
       ),
     );
+  }
+
+  void _addComment() async {
+    if (_commentFieldKey.currentState!.validate()) {
+      await CommentRequests.leaveComment(
+          widget.recipeId, _commentFieldController.text.trim());
+      setState(() {
+        _loadComments();
+      });
+      _commentFieldController.text = "";
+    }
   }
 }

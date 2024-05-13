@@ -22,7 +22,7 @@ class RecipeRequests {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $accessToken',
       },
-      body: jsonEncode(recipe.toJson()),
+      body: jsonEncode(recipe),
     );
 
     return ServiceResult.fromJson(
@@ -259,8 +259,7 @@ class RecipeRequests {
         jsonDecode(response.body) as Map<String, dynamic>);
   }
 
-  static Future<RecipeDescriptionElementsDto> getRecipeById(
-      String recipeId) async {
+  static Future<FullRecipeDto> getRecipeById(String recipeId) async {
     final StringBuffer stringBuffer = StringBuffer();
 
     stringBuffer.write(BaseRoutes.baseUrl);
@@ -279,7 +278,7 @@ class RecipeRequests {
       },
     );
 
-    return RecipeDescriptionElementsDto.fromJson(
+    return FullRecipeDto.fromJson(
         jsonDecode(response.body) as Map<String, dynamic>);
   }
 }
