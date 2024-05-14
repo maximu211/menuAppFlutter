@@ -83,4 +83,17 @@ class DialogUtils {
       ),
     );
   }
+
+  static void showCustomSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        style: TextStyle(color: ColorVariables.backgroundColor),
+      ),
+      duration: const Duration(seconds: 3),
+      backgroundColor: ColorVariables.primaryColor,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:menuapp/pages/add_page/form_components/form_card_button.dart';
 import 'package:menuapp/pages/add_page/form_components/instruction_edit/editing_components/instruction_step_card.dart';

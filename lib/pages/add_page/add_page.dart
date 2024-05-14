@@ -1,9 +1,10 @@
-// ignore_for_file: unused_field
+// ignore_for_file: unused_field, use_build_context_synchronously
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:menuapp/http/DTOs/DTOs.dart';
+import 'package:menuapp/http/DTOs/result.dart';
 import 'package:menuapp/http/recipe_requests/recipe_requests.dart';
 import 'package:menuapp/pages/add_page/form_components/dropdown_picker.dart';
 import 'package:menuapp/pages/add_page/form_components/form_card_button.dart';
@@ -16,23 +17,24 @@ import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/models/models.dart';
 
 class AddPage extends StatefulWidget {
-  AddPage(
+  const AddPage(
       {super.key,
       required this.recipe,
       required this.isUpdate,
       required this.recipeId});
 
-  String recipeId;
-  bool isUpdate;
-  RecipeNotifier recipe;
+  final String recipeId;
+  final bool isUpdate;
+  final RecipeNotifier recipe;
 
   @override
   State<StatefulWidget> createState() => _AddPage();
 }
 
 class FiledMaxLenght {
-  static int maxLenghtrecipeName = 50;
-  static int maxLenghtrecipeType = 30;
+  static int maxLenghtRecipeName = 50;
+  static int maxLenghtRecipeType = 30;
+  static int maxLenghtIngredient = 50;
 }
 
 class _AddPage extends State<AddPage> {
@@ -41,6 +43,23 @@ class _AddPage extends State<AddPage> {
     _recipeTypeFieldController.text = widget.recipe.recipe.recipeType;
     _fieldNameController.text = widget.recipe.recipe.name;
     super.initState();
+  }
+
+  void _clearFields() {
+    _fieldNameController.clear();
+    _recipeTypeFieldController.clear();
+    _ingredientFieldController.clear();
+    widget.recipe.recipe.recipeIngredients.clear();
+    widget.recipe.recipe.recipeDescElements.clear();
+    widget.recipe.recipe.image = null;
+    widget.recipe.recipe.cookingTime = CookingTime.lessThan15min;
+    widget.recipe.recipe.difficulty = CookingDifficulty.easy;
+
+    setState(() {
+      _isImageEmpty = false;
+      _isStepListEmpty = false;
+      _isIngredientListEmpty = false;
+    });
   }
 
   bool _isStepListEmpty = false;
@@ -139,7 +158,7 @@ class _AddPage extends State<AddPage> {
                 FormInputField(
                   filedController: _recipeTypeFieldController,
                   inputLabel: 'Input recipe type (salad, drink, etc.)',
-                  maxLenght: FiledMaxLenght.maxLenghtrecipeType,
+                  maxLenght: FiledMaxLenght.maxLenghtRecipeType,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return "Please input recipe type";
@@ -162,8 +181,7 @@ class _AddPage extends State<AddPage> {
                 const SizedBox(height: 20),
                 DropdownPicker<CookingTime>(
                   isTime: true,
-                  initialValue:
-                      widget.recipe.recipe.cookingTime, // Початкове значення
+                  initialValue: widget.recipe.recipe.cookingTime,
                   onChange: (CookingTime? selectedValue) {
                     setState(() {
                       widget.recipe.recipe.cookingTime = selectedValue!;
@@ -193,9 +211,10 @@ class _AddPage extends State<AddPage> {
                               ),
                             ],
                           ),
+                        const SizedBox(height: 20),
                         Form(
                           key: _ingredientFormKey,
-                          child: TextFormField(
+                          child: FormInputField(
                             validator: (value) {
                               if (value!.trim().isEmpty) {
                                 return "Please input ingredient";
@@ -203,9 +222,9 @@ class _AddPage extends State<AddPage> {
                                 return null;
                               }
                             },
-                            controller: _ingredientFieldController,
-                            decoration: const InputDecoration(
-                                hintText: "Input ingredient and count"),
+                            filedController: _ingredientFieldController,
+                            inputLabel: "Input ingredient and count",
+                            maxLenght: FiledMaxLenght.maxLenghtIngredient,
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -213,7 +232,6 @@ class _AddPage extends State<AddPage> {
                           onPressed: () {
                             if (_ingredientFormKey.currentState!.validate()) {
                               setState(() {
-                                // Створення нового списку і додавання елементів зі старого списку
                                 List<String> updatedIngredientsList = List.from(
                                     widget.recipe.recipe.recipeIngredients);
                                 updatedIngredientsList
@@ -279,7 +297,7 @@ class _AddPage extends State<AddPage> {
             style: ElevatedButton.styleFrom(
               backgroundColor: ColorVariables.primaryColor,
             ),
-            onPressed: () {
+            onPressed: () async {
               if (_globalFormKey.currentState!.validate() &&
                   widget.recipe.recipe.image != null &&
                   widget.recipe.recipe.recipeDescElements.isNotEmpty &&
@@ -288,20 +306,23 @@ class _AddPage extends State<AddPage> {
                   widget.recipe.recipe.name = _fieldNameController.text.trim();
                   widget.recipe.recipe.recipeType =
                       _recipeTypeFieldController.text.trim();
-
                   widget.recipe.recipe.recipeDescElements;
-
-                  if (widget.isUpdate) {
-                    RecipeRequests.updateRecipe(
-                        widget.recipeId, widget.recipe.recipe);
-                  } else {
-                    RecipeRequests.createRecipe(widget.recipe.recipe);
-                  }
-
                   _isImageEmpty = false;
                   _isStepListEmpty = false;
                   _isIngredientListEmpty = false;
                 });
+
+                ServiceResult result;
+                if (widget.isUpdate) {
+                  result = await RecipeRequests.updateRecipe(
+                      widget.recipeId, widget.recipe.recipe);
+                } else {
+                  result =
+                      await RecipeRequests.createRecipe(widget.recipe.recipe);
+                }
+
+                DialogUtils.showCustomSnackBar(context, result.message);
+                _clearFields();
               } else {
                 setState(() {
                   if (widget.recipe.recipe.image == null) {
