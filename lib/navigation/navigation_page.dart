@@ -46,11 +46,21 @@ class _NavigationPage extends State<NavigationPage> {
                     Icons.home,
                     size: IconSizeVariables.regularSize,
                   ),
+                  selectedIcon: Icon(
+                    Icons.home,
+                    size: IconSizeVariables.regularSize,
+                    color: ColorVariables.backgroundColor,
+                  ),
                   label: ''),
               NavigationDestination(
                   icon: Icon(
                     Icons.search_rounded,
                     size: IconSizeVariables.regularSize,
+                  ),
+                  selectedIcon: Icon(
+                    Icons.search_rounded,
+                    size: IconSizeVariables.regularSize,
+                    color: ColorVariables.backgroundColor,
                   ),
                   label: ''),
               NavigationDestination(
@@ -58,11 +68,21 @@ class _NavigationPage extends State<NavigationPage> {
                     Icons.add,
                     size: IconSizeVariables.regularSize,
                   ),
+                  selectedIcon: Icon(
+                    Icons.add,
+                    size: IconSizeVariables.regularSize,
+                    color: ColorVariables.backgroundColor,
+                  ),
                   label: ''),
               NavigationDestination(
                   icon: Icon(
                     Icons.person,
                     size: IconSizeVariables.regularSize,
+                  ),
+                  selectedIcon: Icon(
+                    Icons.person,
+                    size: IconSizeVariables.regularSize,
+                    color: ColorVariables.backgroundColor,
                   ),
                   label: ''),
             ],

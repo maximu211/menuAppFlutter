@@ -121,10 +121,18 @@ class RecipeDescriptionElement {
   Uint8List? recipeDescriptionImage;
 
   factory RecipeDescriptionElement.fromJson(Map<String, dynamic> json) {
-    return RecipeDescriptionElement(
+    if (json['recipeDescriptionElementImage'] == null) {
+      return RecipeDescriptionElement(
+        recipeDescriptionElementText: json['recipeDescriptionElementText'],
+        recipeDescriptionImage: null,
+      );
+    } else {
+      return RecipeDescriptionElement(
         recipeDescriptionElementText: json['recipeDescriptionElementText'],
         recipeDescriptionImage:
-            base64Decode(json['recipeDescriptionElementImage']));
+            base64Decode(json['recipeDescriptionElementImage']),
+      );
+    }
   }
 
   Map<String, dynamic> toJson() {

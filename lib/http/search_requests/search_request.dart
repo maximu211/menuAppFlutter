@@ -4,7 +4,7 @@ import 'package:menuapp/http/DTOs/DTOs.dart';
 import 'package:menuapp/http/routes.dart';
 import 'package:menuapp/utils/secure_storage.dart';
 
-class SubscriptionRequests {
+class SearchRequests {
   static Future<SearchResultDto> getSearchResult(String query) async {
     final StringBuffer stringBuffer = StringBuffer();
 

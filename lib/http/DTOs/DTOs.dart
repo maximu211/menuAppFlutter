@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:menuapp/http/DTOs/result.dart';
 import 'package:menuapp/models/models.dart';
@@ -50,14 +49,14 @@ class CardRecipeDto extends ServiceResult {
 }
 
 class SearchResultDto {
-  List<UserModel>? usersList;
-  List<CardRecipeModel>? recipeList;
+  List<UserModel> usersList;
+  List<CardRecipeModel> recipeList;
   bool success;
   String message;
 
   SearchResultDto({
-    this.usersList,
-    this.recipeList,
+    required this.usersList,
+    required this.recipeList,
     required this.success,
     required this.message,
   });
@@ -69,18 +68,16 @@ class SearchResultDto {
     final List<dynamic>? recipeJsonList = json['data']['recipeList'];
 
     List<UserModel>? usersList;
-    if (userJsonList != null) {
-      usersList = userJsonList.map((userJson) {
-        return UserModel.fromJson(userJson);
-      }).toList();
-    }
 
-    List<CardRecipeModel>? recipeList;
-    if (recipeJsonList != null) {
-      recipeList = recipeJsonList.map((recipeJson) {
-        return CardRecipeModel.fromJson(recipeJson);
-      }).toList();
-    }
+    usersList = userJsonList!.map((userJson) {
+      return UserModel.fromJson(userJson);
+    }).toList();
+
+    List<CardRecipeModel> recipeList;
+
+    recipeList = recipeJsonList!.map((recipeJson) {
+      return CardRecipeModel.fromJson(recipeJson);
+    }).toList();
 
     return SearchResultDto(
       usersList: usersList,

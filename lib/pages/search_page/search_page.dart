@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
+import 'package:menuapp/http/search_requests/search_request.dart';
 import 'package:menuapp/pages/common_components/user_card.dart';
 import 'package:menuapp/pages/home_page/card/card.dart';
 import 'package:menuapp/models/models.dart';
@@ -19,74 +20,11 @@ class _SearchPageState extends State<SearchPage> {
 
   List<CardRecipeModel> _sortedrecipeList = [];
   List<UserModel> _sortedUserList = [];
+  String? _previousQuery;
 
-  late BinaryFileReader binaryFileReader;
-  late Uint8List binaryData;
-  late List<CardRecipeModel> cardRecipeList;
-  late List<UserModel> userList;
   @override
   void initState() {
     super.initState();
-    loadData();
-  }
-
-  Future<void> loadData() async {
-    var data = await rootBundle.load('assets/images/recipe_images/1.jpg');
-    setState(() => binaryData = data.buffer.asUint8List());
-    cardRecipeList = [
-      CardRecipeModel(
-        id: 'фів',
-        user: UserModel(
-            userName: "Name_Guttt", userImage: binaryData, userId: '12'),
-        cookingDifficulty: CookingDifficulty.easy,
-        cookingTime: CookingTime.min15,
-        recipeType: "Drink",
-        name: 'Cocktail "Cool guy"',
-        recipeImage: "binaryData",
-        isRecipeSaved: false,
-        likesCount: 140,
-        isRecipeLiked: true,
-        isOwner: false,
-      ),
-      CardRecipeModel(
-        id: 'фів',
-        user: UserModel(
-            userName: "John_Lennon", userImage: binaryData, userId: '12'),
-        cookingDifficulty: CookingDifficulty.medium,
-        cookingTime: CookingTime.hour1,
-        recipeType: "Drink",
-        name: 'Name',
-        recipeImage: "binaryData",
-        isRecipeSaved: true,
-        likesCount: 140,
-        isRecipeLiked: false,
-        isOwner: false,
-      ),
-    ];
-
-    userList = [
-      UserModel(userName: "1", userImage: binaryData, userId: "userId"),
-      UserModel(userName: "2", userImage: binaryData, userId: "userId"),
-      UserModel(userName: "NAME", userImage: binaryData, userId: "userId"),
-      UserModel(userName: "NAME", userImage: binaryData, userId: "userId"),
-    ];
-  }
-
-  void listFiltering(String query) {
-    setState(() {
-      if (query.trim().isNotEmpty) {
-        _sortedrecipeList = cardRecipeList
-            .where((recipe) =>
-                recipe.name.toLowerCase().contains(query.trim().toLowerCase()))
-            .toList();
-
-        _sortedUserList = userList
-            .where((user) => user.userName
-                .toLowerCase()
-                .contains(query.trim().toLowerCase()))
-            .toList();
-      }
-    });
   }
 
   @override
@@ -108,11 +46,28 @@ class _SearchPageState extends State<SearchPage> {
             searchClearIconTheme: const IconThemeData(),
             searchCursorColor: ColorVariables.primaryColor,
             systemOverlayStyle: SystemUiOverlayStyle.light,
-            onSearch: (query) {
-              listFiltering(query);
+            onSearch: (query) async {
               if (query.isEmpty) {
-                _sortedrecipeList.clear();
-                _sortedUserList.clear();
+                setState(() {
+                  _sortedrecipeList.clear();
+                  _sortedUserList.clear();
+                });
+                return;
+              }
+
+              if (query != _previousQuery) {
+                try {
+                  final searchResult =
+                      await SearchRequests.getSearchResult(query);
+                  setState(() {
+                    _sortedrecipeList = searchResult.recipeList;
+                    _sortedUserList = searchResult.usersList;
+                    _previousQuery = query;
+                  });
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Error occurred while searching')));
+                }
               }
             },
             title: Text(
@@ -129,13 +84,34 @@ class _SearchPageState extends State<SearchPage> {
             margin: const EdgeInsets.all(20),
             child: Column(
               children: [
+                if (_sortedUserList.isEmpty && _sortedrecipeList.isEmpty)
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: ColorVariables.primaryColor,
+                          boxShadow: const [
+                            BoxShadow(color: Colors.black, blurRadius: 2)
+                          ]),
+                      padding: const EdgeInsets.all(20),
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        "Please enter a search term to find recipes or users 😉",
+                        style: TextStyle(
+                          color: ColorVariables.backgroundColor,
+                          fontSize: FontSizeVariables.h2Size,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
                 _sortedUserList.isNotEmpty
                     ? Column(
                         children: [
                           Text(
                             "Users",
                             style: TextStyle(
-                                color: ColorVariables.backgroundColor,
+                                color: ColorVariables.primaryColor,
                                 fontSize: FontSizeVariables.h2Size,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -166,9 +142,9 @@ class _SearchPageState extends State<SearchPage> {
                             height: 10,
                           ),
                           Text(
-                            "recipes",
+                            "Recipes",
                             style: TextStyle(
-                                color: ColorVariables.backgroundColor,
+                                color: ColorVariables.primaryColor,
                                 fontSize: FontSizeVariables.h2Size,
                                 fontWeight: FontWeight.bold),
                           ),
