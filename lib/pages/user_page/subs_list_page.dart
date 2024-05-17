@@ -5,9 +5,9 @@ import 'package:menuapp/models/models.dart';
 import 'package:menuapp/pages/common_components/user_card.dart';
 
 class SubsListPage extends StatefulWidget {
-  SubsListPage({super.key, required this.isSubscribersPage});
+  const SubsListPage({super.key, required this.isSubscribersPage});
 
-  bool isSubscribersPage;
+  final bool isSubscribersPage;
 
   @override
   State<SubsListPage> createState() => _SubsListPageState();

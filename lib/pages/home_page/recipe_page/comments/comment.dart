@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
-import 'package:menuapp/http/comment_requests/comment_requests.dart';
 import 'package:menuapp/pages/common_components/user_row.dart';
 import 'package:intl/intl.dart';
 import 'package:menuapp/models/models.dart';
