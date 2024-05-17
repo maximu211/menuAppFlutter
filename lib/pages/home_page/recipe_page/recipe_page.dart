@@ -43,12 +43,22 @@ class _RecipePage extends State<RecipePage> {
           indicatorColor: ColorVariables.primaryColor,
           destinations: [
             NavigationDestination(
+                selectedIcon: Icon(
+                  Icons.format_list_bulleted,
+                  color: ColorVariables.backgroundColor,
+                  size: IconSizeVariables.regularSize,
+                ),
                 icon: Icon(
                   Icons.format_list_bulleted,
                   size: IconSizeVariables.regularSize,
                 ),
                 label: ''),
             NavigationDestination(
+                selectedIcon: Icon(
+                  Icons.comment,
+                  color: ColorVariables.backgroundColor,
+                  size: IconSizeVariables.regularSize,
+                ),
                 icon: Icon(
                   Icons.comment,
                   size: IconSizeVariables.regularSize,

@@ -59,29 +59,56 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          cardRecipes == null
-              ? const SliverFillRemaining(
-                  child: Center(
-                    child: CircularProgressIndicator(),
+          if (cardRecipes == null)
+            const SliverFillRemaining(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
+          else if (cardRecipes!.isEmpty)
+            SliverFillRemaining(
+              child: Center(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: ColorVariables.primaryColor,
+                    boxShadow: const [
+                      BoxShadow(color: Colors.black, blurRadius: 2)
+                    ],
                   ),
-                )
-              : SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      final cardRecipe = cardRecipes![index];
-                      return Container(
-                        margin: const EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            MainPageCard(cardRecipe: cardRecipe),
-                            const SizedBox(height: 20),
-                          ],
-                        ),
-                      );
-                    },
-                    childCount: cardRecipes!.length,
+                  padding: const EdgeInsets.all(20),
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    "You have not subscribed to any user yet. Find new friends on the search page 😉",
+                    style: TextStyle(
+                      color: ColorVariables.backgroundColor,
+                      fontSize: FontSizeVariables.h2Size,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
+              ),
+            )
+          // Display the list of recipes
+          else
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  final cardRecipe = cardRecipes![index];
+                  return Container(
+                    margin: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        MainPageCard(cardRecipe: cardRecipe),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  );
+                },
+                childCount: cardRecipes!.length,
+              ),
+            ),
         ],
       ),
     );
