@@ -6,6 +6,7 @@ import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/models/models.dart';
 import 'package:menuapp/pages/authorization/log_in_page/log_in_page.dart';
 import 'package:menuapp/pages/common_components/image_picker/photo_button.dart';
+import 'package:menuapp/pages/common_components/toggle_icon_button.dart';
 import 'package:menuapp/pages/home_page/card/card.dart';
 import 'package:menuapp/pages/user_page/saved_recipe_page.dart';
 import 'package:menuapp/pages/user_page/subs_list_page.dart';
@@ -194,90 +195,102 @@ class _UserPageState extends State<UserPage> {
                   ),
                   child: Container(
                     margin: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    child: Column(
                       children: [
-                        Expanded(
-                          flex: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ClipOval(
-                                child: Image.memory(
-                                  binaryData,
-                                  fit: BoxFit.cover,
-                                  width: 75,
-                                  height: 75,
-                                ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ClipOval(
+                                    child: Image.memory(
+                                      binaryData,
+                                      fit: BoxFit.cover,
+                                      width: 75,
+                                      height: 75,
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.userName,
+                                    softWrap: true,
+                                    overflow: TextOverflow.clip,
+                                    style: TextStyle(
+                                      color: ColorVariables.backgroundColor,
+                                      fontSize: FontSizeVariables.h1Size,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                widget.userName,
-                                softWrap: true,
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(
-                                  color: ColorVariables.backgroundColor,
-                                  fontSize: FontSizeVariables.h1Size,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          flex: 6,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Post count: ${widget.postCount}",
-                                style: TextStyle(
-                                  color: ColorVariables.backgroundColor,
-                                  fontSize: FontSizeVariables.h1Size,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SubsListPage(
-                                        isSubscribersPage: true,
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              flex: 6,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Post count: ${widget.postCount}",
+                                    style: TextStyle(
+                                      color: ColorVariables.backgroundColor,
+                                      fontSize: FontSizeVariables.h1Size,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SubsListPage(
+                                            isSubscribersPage: true,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      "Subscribers: ${widget.subsCount}",
+                                      style: TextStyle(
+                                        color: ColorVariables.backgroundColor,
+                                        fontSize: FontSizeVariables.h1Size,
                                       ),
                                     ),
-                                  );
-                                },
-                                child: Text(
-                                  "Subscribers: ${widget.subsCount}",
-                                  style: TextStyle(
-                                    color: ColorVariables.backgroundColor,
-                                    fontSize: FontSizeVariables.h1Size,
                                   ),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SubsListPage(
-                                        isSubscribersPage: false,
+                                  const SizedBox(height: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SubsListPage(
+                                            isSubscribersPage: false,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      "Subscribed to: ${widget.subsToCount}",
+                                      style: TextStyle(
+                                        color: ColorVariables.backgroundColor,
+                                        fontSize: FontSizeVariables.h1Size,
                                       ),
                                     ),
-                                  );
-                                },
-                                child: Text(
-                                  "Subscribed to: ${widget.subsToCount}",
-                                  style: TextStyle(
-                                    color: ColorVariables.backgroundColor,
-                                    fontSize: FontSizeVariables.h1Size,
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
+                        !widget.isCurrentUser
+                            ? ElevatedToggleButton(
+                                buttonToggledText: "Unsubscribe",
+                                buttonUntoggledText: "Subscribe",
+                                isButtonToggled: true,
+                                onTap: (newState) {},
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   ),

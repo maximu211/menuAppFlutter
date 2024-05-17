@@ -58,7 +58,7 @@ class CommentRequests {
     final StringBuffer stringBuffer = StringBuffer();
 
     stringBuffer.write(BaseRoutes.baseUrl);
-    stringBuffer.write(BaseRoutes.recipe);
+    stringBuffer.write(BaseRoutes.comment);
     stringBuffer.write(CommentRoutes.deleteComment);
     stringBuffer.write("/$commentId");
 
@@ -82,7 +82,7 @@ class CommentRequests {
     final StringBuffer stringBuffer = StringBuffer();
 
     stringBuffer.write(BaseRoutes.baseUrl);
-    stringBuffer.write(BaseRoutes.recipe);
+    stringBuffer.write(BaseRoutes.comment);
     stringBuffer.write(CommentRoutes.updateComment);
     stringBuffer.write("/$commentId");
 
@@ -95,7 +95,7 @@ class CommentRequests {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $accessToken',
       },
-      body: jsonEncode(<String, String>{'comment': commentText}),
+      body: jsonEncode(commentText),
     );
 
     return ServiceResult.fromJson(

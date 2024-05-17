@@ -8,7 +8,7 @@ import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/global_variables/page_transition_animation.dart';
 import 'package:menuapp/http/DTOs/DTOs.dart';
 import 'package:menuapp/http/recipe_requests/recipe_requests.dart';
-import 'package:menuapp/pages/common_components/toggle_button.dart';
+import 'package:menuapp/pages/common_components/toggle_icon_button.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/models/mappers.dart';

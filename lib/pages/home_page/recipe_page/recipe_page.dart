@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
 import 'package:menuapp/http/recipe_requests/recipe_requests.dart';
-import 'package:menuapp/pages/common_components/toggle_button.dart';
+import 'package:menuapp/pages/common_components/toggle_icon_button.dart';
 import 'package:menuapp/pages/home_page/recipe_page/list_of_ingredients/list_of_ingredients.dart';
 import 'package:menuapp/models/models.dart';
 import 'comments/comments_page.dart';
