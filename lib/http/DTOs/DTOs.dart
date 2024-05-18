@@ -279,3 +279,47 @@ class RecipeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+class UserPageDataDto extends ServiceResult {
+  UserPageDataDto(
+      {required super.success,
+      required super.message,
+      required this.isOwner,
+      required this.isSubscribed,
+      required this.recipes,
+      required this.subscribedToCount,
+      required this.subscribedUsersCount,
+      required this.user});
+
+  List<CardRecipeModel> recipes;
+  bool isSubscribed;
+  int subscribedUsersCount;
+  int subscribedToCount;
+  bool isOwner;
+  UserModel user;
+
+  factory UserPageDataDto.fromJson(Map<String, dynamic> json) {
+    final UserModel user = UserModel.fromJson(json['data']['user']);
+    final List<dynamic>? recipes = json['data']['cardRecipes'];
+    final int subscribedUsersCount = json['subscribedUsersCount'];
+    final int subscribedToCount = json['subscribedToCount'];
+    final bool isOwner = json['isOwner'];
+    final bool isSubscribed = json['isSubscribed'];
+
+    List<CardRecipeModel> recipeList;
+    recipeList = recipes!.map((descJson) {
+      return CardRecipeModel.fromJson(descJson);
+    }).toList();
+
+    return UserPageDataDto(
+      success: json['success'] ?? false,
+      message: json['message'] ?? '',
+      isOwner: isOwner,
+      isSubscribed: isSubscribed,
+      recipes: recipeList,
+      subscribedToCount: subscribedToCount,
+      subscribedUsersCount: subscribedUsersCount,
+      user: user,
+    );
+  }
+}

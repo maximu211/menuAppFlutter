@@ -5,7 +5,9 @@ import 'package:menuapp/models/models.dart';
 import 'package:menuapp/pages/home_page/card/card.dart';
 
 class SavedRecipesPage extends StatefulWidget {
-  const SavedRecipesPage({super.key});
+  const SavedRecipesPage({super.key, required this.userId});
+
+  final String userId;
 
   @override
   State<SavedRecipesPage> createState() => _SavedRecipesPageState();

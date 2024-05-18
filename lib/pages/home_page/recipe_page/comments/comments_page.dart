@@ -75,7 +75,7 @@ class _CommentsPage extends State<CommentsPage> {
                           if (_commentEditFieldKey.currentState!.validate()) {
                             await CommentRequests.updateComment(
                                 comment.id, _editCommentController.text.trim());
-                            Navigator.pop(context); // Close the bottom sheet
+                            Navigator.pop(context);
                             _loadComments();
                           }
                         },
