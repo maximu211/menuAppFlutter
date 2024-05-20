@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:menuapp/http/DTOs/DTOs.dart';
+import 'package:menuapp/http/DTOs/dtos.dart';
 import 'package:menuapp/http/DTOs/result.dart';
 import 'package:menuapp/http/routes.dart';
 import 'package:menuapp/utils/secure_storage.dart';
@@ -137,6 +137,7 @@ class RecipeRequests {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $accessToken',
       },
+      body: jsonEncode(recipe),
     );
 
     return ServiceResult.fromJson(
@@ -264,7 +265,7 @@ class RecipeRequests {
 
     stringBuffer.write(BaseRoutes.baseUrl);
     stringBuffer.write(BaseRoutes.recipe);
-    stringBuffer.write(RecipeRoutes.deleteFromSaved);
+    stringBuffer.write(RecipeRoutes.getRecipeById);
     stringBuffer.write("/$recipeId");
 
     final String? accessToken =

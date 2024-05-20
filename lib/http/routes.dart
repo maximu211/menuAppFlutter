@@ -26,6 +26,7 @@ class UserRoutes {
   static String registerUser = "/register_user";
   static String setUserImage = "/set_user_image";
   static String getUserImage = "/get_user_image";
+  static String userPage = "/get_page_data";
 }
 
 class SubscriptionRoutes {

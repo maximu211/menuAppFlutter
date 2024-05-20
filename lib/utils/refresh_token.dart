@@ -4,33 +4,32 @@ import 'package:menuapp/http/user_requests/user_requests.dart';
 import 'package:menuapp/utils/secure_storage.dart';
 
 class TokenFetcher {
+  static Timer? _timer;
+
   static void startTokenFetching() {
-    Timer.periodic(const Duration(seconds: 1), (_) {
-      tokenFetchIsolate();
+    _timer ??= Timer.periodic(const Duration(seconds: 1), (_) async {
+      await tokenFetchIsolate();
     });
   }
 
-  static void tokenFetchIsolate() async {
-    String? accessToken =
-        await SecureStorage().storage.read(key: "AccessToken");
-
+  static Future<void> tokenFetchIsolate() async {
+    final String? accessToken = await SecureStorage().readData("AccessToken");
     if (accessToken != null) {
-      DateTime? decodedToken = Jwt.getExpiryDate(accessToken);
-      Duration timeUntilExpiry = decodedToken!.difference(DateTime.now());
-
-      if (timeUntilExpiry <= Duration.zero) {
-        UserRequest.refreshToken(
-                await SecureStorage().storage.read(key: "RefreshToken") ?? '')
-            .then((result) {
+      final DateTime? expiryDate = Jwt.getExpiryDate(accessToken);
+      if (expiryDate != null && DateTime.now().isAfter(expiryDate)) {
+        final String? refreshToken =
+            await SecureStorage().readData("RefreshToken");
+        if (refreshToken != null) {
+          final result = await UserRequest.refreshToken(refreshToken);
           if (result.success) {
-            SecureStorage()
+            await SecureStorage()
                 .storage
                 .write(key: "AccessToken", value: result.accessToken);
-            SecureStorage()
+            await SecureStorage()
                 .storage
                 .write(key: "RefreshToken", value: result.refreshToken);
           }
-        });
+        }
       }
     }
   }

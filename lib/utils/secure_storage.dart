@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 class SecureStorage {
   static final SecureStorage _instance = SecureStorage._internal();
@@ -14,5 +15,17 @@ class SecureStorage {
 
   Future<String?> readData(String key) async {
     return await _storage.read(key: key);
+  }
+
+  Future<String?> getUserIdFromToken() async {
+    // Отримуємо токен з сховища
+    String? token = await readData("AccessToken");
+    if (token == null) {
+      return null;
+    }
+    
+    // Розпаковуємо токен і отримуємо userId
+    Map<String, dynamic> decodedToken = Jwt.parseJwt(token);
+    return decodedToken['userId'] as String?;
   }
 }

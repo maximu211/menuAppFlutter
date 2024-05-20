@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:menuapp/http/DTOs/result.dart';
+import 'package:menuapp/models/mappers.dart';
 import 'package:menuapp/models/models.dart';
 
 class UserDto {
@@ -11,9 +14,9 @@ class UserDto {
     final List<dynamic> userJsonList = json['data']['subscribers'];
     final List<UserModel> usersList = userJsonList.map((userJson) {
       return UserModel(
-        userName: userJson['userName'],
-        userImage: userJson['userPhotoUrl'],
-        userId: userJson['userId'],
+        userName: userJson['username'],
+        userImage: base64Decode(userJson['image']),
+        userId: userJson['id'],
       );
     }).toList();
 
@@ -239,26 +242,27 @@ class FullRecipeDto {
   }
 
   factory FullRecipeDto.fromJson(Map<String, dynamic> json) {
-    final List<dynamic>? recipeDescJsonList =
+    final List<dynamic> recipeDescJsonList =
         json['data']['recipeDescriptionElements'];
-    final List<dynamic>? recipeIngradientsJsonList =
-        json['data']['recipeIngradients'];
+    final List<dynamic> recipeIngradientsJsonList =
+        json['data']['recipeIngredients'];
 
     List<RecipeDescriptionElement> recipeDescElementList;
-    recipeDescElementList = recipeDescJsonList!.map((descJson) {
+    recipeDescElementList = recipeDescJsonList.map((descJson) {
       return RecipeDescriptionElement.fromJson(descJson);
     }).toList();
 
     List<String> recipeIngradientsList;
-    recipeIngradientsList = recipeIngradientsJsonList!.map((ingrJson) {
-      return ingrJson.toString();
+    recipeIngradientsList =
+        recipeIngradientsJsonList.map((recipeIngradientsJsonList) {
+      return recipeIngradientsJsonList.toString();
     }).toList();
 
     return FullRecipeDto(
       name: json['data'] != null ? json['data']['name'] : null,
-      cookingTime: json['data'] != null ? json['data']['cookTime'] : null,
+      cookingTime: Mapper.getCookingTimeByIndex(json['data']['cookTime']),
       difficulty:
-          json['data'] != null ? json['data']['cookingDifficulty'] : null,
+          Mapper.getCookingDifficultyByIndex(json['data']['cookingDifficulty']),
       image: json['data'] != null ? json['data']['image'] : null,
       recipeDescElements: recipeDescElementList,
       recipeIngredients: recipeIngradientsList,
@@ -301,10 +305,10 @@ class UserPageDataDto extends ServiceResult {
   factory UserPageDataDto.fromJson(Map<String, dynamic> json) {
     final UserModel user = UserModel.fromJson(json['data']['user']);
     final List<dynamic>? recipes = json['data']['cardRecipes'];
-    final int subscribedUsersCount = json['subscribedUsersCount'];
-    final int subscribedToCount = json['subscribedToCount'];
-    final bool isOwner = json['isOwner'];
-    final bool isSubscribed = json['isSubscribed'];
+    final int subscribedUsersCount = json['data']['subscribedUsersCount'];
+    final int subscribedToCount = json['data']['subscribedToCount'];
+    final dynamic isOwner = json['data']['isOwner'];
+    final dynamic isSubscribed = json['data']['isSubscribed'] ?? false;
 
     List<CardRecipeModel> recipeList;
     recipeList = recipes!.map((descJson) {

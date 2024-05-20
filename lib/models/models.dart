@@ -17,7 +17,7 @@ class BinaryFileReader {
 
 class UserModel {
   final String userName;
-  final Uint8List userImage;
+  final Uint8List? userImage;
   final String userId;
 
   UserModel({
@@ -29,7 +29,7 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       userName: json['username'],
-      userImage: base64Decode(json['image']),
+      userImage: json['image'] != "" ? base64Decode(json['image']) : null,
       userId: json['id'],
     );
   }
@@ -113,32 +113,28 @@ class RecipeDescriptionElements {
 }
 
 class RecipeDescriptionElement {
-  RecipeDescriptionElement(
-      {required this.recipeDescriptionElementText,
-      this.recipeDescriptionImage});
+  RecipeDescriptionElement({
+    required this.recipeDescriptionElementText,
+    this.recipeDescriptionImage,
+  });
 
   String recipeDescriptionElementText;
   Uint8List? recipeDescriptionImage;
 
   factory RecipeDescriptionElement.fromJson(Map<String, dynamic> json) {
-    if (json['recipeDescriptionElementImage'] == null) {
-      return RecipeDescriptionElement(
-        recipeDescriptionElementText: json['recipeDescriptionElementText'],
-        recipeDescriptionImage: null,
-      );
-    } else {
-      return RecipeDescriptionElement(
-        recipeDescriptionElementText: json['recipeDescriptionElementText'],
-        recipeDescriptionImage:
-            base64Decode(json['recipeDescriptionElementImage']),
-      );
-    }
+    return RecipeDescriptionElement(
+      recipeDescriptionElementText: json['recipeDescriptionElementText'],
+      recipeDescriptionImage: json['recipeDescriptionElementImage'] != null
+          ? base64Decode(json['recipeDescriptionElementImage'])
+          : null,
+    );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'recipeDescriptionElementText': recipeDescriptionElementText,
-      'recipeDescriptionElementImage': recipeDescriptionImage,
+      if (recipeDescriptionImage != null)
+        'recipeDescriptionElementImage': base64Encode(recipeDescriptionImage!),
     };
   }
 }

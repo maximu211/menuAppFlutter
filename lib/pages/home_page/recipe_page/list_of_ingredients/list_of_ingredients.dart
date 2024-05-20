@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/http/DTOs/DTOs.dart';
+import 'package:menuapp/http/DTOs/dtos.dart';
 import 'package:menuapp/http/recipe_requests/recipe_requests.dart';
 import 'package:menuapp/pages/home_page/card/card_icons_info.dart';
 import 'package:menuapp/pages/common_components/user_row.dart';

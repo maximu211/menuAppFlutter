@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:menuapp/http/DTOs/DTOs.dart';
+import 'package:menuapp/http/DTOs/dtos.dart';
 import 'package:menuapp/http/DTOs/result.dart';
 import 'package:menuapp/http/routes.dart';
 import 'package:menuapp/utils/secure_storage.dart';
@@ -70,12 +70,9 @@ class UserRequest {
       }),
     );
 
-    if (response.statusCode == 200) {
+
       return TokenFetchResult.fromJson(
           jsonDecode(response.body) as Map<String, dynamic>);
-    } else {
-      throw Exception();
-    }
   }
 
   static Future<AuthTokenFetch> registerEmail(String email) async {
@@ -309,6 +306,29 @@ class UserRequest {
     );
 
     return FetchUserImage.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+    static Future<UserPageDataDto> getUserPageData(String userId) async {
+    final StringBuffer stringBuffer = StringBuffer();
+
+    stringBuffer.write(BaseRoutes.baseUrl);
+    stringBuffer.write(BaseRoutes.user);
+    stringBuffer.write(UserRoutes.userPage);
+    stringBuffer.write("/$userId");
+
+    final String? accessToken =
+        await SecureStorage().storage.read(key: "AccessToken");
+
+    final response = await http.get(
+      Uri.parse(stringBuffer.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    return UserPageDataDto.fromJson(
         jsonDecode(response.body) as Map<String, dynamic>);
   }
 }

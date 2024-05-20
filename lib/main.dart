@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
@@ -11,7 +12,7 @@ import 'package:menuapp/utils/refresh_token.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
-  TokenFetcher.startTokenFetching();
+
   runApp(
     DevicePreview(
       enabled: true,
@@ -23,6 +24,8 @@ void main() async {
       },
     ),
   );
+
+  Timer(const Duration(seconds: 20), () => TokenFetcher.startTokenFetching());
 }
 
 class MyApp extends StatelessWidget {

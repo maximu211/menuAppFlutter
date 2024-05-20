@@ -1,7 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
-import 'package:menuapp/http/DTOs/DTOs.dart';
+import 'package:menuapp/http/DTOs/dtos.dart';
 import 'package:menuapp/http/comment_requests/comment_requests.dart';
 import 'package:menuapp/models/models.dart';
 import 'package:menuapp/pages/home_page/recipe_page/comments/comment.dart';
@@ -103,11 +105,7 @@ class _CommentsPage extends State<CommentsPage> {
   }
 
   Future<void> _loadComments() async {
-    try {
-      _commentsFuture = CommentRequests.getCommentsByRecipeId(widget.recipeId);
-    } catch (error) {
-      print('Error loading comments: $error');
-    }
+    _commentsFuture = CommentRequests.getCommentsByRecipeId(widget.recipeId);
   }
 
   @override

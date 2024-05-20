@@ -79,7 +79,6 @@ class _RecipePage extends State<RecipePage> {
                 floating: false,
                 pinned: true,
                 snap: false,
-                automaticallyImplyLeading: true,
                 expandedHeight: MediaQuery.of(context).size.height * 0.5,
                 backgroundColor: ColorVariables.primaryColor,
                 actions: [
@@ -108,7 +107,12 @@ class _RecipePage extends State<RecipePage> {
                       color: ColorVariables.backgroundColor,
                     ),
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.pop(
+                        context,
+                        <String, bool>{
+                          widget.cardRecipe.id: widget.cardRecipe.isRecipeSaved
+                        },
+                      );
                     }),
                 flexibleSpace: FlexibleSpaceBar(
                   background: Image.memory(

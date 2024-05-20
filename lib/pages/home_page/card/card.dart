@@ -1,12 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/dialog_utils.dart';
 import 'package:menuapp/global_variables/page_transition_animation.dart';
-import 'package:menuapp/http/DTOs/DTOs.dart';
+import 'package:menuapp/http/DTOs/dtos.dart';
 import 'package:menuapp/http/recipe_requests/recipe_requests.dart';
 import 'package:menuapp/pages/common_components/toggle_icon_button.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
@@ -17,9 +16,16 @@ import 'package:menuapp/pages/common_components/user_row.dart';
 import 'package:menuapp/pages/home_page/card/card_icons_info.dart';
 
 class MainPageCard extends StatefulWidget {
-  const MainPageCard({Key? key, required this.cardRecipe}) : super(key: key);
+  const MainPageCard(
+      {Key? key,
+      required this.cardRecipe,
+      this.onDeleteCallBack,
+      this.onDeleteFromSaved})
+      : super(key: key);
 
   final CardRecipeModel cardRecipe;
+  final VoidCallback? onDeleteCallBack;
+  final Function(Map<String, bool> deleteFromSavedMap)? onDeleteFromSaved;
 
   @override
   State<MainPageCard> createState() => _MainPageCardState();
@@ -49,7 +55,7 @@ class _MainPageCardState extends State<MainPageCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 UserRow(
-                  userId: "asd",
+                  userId: widget.cardRecipe.user.userId,
                   userName: widget.cardRecipe.user.userName,
                   textColor: ColorVariables.backgroundColor,
                   image: widget.cardRecipe.user.userImage,
@@ -83,8 +89,30 @@ class _MainPageCardState extends State<MainPageCard> {
                                 Navigator.push(
                                   context,
                                   NavigationService.createAddPageRoute(
-                                      RecipeNotifier(result), true),
-                                );
+                                      RecipeNotifier(result),
+                                      true,
+                                      widget.cardRecipe.id),
+                                ).then((value) {
+                                  if (value != null && value is FullRecipeDto) {
+                                    setState(() {
+                                      widget.cardRecipe.name = value.name;
+                                      widget.cardRecipe.cookingDifficulty =
+                                          value.difficulty;
+                                      widget.cardRecipe.cookingTime =
+                                          value.cookingTime;
+                                      if (value.image == null) {
+                                        widget.cardRecipe.recipeImage =
+                                            widget.cardRecipe.recipeImage;
+                                      } else {
+                                        widget.cardRecipe.recipeImage =
+                                            value.image!;
+                                      }
+
+                                      widget.cardRecipe.recipeType =
+                                          widget.cardRecipe.recipeType;
+                                    });
+                                  }
+                                });
                                 break;
                               case 'delete':
                                 DialogUtils.showLeavePageDialog(
@@ -95,6 +123,7 @@ class _MainPageCardState extends State<MainPageCard> {
                                     RecipeRequests.deleteRecipe(
                                         widget.cardRecipe.id);
                                     Navigator.pop(context);
+                                    widget.onDeleteCallBack!();
                                   },
                                   cancelFunc: () {
                                     Navigator.pop(context);
@@ -142,7 +171,16 @@ class _MainPageCardState extends State<MainPageCard> {
                         Navigator.of(context)
                             .push(NavigationService.createRecipePageRoute(
                           widget.cardRecipe,
-                        ));
+                        ))
+                            .then((value) {
+                          if (value is Map<String, bool>) {
+                            if (widget.onDeleteFromSaved == null) {
+                              return;
+                            } else {
+                              widget.onDeleteFromSaved!(value);
+                            }
+                          }
+                        });
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorVariables.backgroundColor,

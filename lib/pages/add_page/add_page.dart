@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:menuapp/http/DTOs/DTOs.dart';
+import 'package:menuapp/http/DTOs/dtos.dart';
 import 'package:menuapp/http/DTOs/result.dart';
 import 'package:menuapp/http/recipe_requests/recipe_requests.dart';
 import 'package:menuapp/pages/add_page/form_components/dropdown_picker.dart';
@@ -43,23 +43,6 @@ class _AddPage extends State<AddPage> {
     _recipeTypeFieldController.text = widget.recipe.recipe.recipeType;
     _fieldNameController.text = widget.recipe.recipe.name;
     super.initState();
-  }
-
-  void _clearFields() {
-    _fieldNameController.clear();
-    _recipeTypeFieldController.clear();
-    _ingredientFieldController.clear();
-    widget.recipe.recipe.recipeIngredients.clear();
-    widget.recipe.recipe.recipeDescElements.clear();
-    widget.recipe.recipe.image = null;
-    widget.recipe.recipe.cookingTime = CookingTime.lessThan15min;
-    widget.recipe.recipe.difficulty = CookingDifficulty.easy;
-
-    setState(() {
-      _isImageEmpty = false;
-      _isStepListEmpty = false;
-      _isIngredientListEmpty = false;
-    });
   }
 
   bool _isStepListEmpty = false;
@@ -320,9 +303,9 @@ class _AddPage extends State<AddPage> {
                   result =
                       await RecipeRequests.createRecipe(widget.recipe.recipe);
                 }
+                Navigator.pop(context, widget.recipe.recipe);
 
                 DialogUtils.showCustomSnackBar(context, result.message);
-                _clearFields();
               } else {
                 setState(() {
                   if (widget.recipe.recipe.image == null) {

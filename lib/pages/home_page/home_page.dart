@@ -23,14 +23,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _loadRecipes() async {
-    try {
-      var result = await RecipeRequests.getRecipesBySubs();
-      setState(() {
-        cardRecipes = result.recipeList;
-      });
-    } catch (error) {
-      print('Error loading recipes: $error');
-    }
+    var result = await RecipeRequests.getRecipesBySubs();
+    setState(() {
+      cardRecipes = result.recipeList;
+    });
   }
 
   @override
@@ -52,7 +48,7 @@ class _HomePageState extends State<HomePage> {
               color: ColorVariables.backgroundColor,
             ),
             title: Text(
-              'Cool App Name',
+              'Kitchen',
               style: TextStyle(
                 color: ColorVariables.backgroundColor,
                 fontSize: FontSizeVariables.h1Size,
@@ -69,7 +65,7 @@ class _HomePageState extends State<HomePage> {
             SliverFillRemaining(
               child: Center(
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: ColorVariables.primaryColor,
@@ -90,7 +86,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             )
-          // Display the list of recipes
           else
             SliverList(
               delegate: SliverChildBuilderDelegate(
