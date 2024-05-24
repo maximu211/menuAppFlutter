@@ -17,7 +17,7 @@ class BinaryFileReader {
 
 class UserModel {
   final String userName;
-  final Uint8List? userImage;
+  Uint8List? userImage;
   final String userId;
 
   UserModel({
@@ -29,7 +29,7 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       userName: json['username'],
-      userImage: json['image'] != "" ? base64Decode(json['image']) : null,
+      userImage: json['image'] != null ? base64Decode(json['image']) : null,
       userId: json['id'],
     );
   }

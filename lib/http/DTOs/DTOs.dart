@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:menuapp/http/DTOs/result.dart';
+import 'package:menuapp/http/dtos/result.dart';
 import 'package:menuapp/models/mappers.dart';
 import 'package:menuapp/models/models.dart';
 
@@ -192,20 +193,20 @@ class AuthTokenFetch extends ServiceResult {
   }
 }
 
-class FetchUserImage extends ServiceResult {
-  String? userImage;
+class UserImageDto extends ServiceResult {
+  Uint8List? userImage;
 
-  FetchUserImage({
+  UserImageDto({
     required bool success,
     required String message,
     this.userImage,
   }) : super(success: success, message: message);
 
-  factory FetchUserImage.fromJson(Map<String, dynamic> json) {
-    return FetchUserImage(
+  factory UserImageDto.fromJson(Map<String, dynamic> json) {
+    return UserImageDto(
       success: json['success'] ?? false,
       message: json['message'] ?? '',
-      userImage: json['data'] != null ? json['data']['userImage'] : null,
+      userImage: base64Decode(json['data']),
     );
   }
 }
@@ -303,12 +304,12 @@ class UserPageDataDto extends ServiceResult {
   UserModel user;
 
   factory UserPageDataDto.fromJson(Map<String, dynamic> json) {
-    final UserModel user = UserModel.fromJson(json['data']['user']);
-    final List<dynamic>? recipes = json['data']['cardRecipes'];
-    final int subscribedUsersCount = json['data']['subscribedUsersCount'];
-    final int subscribedToCount = json['data']['subscribedToCount'];
-    final dynamic isOwner = json['data']['isOwner'];
-    final dynamic isSubscribed = json['data']['isSubscribed'] ?? false;
+    UserModel user = UserModel.fromJson(json['data']['user']);
+    List<dynamic>? recipes = json['data']['cardRecipes'];
+    int subscribedUsersCount = json['data']['subscribedUsersCount'];
+    int subscribedToCount = json['data']['subscribedToCount'];
+    dynamic isOwner = json['data']['isOwner'];
+    dynamic isSubscribed = json['data']['isSubscribed'] ?? false;
 
     List<CardRecipeModel> recipeList;
     recipeList = recipes!.map((descJson) {

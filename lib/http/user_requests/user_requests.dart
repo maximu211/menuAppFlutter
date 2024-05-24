@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:menuapp/http/DTOs/dtos.dart';
-import 'package:menuapp/http/DTOs/result.dart';
+import 'package:menuapp/http/dtos/dtos.dart';
+import 'package:menuapp/http/dtos/result.dart';
 import 'package:menuapp/http/routes.dart';
 import 'package:menuapp/utils/secure_storage.dart';
 
@@ -70,9 +70,8 @@ class UserRequest {
       }),
     );
 
-
-      return TokenFetchResult.fromJson(
-          jsonDecode(response.body) as Map<String, dynamic>);
+    return TokenFetchResult.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>);
   }
 
   static Future<AuthTokenFetch> registerEmail(String email) async {
@@ -262,7 +261,7 @@ class UserRequest {
         jsonDecode(response.body) as Map<String, dynamic>);
   }
 
-  static Future<ServiceResult> setUserImage(String image) async {
+  static Future<ServiceResult> setProfileImage(String? image) async {
     final StringBuffer stringBuffer = StringBuffer();
 
     stringBuffer.write(BaseRoutes.baseUrl);
@@ -278,16 +277,14 @@ class UserRequest {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $accessToken',
       },
-      body: jsonEncode(<String, String>{
-        "image": image,
-      }),
+      body: jsonEncode(image),
     );
 
     return ServiceResult.fromJson(
         jsonDecode(response.body) as Map<String, dynamic>);
   }
 
-  static Future<FetchUserImage> getUserImage() async {
+  static Future<UserImageDto> getProfileImage() async {
     final StringBuffer stringBuffer = StringBuffer();
 
     stringBuffer.write(BaseRoutes.baseUrl);
@@ -305,11 +302,11 @@ class UserRequest {
       },
     );
 
-    return FetchUserImage.fromJson(
+    return UserImageDto.fromJson(
         jsonDecode(response.body) as Map<String, dynamic>);
   }
 
-    static Future<UserPageDataDto> getUserPageData(String userId) async {
+  static Future<UserPageDataDto> getUserPageData(String userId) async {
     final StringBuffer stringBuffer = StringBuffer();
 
     stringBuffer.write(BaseRoutes.baseUrl);

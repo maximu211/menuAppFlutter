@@ -3,13 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
 import 'package:menuapp/global_variables/icon_size_variables.dart';
-import 'package:menuapp/http/DTOs/dtos.dart';
+import 'package:menuapp/http/dtos/dtos.dart';
 import 'package:menuapp/http/subscription_requests/subscription_requests.dart';
 import 'package:menuapp/http/user_requests/user_requests.dart';
 import 'package:menuapp/pages/authorization/log_in_page/log_in_page.dart';
 import 'package:menuapp/pages/common_components/image_picker/photo_button.dart';
 import 'package:menuapp/pages/common_components/toggle_icon_button.dart';
 import 'package:menuapp/pages/home_page/card/card.dart';
+import 'package:menuapp/pages/user_page/profile_update_page.dart';
 import 'package:menuapp/pages/user_page/saved_recipe_page.dart';
 import 'package:menuapp/pages/user_page/subs_list_page.dart';
 import 'package:menuapp/utils/secure_storage.dart';
@@ -90,7 +91,7 @@ class _UserPageState extends State<UserPage> {
                               builder: (BuildContext context) {
                                 return SizedBox(
                                   height:
-                                      MediaQuery.of(context).size.height * 0.2,
+                                      MediaQuery.of(context).size.height * 0.25,
                                   width: double.infinity,
                                   child: Column(
                                     mainAxisAlignment:
@@ -101,7 +102,25 @@ class _UserPageState extends State<UserPage> {
                                       BottomModalButton(
                                         icon: Icons.person,
                                         onPressed: () {
-                                          print("object");
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProfileUpdatePage(
+                                                userId:
+                                                    userPageData.user.userId,
+                                              ),
+                                            ),
+                                          ).then((value) {
+                                            setState(() {
+                                              userPageData.user.userImage =
+                                                  value;
+                                              for (var element
+                                                  in userPageData.recipes) {
+                                                element.user.userImage = value;
+                                              }
+                                            });
+                                          });
                                         },
                                         buttonText: "Update profile",
                                       ),
