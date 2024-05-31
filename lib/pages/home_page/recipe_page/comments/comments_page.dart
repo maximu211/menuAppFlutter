@@ -185,8 +185,8 @@ class _CommentsPage extends State<CommentsPage> {
                       final comment = commentList[index];
                       return Comment(
                         comment: comment,
-                        delteFunc: () {
-                          CommentRequests.deleteComment(comment.id);
+                        delteFunc: () async{
+                          await CommentRequests.deleteComment(comment.id);
                           Navigator.pop(context);
                           setState(() {
                             _loadComments();

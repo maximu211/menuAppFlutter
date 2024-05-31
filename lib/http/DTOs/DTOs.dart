@@ -1,6 +1,6 @@
+
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:menuapp/http/dtos/result.dart';
 import 'package:menuapp/models/mappers.dart';
@@ -16,7 +16,7 @@ class UserDto {
     final List<UserModel> usersList = userJsonList.map((userJson) {
       return UserModel(
         userName: userJson['username'],
-        userImage: base64Decode(userJson['image']),
+        userImage: json['image'] != null ? base64Decode(json['image']) : null,
         userId: userJson['id'],
       );
     }).toList();

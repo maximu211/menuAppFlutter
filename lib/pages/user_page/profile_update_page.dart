@@ -70,20 +70,30 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
           style: TextStyle(color: ColorVariables.backgroundColor),
         ),
       ),
-      persistentFooterButtons: [
-        ElevatedButton(
-          onPressed: () {
-            UserRequest.setProfileImage(
-                _image != null ? base64Encode(_image!) : null);
-            Navigator.pop(context, _image);
-          },
-          child: Text(
-            "Submit",
-            style: TextStyle(
-              color: ColorVariables.backgroundColor,
-              fontSize: FontSizeVariables.h2Size,
+      persistentFooterButtons: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorVariables.primaryColor,
+                  textStyle: TextStyle(
+                      color: ColorVariables.backgroundColor,
+                      fontSize: FontSizeVariables.h2Size)),
+              onPressed: () {
+                UserRequest.setProfileImage(
+                    _image != null ? base64Encode(_image!) : null);
+                Navigator.pop(context, _image);
+              },
+              child: Text(
+                "Submit",
+                style: TextStyle(
+                  color: ColorVariables.backgroundColor,
+                  fontSize: FontSizeVariables.h2Size,
+                ),
+              ),
             ),
-          ),
+          ],
         )
       ],
       body: _isLoading

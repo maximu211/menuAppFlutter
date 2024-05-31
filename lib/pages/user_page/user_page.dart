@@ -102,6 +102,7 @@ class _UserPageState extends State<UserPage> {
                                       BottomModalButton(
                                         icon: Icons.person,
                                         onPressed: () {
+                                          Navigator.pop(context);
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
