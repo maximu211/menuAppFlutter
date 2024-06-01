@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/pages/authorization/log_in_page/log_in_page.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/pages/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
@@ -41,7 +40,12 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
           child: SingleChildScrollView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 40),
+              padding: const EdgeInsets.all(20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                color: Color.fromARGB(150, 229, 238, 230),
+              ),
               child: Form(
                 key: _formKey,
                 onChanged: () => clearErrors(),
@@ -50,18 +54,18 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset('assets/images/logo.png',
-                        width: 150, color: Colors.white),
+                        width: 150, color: Colors.black),
                     const SizedBox(height: 25),
                     Text(
                       "Sign Up",
                       style: TextStyle(
                           fontSize: FontSizeVariables.h1Size,
-                          color: Colors.white),
+                          color: Colors.black),
                     ),
                     const SizedBox(height: 25),
                     TextFieldLogin(
                       isPasswordField: false,
-                      labelText: "E-Mail",
+                      labelText: "User Name",
                       loginFieldController: _userNameController,
                       validator: (value) {
                         if (value!.trim().isEmpty) {
@@ -73,11 +77,11 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                     const SizedBox(height: 20),
                     TextFieldLogin(
                       isPasswordField: false,
-                      labelText: "User Name",
+                      labelText: "Password",
                       loginFieldController: _emailController,
                       validator: (value) {
                         if (value!.trim().isEmpty) {
-                          return 'Please enter EMail';
+                          return 'Pelase input password';
                         }
                         return null;
                       },
@@ -87,7 +91,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                     ),
                     TextFieldLogin(
                       isPasswordField: true,
-                      labelText: "Password",
+                      labelText: "Repeat Password",
                       loginFieldController: _passwordController,
                       validator: (value) {
                         if (value!.trim().isEmpty) {
@@ -103,21 +107,24 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const LoginPage()));
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const RegisterUserPage(), //
+                                ),
+                              );
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorVariables.primaryColor,
+                            backgroundColor: Colors.black,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(40)),
                           ),
                           child: Text(
-                            "Register",
+                            "Sign Up",
                             style: TextStyle(
                                 color: ColorVariables.backgroundColor),
                           ),

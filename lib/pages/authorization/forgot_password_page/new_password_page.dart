@@ -22,16 +22,21 @@ class NewPasswordPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: Center(
           child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 40),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              color: Color.fromARGB(150, 229, 238, 230),
+            ),
+            padding: const EdgeInsets.all(20),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset('assets/images/logo.png',
-                    width: 150, color: Colors.white),
+                    width: 150, color: Colors.black),
                 const SizedBox(height: 25),
                 const Text(
                   "Enter your new password",
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 const SizedBox(height: 25),
                 TextFieldLogin(
@@ -47,7 +52,6 @@ class NewPasswordPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 25),
                 TextFieldLogin(
-                  //validationKey: _formKey,
                   isPasswordField: true,
                   labelText: "Repeat new password",
                   loginFieldController: _repeatPasswordController,
@@ -93,7 +97,7 @@ class NewPasswordPage extends StatelessWidget {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorVariables.primaryColor,
+                        backgroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40)),
                       ),

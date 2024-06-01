@@ -1,8 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:menuapp/navigation/navigation_page.dart';
+import 'package:menuapp/pages/authorization/forgot_password_page/new_password_page.dart';
 import 'package:menuapp/pages/authorization/log_in_page/log_in_page.dart';
+import 'package:menuapp/pages/authorization/register_pages/register_user_page.dart';
 import 'package:menuapp/pages/authorization/text_fields.dart';
 import 'package:menuapp/global_variables/color_variables.dart';
 import 'package:menuapp/global_variables/font_size_variables.dart';
@@ -10,7 +11,8 @@ import 'package:menuapp/http/user_requests/user_requests.dart';
 import 'package:menuapp/utils/secure_storage.dart';
 
 class VerifyCodePage extends StatefulWidget {
-  const VerifyCodePage({super.key});
+  const VerifyCodePage({super.key, this.isRecoverPasswordPage = true});
+  final bool isRecoverPasswordPage;
 
   @override
   State<VerifyCodePage> createState() => _VerifyCodePage();
@@ -50,7 +52,8 @@ class _VerifyCodePage extends State<VerifyCodePage> {
                     children: [
                       const SizedBox(height: 25),
                       Text(
-                        "Input your email to send verify code",
+                        "Input verify code to confirm your account",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: FontSizeVariables.h1Size,
                             color: Colors.black),
@@ -68,29 +71,27 @@ class _VerifyCodePage extends State<VerifyCodePage> {
                           }
                         },
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 30),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           ElevatedButton(
                             onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                final result = await UserRequest.registerEmail(
-                                    _emailController.text);
-                                if (result.success) {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const NavigationPage(), //
-                                    ),
-                                  );
-                                  await secureStorage.write(
-                                    key: "AuthToken",
-                                    value: result.authToken,
-                                  );
-                                }
-                              }
+                              // if (_formKey.currentState!.validate()) {
+                              //   final result = await UserRequest.registerEmail(
+                              //       _emailController.text);
+                              //   if (result.success) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      !widget.isRecoverPasswordPage
+                                          ? const RegisterUserPage()
+                                          : NewPasswordPage(),
+                                ),
+                              );
+                              //}
+                              //}
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
@@ -105,17 +106,23 @@ class _VerifyCodePage extends State<VerifyCodePage> {
                           ),
                         ],
                       ),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginPage()));
-                          },
-                          child: Text("Already have an account? Log in!",
-                              style: TextStyle(
-                                  fontSize: FontSizeVariables.regularSize,
-                                  color: Colors.black)))
+                      !widget.isRecoverPasswordPage
+                          ? TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginPage()));
+                              },
+                              child: Text(
+                                "Already have an account? Log in!",
+                                style: TextStyle(
+                                    fontSize: FontSizeVariables.regularSize,
+                                    color: Colors.black),
+                              ),
+                            )
+                          : const SizedBox()
                     ],
                   ),
                 ),

@@ -75,7 +75,7 @@ class _RegisterEmailPage extends State<RegisterEmailPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 30),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -89,7 +89,8 @@ class _RegisterEmailPage extends State<RegisterEmailPage> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const VerifyCodePage(), //
+                                          const VerifyCodePage(
+                                              isRecoverPasswordPage: false), //
                                     ),
                                   );
                                   await secureStorage.write(
