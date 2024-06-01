@@ -30,7 +30,7 @@ class _RecipePage extends State<RecipePage> {
       case 1:
         return CommentsPage(recipeId: widget.cardRecipe.id);
       default:
-        return const Text('Невідомий екран');
+        return const Text('Unknown page');
     }
   }
 
