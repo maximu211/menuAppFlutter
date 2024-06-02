@@ -109,7 +109,7 @@ class _MainPageCardState extends State<MainPageCard> {
                                       }
 
                                       widget.cardRecipe.recipeType =
-                                          widget.cardRecipe.recipeType;
+                                          value.recipeType;
                                     });
                                   }
                                 });
