@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -14,11 +13,7 @@ class UserDto {
   factory UserDto.fromJson(Map<String, dynamic> json) {
     final List<dynamic> userJsonList = json['data']['subscribers'];
     final List<UserModel> usersList = userJsonList.map((userJson) {
-      return UserModel(
-        userName: userJson['username'],
-        userImage: json['image'] != null ? base64Decode(json['image']) : null,
-        userId: userJson['id'],
-      );
+      return UserModel.fromJson(userJson);
     }).toList();
 
     return UserDto(usersList: usersList);
